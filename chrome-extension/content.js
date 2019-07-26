@@ -31,8 +31,12 @@ async function loopThrough(){
 }
 
 async function processPost(){
-	await timeMeOut(2000)
+	await timeMeOut(2000) //mau diganti ke window.on("load")
+	// await $(window).on("load")
 	return new Promise((resolve, reject) => {
+		// let imageURL = waitForEl(".ckWGn", () => {
+		// 	return $(".KL4Bh").find("img").attr('src')
+		// })
 		let imageURL = $(".KL4Bh").find("img").attr('src')
 		// console.log({imageURL})
 		let captionText = $(".C4VMK").find("span").text()
@@ -53,5 +57,19 @@ async function timeMeOut(ms){
 		setTimeout(resolve, ms)
 	})
 }
+
+
+function waitForEl(selector, callback) {
+	console.log($(selector).length)
+
+  if ($(selector).length) {
+    callback();
+  } else {
+    setTimeout(function() {
+      waitForEl(selector, callback);
+    }, 100);
+  }
+};
+
 
 loopThrough()
