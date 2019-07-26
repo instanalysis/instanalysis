@@ -18,7 +18,7 @@ async function loopThrough(){
 	const postLinks = $(".v1Nh3").find("a")
 	let posts = []
 
-	for (let i =0; i < postLinks; i++){
+	for (let i =0; i < postLinks.length; i++){
 		// await timeMeOut(1000) //testing await inside async function
 		const linkElement = postLinks[i]
 		// const link = postLinks[i].href
