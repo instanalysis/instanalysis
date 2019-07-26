@@ -3,14 +3,28 @@
   <head>
     <style>
       button {
-        height: 30px;
-        width: 30px;
+        cursor: pointer;
+        padding: 0.5rem 0.8rem;
         outline: none;
+        border: none;
+        font-size: 0.8rem;
+        border-radius: 0.4rem;
+      }
+      #container {
+        min-width: 12rem;
+        text-align: center;
+      }
+      p {
+        font-size: 0.9rem;
+        font-weight: bold;
       }
     </style>
   </head>
   <body>
-    <button id="changeColor"></button>
+    <div id="container">
+      <p class="title">Instanalysis</p>
+      <button id="startButton">Start analysis</button>
+    </div>
     <script src="popup.js"></script>
   </body>
 </html>
