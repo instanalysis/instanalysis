@@ -101,9 +101,9 @@ async function scrapeData() {
 	const key = generateKey()
 	const payload = {
 		username,
+		key,
 		profilePicture,
 		posts: data,
-		key,
 	}
 	console.log(payload)
 	let response = await fetch('http://localhost:3000/', {
