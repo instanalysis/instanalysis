@@ -9,8 +9,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 
-app.get('/', (req, res, next) => {
-
+app.post('/', (req, res, next) => {
+	console.log(req.body)
 });
 app.use(errorHandler);
 
