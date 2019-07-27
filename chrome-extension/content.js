@@ -25,17 +25,20 @@ async function loopThrough(){
 		userimage: userimage,
 		posts: posts
 	}
+
+	console.log({resultingData})
 	return resultingData
 }
 
 async function processPost(username){
 	// await timeMeOut(2000) //mau diganti ke window.on("load")
 	// wait for load
-	await waitForEl(".ckWGn", 2000)
-	await waitForEl(".M9sTE", 2000)
-	await waitForEl(".C4VMK", 2000)
+	await waitForEl(".ckWGn", 2000) //x close button
+	await waitForEl(".M9sTE", 2000) //article container
+	await waitForEl(".C4VMK", 2000) //caption
 	await waitForEl(".KL4Bh", 1000)
-	await waitForEl(".tWeCl", 1000)
+	await waitForEl(".tWeCl", 1000) //video
+	await waitForEl("._1o9PC", 1000) //datetime
 
 	let imageURL = getImageURL()
 	// console.log({imageURL})
@@ -44,14 +47,22 @@ async function processPost(username){
 	// console.log({captionText})
 	let likeCount = await getLikes()
 	// console.log({likeCount})
+	let date = getDateFromPost()
 	return new Promise((resolve, reject) => {
 		$(".ckWGn").click()
 		resolve({
 			imageURL:imageURL, 
 			caption:captionText, 
 			likes:likeCount
+			date: date
 		})
 	})
+}
+
+function getDateFromPost(){
+	const date = $("._1o9PC").attr("datetime")
+	console.log(date)
+	return date
 }
 
 function getImageURL(){
