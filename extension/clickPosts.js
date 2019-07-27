@@ -1,3 +1,5 @@
+const extensionId = 'njalbdhpniekifijjefichllkdjeecll'
+
 async function wait(ms) {
 	return new Promise(resolve => {
 		setTimeout(resolve, ms);
@@ -5,11 +7,11 @@ async function wait(ms) {
 };
 let data = [];
 const posts = document.querySelectorAll('._9AhH0');
-let username = document.querySelector('._7UhW9').textContent;
+const username = document.querySelector('._7UhW9').textContent;
 const quantity = posts.length > 10 ? 10 : posts.length;
 
 async function clickPosts() {
-	for(let i = 0; i < 5; i ++) {
+	for(let i = 0; i < quantity; i ++) {
 		posts[i].click();
 		data[i] = {	imageUrl: '',	caption: ''	};
 		let temp;
@@ -55,6 +57,18 @@ async function clickPosts() {
 		document.querySelector('.ckWGn').click()
 		await wait(100);
 	}
+
+	let response = await fetch('http://localhost:3000/', {
+		method: 'POST',
+		headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+		body: JSON.stringify({
+			username,
+			posts: data,
+		})
+	});
 };
 
 clickPosts();

@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.post('/', (req, res, next) => {
 	console.log(req.body)
+	res.end()
 });
 app.use(errorHandler);
 
