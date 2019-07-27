@@ -5,7 +5,7 @@ async function parseContent(maxTimeTaken){
 	let scrollNav = await waitForEl("._4emnV", 2000)
 	console.log(scrollNav.length)
 	while (scrollNav.length && timeTaken < maxTimeTaken){
-		console.log("can scroll down")
+		// console.log("can scroll down")
 		await scrollDown()
 		scrollNav = await waitForEl("._4emnV", 2000)
 		timeTaken += 500
@@ -16,12 +16,12 @@ async function parseContent(maxTimeTaken){
 
 async function scrollDown(){
 	$("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-	console.log("scrolling down")
+	// console.log("scrolling down")
 	await timeMeOut(500)
 }
 
 async function loopThrough(){
-	console.log("looping through posts..")
+	// console.log("looping through posts..")
 	await waitForEl("._7UhW9",2000)
 	const username = $("._7UhW9").text()
 	// console.log(username)
@@ -137,7 +137,7 @@ async function timeMeOut(ms){
 
 
 async function waitForEl(selector, maxTimeWait) {
-	console.log("waiting for", selector)
+	// console.log("waiting for", selector)
 	// console.log($(selector))
 	let currentTimeWait = 0
 	while ($(selector)===undefined || $(selector).length===0) {
