@@ -1,5 +1,4 @@
 const startButton = document.getElementById('startButton');
-const loopThrough = require('./content.js')
 
 startButton.onclick = function(element) {
 
@@ -8,7 +7,7 @@ startButton.onclick = function(element) {
 		currentWindow: true
 	}, function(tabs) {
 		chrome.tabs.executeScript(
-			tabs[0].id,loopThrough
+			tabs[0].id, {file: 'content.js'}
 		);
 	});
 };

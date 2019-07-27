@@ -1,11 +1,33 @@
+parseContent(5000)
+
+async function parseContent(maxTimeTaken){
+	let timeTaken = 0
+	let scrollNav = await waitForEl("._4emnV", 2000)
+	console.log(scrollNav.length)
+	while (scrollNav.length && timeTaken < maxTimeTaken){
+		console.log("can scroll down")
+		await scrollDown()
+		scrollNav = await waitForEl("._4emnV", 2000)
+		timeTaken += 500
+	}
+	loopThrough()
+}
+
+
+async function scrollDown(){
+	$("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+	console.log("scrolling down")
+	await timeMeOut(500)
+}
 
 async function loopThrough(){
+	console.log("looping through posts..")
 	await waitForEl("._7UhW9",2000)
 	const username = $("._7UhW9").text()
-	console.log(username)
+	// console.log(username)
 	await waitForEl("._6q-tv",2000)
 	const userimage = $("._6q-tv").attr("src")
-	console.log(userimage)
+	// console.log(userimage)
 	await waitForEl(".v1Nh3",2000)
 	const postLinks = $(".v1Nh3").find("a")
 	let posts = []
@@ -17,7 +39,7 @@ async function loopThrough(){
 		linkElement.click()
 		let postDetail = await processPost(username)
 		posts.push(postDetail)
-		console.log(postDetail)
+		// console.log(postDetail)
 	}
 	
 	const resultingData = {
@@ -61,7 +83,7 @@ async function processPost(username){
 
 function getDateFromPost(){
 	const date = $("._1o9PC").attr("datetime")
-	console.log(date)
+	// console.log(date)
 	return date
 }
 
@@ -92,7 +114,7 @@ async function getLikes(){
 		$(".vcOH2").trigger("click")
 		likeStrArr = $(".vJRqr").text().split(" ")
 	}
-	console.log({likeStrArr})
+	// console.log({likeStrArr})
 	if (likeStrArr.length < 2) return 0
 
 	let likeCount = Number(likeStrArr[likeStrArr.length-2].split(",").join(""))
@@ -121,10 +143,8 @@ async function waitForEl(selector, maxTimeWait) {
 	while ($(selector)===undefined || $(selector).length===0) {
 		await timeMeOut(100)
 		currentTimeWait += 100
-		console.log(currentTimeWait)
+		// console.log(currentTimeWait)
 		if (currentTimeWait == maxTimeWait) return true
 	}
 	return $(selector)
 };
-
-loopThrough()
