@@ -1,12 +1,14 @@
 
 async function loopThrough(){
+	await waitForEl("._7UhW9",2000)
 	const username = $("._7UhW9").text()
 	console.log(username)
+	await waitForEl(".v1Nh3",2000)
 	const postLinks = $(".v1Nh3").find("a")
 	let posts = []
 
-	// for (let i =0; i < postLinks.length; i++){
-	for (let i =0; i < 2; i++){
+	for (let i =0; i < postLinks.length; i++){
+	// for (let i =0; i < 2; i++){
 		const linkElement = postLinks[i]
 
 		linkElement.click()
@@ -17,8 +19,13 @@ async function loopThrough(){
 }
 
 async function processPost(username){
-	await timeMeOut(2000) //mau diganti ke window.on("load")
+	// await timeMeOut(2000) //mau diganti ke window.on("load")
 	// wait for load
+	await waitForEl(".ckWGn", 2000)
+	await waitForEl(".M9sTE", 2000)
+	await waitForEl(".C4VMK", 2000)
+	await waitForEl(".KL4Bh", 1000)
+	await waitForEl(".tWeCl", 1000)
 
 	let imageURL = getImageURL()
 	// console.log({imageURL})
@@ -87,11 +94,14 @@ async function timeMeOut(ms){
 
 
 async function waitForEl(selector, maxTimeWait) {
+	console.log("waiting for", selector)
+	// console.log($(selector))
 	let currentTimeWait = 0
-	while ($(selector)===null) {
+	while ($(selector)===undefined || $(selector).length===0) {
 		await timeMeOut(100)
 		currentTimeWait += 100
-		if (currentTimeWait == maxTimeWait) return null
+		console.log(currentTimeWait)
+		if (currentTimeWait == maxTimeWait) return true
 	}
 	return $(selector)
 };
