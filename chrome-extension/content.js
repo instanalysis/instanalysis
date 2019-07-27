@@ -53,7 +53,7 @@ async function processPost(username){
 		resolve({
 			imageURL:imageURL, 
 			caption:captionText, 
-			likes:likeCount
+			likes:likeCount,
 			date: date
 		})
 	})
