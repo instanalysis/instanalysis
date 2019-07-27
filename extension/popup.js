@@ -1,12 +1,9 @@
 let startButton = document.getElementById('startButton');
-
 // chrome.storage.sync.get('color', function(data) {
 // 	startButton.style.backgroundColor = data.color;
 // 	startButton.setAttribute('value', data.color);
 // });
-
 startButton.onclick = function(element) {
-
 	chrome.tabs.query({
 		active: true,
 		currentWindow: true
@@ -22,15 +19,14 @@ startButton.onclick = function(element) {
 					};
 					let data = [];
 					const posts = document.querySelectorAll('._9AhH0');
+					let username = document.querySelector('._7UhW9').textContent;
+					console.log({username})
 					const quantity = posts.length > 10 ? 10 : posts.length;
 
 					async function clickPosts() {
-						for(let i = 0; i < quantity; i ++) {
+						for(let i = 0; i < 5; i ++) {
 							posts[i].click();
-							data[i] = {
-								imageUrl: '',
-								caption: '',
-							};
+							data[i] = {	imageUrl: '',	caption: ''	};
 							let temp;
 							
 							// wait for load
@@ -40,7 +36,7 @@ startButton.onclick = function(element) {
 							// safety margin
 							await wait(100);
 							
-							// to ignore videos
+							// if statement to ignore videos
 							if(document.querySelector('article.M9sTE').querySelector('.KL4Bh')) {
 								temp = document.querySelector('article.M9sTE')
 									.querySelector('.KL4Bh')
@@ -50,15 +46,28 @@ startButton.onclick = function(element) {
 								for(let j = 0; j < temp.length - 5; j ++) {
 									data[i].imageUrl += temp[j]
 								}
+							} else {
+								try {
+									data[i].imageUrl = document.querySelector('article.M9sTE')
+										.querySelector('._5wCQW')
+										.querySelector('img')
+										.getAttribute('src')
+								} catch(err) {
+									console.log('No video img alt')
+								}
 							}
 
 							if(document.querySelector('.C4VMK')) {
-								data[i].caption = document.querySelector('.C4VMK').querySelector('span').textContent;
+								if(document.querySelector('.C4VMK').querySelector('.FPmhX.TlrDj').textContent === username) {
+									data[i].caption = document.querySelector('.C4VMK').querySelector('span:not(.Szr5J)').textContent
+								} else {
+									console.log('username doesnt match on first comment')
+								}
 							}
 
 							console.log(data[i])
 							document.querySelector('.ckWGn').click()
-							await wait(150);
+							await wait(100);
 						}
 					};
 
