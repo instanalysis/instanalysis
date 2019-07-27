@@ -11,6 +11,7 @@ module.exports = function(data){
     let IBMAnalysis = {
         "contentItems": contentItems
     }
+    
     return {
         IBMAnalysis
     }
