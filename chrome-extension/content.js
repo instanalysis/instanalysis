@@ -1,30 +1,14 @@
 
-// const doc = $(document)
-// const ele = $(document.documentElement)
-
-// console.log('ele was printed')
-// console.log({html:ele.html})
-
-// const postLinks = $(".v1Nh3").find("a")
-// console.log(postLinks)
-
-// for (let i =0; i < postLinks.length; i++){
-// 	console.log(i+1, postLinks[i].href)
-// }
-// console.log(doc.text())
-// console.log('doc.text was printed')
-
 async function loopThrough(){
 	const username = $("._7UhW9").text()
 	console.log(username)
 	const postLinks = $(".v1Nh3").find("a")
 	let posts = []
 
-	for (let i =0; i < postLinks.length; i++){
-		// await timeMeOut(1000) //testing await inside async function
+	// for (let i =0; i < postLinks.length; i++){
+	for (let i =0; i < 2; i++){
 		const linkElement = postLinks[i]
-		// const link = postLinks[i].href
-		// console.log(i+1, link)
+
 		linkElement.click()
 		let postDetail = await processPost(username)
 		posts.push(postDetail)
@@ -34,17 +18,16 @@ async function loopThrough(){
 
 async function processPost(username){
 	await timeMeOut(2000) //mau diganti ke window.on("load")
-	// await $(window).on("load")
+	// wait for load
+
 	return new Promise((resolve, reject) => {
-		// let imageURL = waitForEl(".ckWGn", () => {
-		// 	return $(".KL4Bh").find("img").attr('src')
-		// })
-		let imageURL = $(".KL4Bh").find("img").attr("src")
+		let imageURL = getImageURL()
+		console.log(imageURL)
 		// console.log({imageURL})
 		//".C4VMK"
 		let captionText = cleanCaption(username)
 		// console.log({captionText})
-		let likeCount = cleanLikes($(".Nm9Fw").text().split(" "))
+		let likeCount = getLikes()
 		// console.log({likeCount})
 		$(".ckWGn").click()
 		resolve({
@@ -55,19 +38,32 @@ async function processPost(username){
 	})
 }
 
+function getImageURL(){
+	let url = $(".M9sTE").find(".KL4Bh").children(":first").attr("src")
+	if (!url){
+		url = $("_8jZFn").attr("src")
+		console.log(url)
+	}
+	return url
+}
+
 function cleanCaption(username){
-	// _6lAjh
-	//C4VMK
-	if ($(".C4VMK").find("h2").text().startsWith(username)) {
-		return $(".C4VMK").find("span").text()
+	if ($(".C4VMK > h2:first").text().startsWith(username)) {
+		let caption = $(".C4VMK > span:first").text()
+		console.log({caption})
+		return caption
 	} else { 
 		return ''
 	}
 }
 
-function cleanLikes(likeStrArr){
-	if (!likeStrArr || likeStrArr.length < 2) return 0
-	let likeCount = Number(likeStrArr[likeStrArr.length-2])
+function getLikes(){
+	let likeStrArr = $(".Nm9Fw").text().split(" ")
+	if (!likeStrArr) likeStrArr = $(".vcOH2").text().split(" ")
+		console.log(likeStrArr)
+	if (likeStrArr.length < 2) return 0
+
+	let likeCount = Number(likeStrArr[likeStrArr.length-2].split(",").join(""))
 	if (likeStrArr.length > 2) {
 		//count "and" and "," in likeStrArr
 		likeStrArr.forEach(word => {
@@ -86,17 +82,14 @@ async function timeMeOut(ms){
 }
 
 
-function waitForEl(selector, callback) {
-	console.log($(selector).length)
-
-  if ($(selector).length) {
-    callback();
-  } else {
-    setTimeout(function() {
-      waitForEl(selector, callback);
-    }, 100);
-  }
+async function waitForEl(selector, maxTimeWait) {
+	let currentTimeWait = 0
+	while ($(selector)===null) {
+		await timeMeOut(100)
+		currentTimeWait += 100
+		if (currentTimeWait == maxTimeWait) return null
+	}
+	return $(selector)
 };
-
 
 loopThrough()
