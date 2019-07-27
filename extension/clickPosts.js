@@ -27,6 +27,14 @@ async function getLikes() {
 	return likes;
 }
 
+function generateKey() {
+	let out = ''
+	for(let i = 0; i < 10; i ++) {
+		out += Math.floor(Math.random()*10).toString()
+	}
+	return out
+}
+
 async function scrapeData() {
 	// Wait for profile picture
 	while(!document.querySelector('._6q-tv')) {
@@ -36,7 +44,7 @@ async function scrapeData() {
 	const username = document.querySelector('._7UhW9').textContent;
 	const profilePicture = document.querySelector('._6q-tv').getAttribute('src')
 	const posts = document.querySelectorAll('._9AhH0');
-	console.log({length: posts.length})
+	// console.log({length: posts.length})
 	const quantity = posts.length > 12 ? 12 : posts.length;
 	let data = [];
 
@@ -90,10 +98,12 @@ async function scrapeData() {
 		await wait(100);
 	}
 	// Object to be sent to the backend
+	const key = generateKey()
 	const payload = {
 		username,
 		profilePicture,
 		posts: data,
+		key,
 	}
 	console.log(payload)
 	let response = await fetch('http://localhost:3000/', {
@@ -104,6 +114,7 @@ async function scrapeData() {
     },
 		body: JSON.stringify(payload)
 	});
+	chrome.runtime.sendMessage({openTab: `?user=${username}&key=${key}`});
 };
 
 scrapeData();
