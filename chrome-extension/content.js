@@ -3,6 +3,9 @@ async function loopThrough(){
 	await waitForEl("._7UhW9",2000)
 	const username = $("._7UhW9").text()
 	console.log(username)
+	await waitForEl("._6q-tv",2000)
+	const userimage = $("._6q-tv").attr("src")
+	console.log(userimage)
 	await waitForEl(".v1Nh3",2000)
 	const postLinks = $(".v1Nh3").find("a")
 	let posts = []
@@ -16,6 +19,13 @@ async function loopThrough(){
 		posts.push(postDetail)
 		console.log(postDetail)
 	}
+	
+	const resultingData = {
+		username: username,
+		userimage: userimage,
+		posts: posts
+	}
+	return resultingData
 }
 
 async function processPost(username){
