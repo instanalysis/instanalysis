@@ -1,3 +1,7 @@
+document.querySelector('input#myRange').onchange = function(e) {
+	document.getElementById('postlimit').value = e.target.value; 
+}
+
 let startButton = document.getElementById('startButton');
 // chrome.storage.sync.get('color', function(data) {
 // 	startButton.style.backgroundColor = data.color;

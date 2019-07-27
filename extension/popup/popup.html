@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <div id="container">
+      <p class="title">InstAnalysis</p>
+      <hr>
+      <div class="slidecontainer">
+        <p>Limit number of posts:</p>
+        <input type="text" id="postlimit" value="10" readonly>
+        <br>
+        <input
+          type="range" min="10" max="40" value="10" step="2"
+          class="slider" id="myRange" list="steplist">
+      </div>
+      <button id="startButton">Start analysis</button>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

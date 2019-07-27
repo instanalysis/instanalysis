@@ -1,21 +1,49 @@
-const extensionId = 'njalbdhpniekifijjefichllkdjeecll'
+// const extensionId = 'njalbdhpniekifijjefichllkdjeecll'
 
 async function wait(ms) {
 	return new Promise(resolve => {
 		setTimeout(resolve, ms);
 	});
 };
-let data = [];
-const posts = document.querySelectorAll('._9AhH0');
-const username = document.querySelector('._7UhW9').textContent;
-const quantity = posts.length > 10 ? 10 : posts.length;
 
-async function clickPosts() {
+async function getLikes() {
+	let likeStrArr;
+	if(document.querySelector('.Nm9Fw')) {
+		likeStrArr = document.querySelector('.Nm9Fw').textContent.split(' ');
+	} else {
+		document.querySelector('.vcOH2').click()
+		await wait(50)
+		likeStrArr = document.querySelector('.vJRqr').textContent.split(' ');
+	}
+	// second to last element with commas removed, coerced into type: Number
+	let likes = +(likeStrArr[likeStrArr.length-2].split(',').join(''));
+	if (likeStrArr.length > 2) {
+		likeStrArr.forEach(word => {
+			if(word === 'and' || word === ',') {
+				likes ++;
+			}
+		})
+	}
+	return likes;
+}
+
+async function scrapeData() {
+	// Wait for profile picture
+	while(!document.querySelector('._6q-tv')) {
+		await new Promise(resolve => setTimeout(resolve, 100))	
+	}
+	// Get User data
+	const username = document.querySelector('._7UhW9').textContent;
+	const profilePicture = document.querySelector('._6q-tv').getAttribute('src')
+	const posts = document.querySelectorAll('._9AhH0');
+	console.log({length: posts.length})
+	const quantity = posts.length > 12 ? 12 : posts.length;
+	let data = [];
+
+	// Loop through posts
 	for(let i = 0; i < quantity; i ++) {
+		data[i] = {	imageUrl: '',	caption: '', likes: 0, postedOn: ''	};
 		posts[i].click();
-		data[i] = {	imageUrl: '',	caption: ''	};
-		let temp;
-		
 		// wait for post to load
 		while(!document.querySelector('article.M9sTE')) {
 			await new Promise(resolve => setTimeout(resolve, 200));
@@ -23,7 +51,8 @@ async function clickPosts() {
 		// safety margin
 		await wait(100);
 		
-		// if statement to ignore videos
+		let temp;
+		// check if image or video
 		if(document.querySelector('article.M9sTE').querySelector('.KL4Bh')) {
 			temp = document.querySelector('article.M9sTE')
 				.querySelector('.KL4Bh')
@@ -41,34 +70,40 @@ async function clickPosts() {
 					.querySelector('img')
 					.getAttribute('src')
 			} catch(err) {
-				console.log('No video img alt')
+				console.log('No alt img for video')
 			}
 		}
 
 		if(document.querySelector('.C4VMK')) {
+			// check if first comment is by the correct user
 			if(document.querySelector('.C4VMK').querySelector('.FPmhX.TlrDj').textContent === username) {
+				// ignore verified checkmark span
 				data[i].caption = document.querySelector('.C4VMK').querySelector('span:not(.Szr5J)').textContent
-			} else {
-				console.log('username doesnt match on first comment')
 			}
 		}
-
-		console.log(data[i])
+		// likes
+		data[i].likes = await getLikes()
+		// date
+		data[i].postedOn = document.querySelector('._1o9PC').getAttribute('datetime')
+		// close modal
 		document.querySelector('.ckWGn').click()
 		await wait(100);
 	}
-
+	// Object to be sent to the backend
+	const payload = {
+		username,
+		profilePicture,
+		posts: data,
+	}
+	console.log(payload)
 	let response = await fetch('http://localhost:3000/', {
 		method: 'POST',
 		headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-		body: JSON.stringify({
-			username,
-			posts: data,
-		})
+		body: JSON.stringify(payload)
 	});
 };
 
-clickPosts();
+scrapeData();
