@@ -20,15 +20,14 @@ async function processPost(username){
 	await timeMeOut(2000) //mau diganti ke window.on("load")
 	// wait for load
 
+	let imageURL = getImageURL()
+	// console.log({imageURL})
+	//".C4VMK"
+	let captionText = cleanCaption(username)
+	// console.log({captionText})
+	let likeCount = await getLikes()
+	// console.log({likeCount})
 	return new Promise((resolve, reject) => {
-		let imageURL = getImageURL()
-		console.log(imageURL)
-		// console.log({imageURL})
-		//".C4VMK"
-		let captionText = cleanCaption(username)
-		// console.log({captionText})
-		let likeCount = getLikes()
-		// console.log({likeCount})
 		$(".ckWGn").click()
 		resolve({
 			imageURL:imageURL, 
@@ -41,8 +40,10 @@ async function processPost(username){
 function getImageURL(){
 	let url = $(".M9sTE").find(".KL4Bh").children(":first").attr("src")
 	if (!url){
-		url = $("_8jZFn").attr("src")
-		console.log(url)
+		// url = $(".M9sTE > div:first > div:first > div:first > div:first > div:first > div:first > img:first").attr("src")
+		// console.log($(".M9sTE > div:first > div:first > div:first > div:first > div:first > div:first > img:first").innerHtml)
+		url = $("._5wCQW").find(".tWeCl").attr("poster")
+		// console.log("is a video", url)
 	}
 	return url
 }
@@ -50,17 +51,20 @@ function getImageURL(){
 function cleanCaption(username){
 	if ($(".C4VMK > h2:first").text().startsWith(username)) {
 		let caption = $(".C4VMK > span:first").text()
-		console.log({caption})
+		// console.log({caption})
 		return caption
 	} else { 
 		return ''
 	}
 }
 
-function getLikes(){
+async function getLikes(){
 	let likeStrArr = $(".Nm9Fw").text().split(" ")
-	if (!likeStrArr) likeStrArr = $(".vcOH2").text().split(" ")
-		console.log(likeStrArr)
+	if (!likeStrArr || likeStrArr.length < 2) {
+		$(".vcOH2").trigger("click")
+		likeStrArr = $(".vJRqr").text().split(" ")
+	}
+	console.log({likeStrArr})
 	if (likeStrArr.length < 2) return 0
 
 	let likeCount = Number(likeStrArr[likeStrArr.length-2].split(",").join(""))
