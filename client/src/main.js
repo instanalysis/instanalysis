@@ -64,7 +64,7 @@ const app = new Vue({
             {
               label: `${this.user.username} Personality`,
               fill: true,
-              backgroundColor: "rgba(179,181,198,0.5)",
+              backgroundColor: "rgba(111,148,205,0.7)",
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
               data: this.user.personalities.map(personality => personality.raw_score)
