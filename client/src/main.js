@@ -41,7 +41,7 @@ const app = new Vue({
             {
               label: `${this.user.username} need`,
               fill: true,
-              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#9db3d2","#d9ece2", "#e96775", "#455a63", "#b7e3e2", "#beaed6", "#fdd074"],
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
               data: this.user.needs.map(need => need.raw_score)
