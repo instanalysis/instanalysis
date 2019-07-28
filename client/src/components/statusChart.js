@@ -13,7 +13,6 @@ Vue.component('statuschart', {
   `,
   methods: {
     initStatusChart() {
-      // const componentId = `'${this.id}'`
       new Chart(document.getElementById(this.componentId), {
         type: 'radar',
         data: {

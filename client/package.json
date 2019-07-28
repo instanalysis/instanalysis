@@ -4,12 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass ./src/assets/scss/_main.scss:./src/assets/css/style.css --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "d3": "^5.9.7",
+    "sass": "^1.22.7",
     "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0"
   }
 }

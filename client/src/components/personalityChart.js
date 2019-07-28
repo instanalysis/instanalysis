@@ -1,8 +1,8 @@
 Vue.component('personalitychart', {
-  props: ['id'],
+  props: ['id', 'user', 'data'],
   data() {
     return {
-      componentId: `${this.id}`
+      componentId: `${this.id}`,
     }
   },
   template: 
@@ -13,13 +13,14 @@ Vue.component('personalitychart', {
   `,
   methods: {
     initPersonalityChart() {
+      console.log(this.data);
       new Chart(document.getElementById(this.componentId), {
         type: 'horizontalBar',
         data: {
-          labels: ["Strength", "Agility", "Vitality", "Intelegence", "Dexterity"],
+          labels: this.data,
           datasets: [
             {
-              label: "Gigi Hadid Personality",
+              label: this.username,
               // fill: true,
               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
               pointBorderColor: "#fff",
@@ -31,13 +32,19 @@ Vue.component('personalitychart', {
         options: {
           title: {
             display: true,
-            text: 'Gigi Hadid Characteristic'
+            // text: username
           }
         }
       });
-    }
+    },
   },
   mounted() {
     this.initPersonalityChart()
+    // this.fetchPersonalityData()
+  },
+  computed: {
+    username() {
+      return this.user.username
+    }
   },
 })

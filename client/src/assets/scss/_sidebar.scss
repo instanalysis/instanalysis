@@ -1,0 +1,23 @@
+.sidebar {
+    &--container {
+        width: 10em;
+        margin-left: -12.5em;
+        -webkit-transition: margin .25s ease-out;
+        -moz-transition: margin .25s ease-out;
+        -o-transition: margin .25s ease-out;
+        transition: margin .25s ease-out;
+    }
+
+    &__heading {
+        padding: 1rem 2.1rem;
+        font-size: 1.2rem;
+    }
+
+    .list-group {
+        width: 15rem;
+    }
+}
+
+.toggled .sidebar--container {
+    margin-left: 0;
+}

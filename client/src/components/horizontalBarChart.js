@@ -3,12 +3,11 @@ Vue.component('horizontalbarchart', {
   template: 
   `
   <div>
-    <h1>HELELLELEEL</h1>
     <canvas id="${this.props.id}" width="200" height="200"></canvas>
   </div>
   `,
   methods: {
-    initStatusChart() {
+    initBarChart() {
       console.log(object);
       new Chart(document.getElementById(this.props.id), {
         type: 'radar',
@@ -36,6 +35,6 @@ Vue.component('horizontalbarchart', {
     }
   },
   mounted() {
-    this.initStatusChart()
+    this.initBarChart()
   },
 })
