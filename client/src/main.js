@@ -104,10 +104,5 @@ const app = new Vue({
   },
   mounted() {
     this.fetchPersonalityData()
-  },
-  computed: {
-    wordsCount() {
-      return 
-    }
-  },
+  }
 })

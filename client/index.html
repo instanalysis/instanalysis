@@ -21,7 +21,10 @@
   <div id="app">
     <div class="container">
       <myheader></myheader>
-      <section id="profile" style="display: flex; margin: .3rem 0 3rem">
+      <section id="profile" 
+      style="display: flex;
+      padding: 1.3rem 104px 1.3rem;
+      margin: 0px -7.5rem;">
         <div style="margin-right: 1.5rem;">
           <img src="http://placehold.it/100x100" alt="" style="border-radius: 50%;">
         </div>
@@ -32,22 +35,22 @@
         </div>
       </section>
 
-      <section style="display: flex;">
-        <div class="myCard">
+      <section class="myCard" style="display: flex;">
+        <div>
           <div style="display: flex;">
             <img src="./src/assets/images/drama_mask.png" alt="" style="width: 2rem;">
             <h5>User Personality</h5>
           </div>
           <canvas id="personalityChart" width="350" height="350"></canvas>
         </div>
-        <div class="myCard">
+        <div>
           <div style="display: flex;">
             <img src="./src/assets/images/drama_mask.png" alt="" style="width: 2rem;">
             <h5>User Needs</h5>
           </div>
           <canvas id="needsChart" width="350" height="350"></canvas>
         </div>
-        <div class="myCard">
+        <div>
           <div style="display: flex;">
             <img src="./src/assets/images/drama_mask.png" alt="" style="width: 2rem;">
             <h5>User Values</h5>
