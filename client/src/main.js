@@ -7,20 +7,20 @@ const app = new Vue({
   },
   data: {
     user: {
+      wordsCount: 0,
       username: '',
       personalities: [],
       needs: [],
       values: [],
       consumption_preferences: []
-    },
-    username: ''
+    }
   },
   methods: {
     async fetchPersonalityData() {
       const {data} = await axios.get(`${PERSONALITIES_PATH}/personalityAnalysisResult`)
       const username = await axios.get(`${PERSONALITIES_PATH}/username`)
 
-      this.username = username.data.username
+      this.user.wordsCount = data.word_count
 
       this.user.username = username.data.username;
       this.user.personalities = data.personality;
@@ -28,8 +28,9 @@ const app = new Vue({
       this.user.values = data.values;
       this.user.consumption_preferences = data.consumption_preferences;
       
-      this.initNeedsChart()
-      this.initPersonalityChart()
+      this.initNeedsChart();
+      this.initPersonalityChart();
+      this.initValuesChart();
     },
     initNeedsChart() {
       new Chart(document.getElementById('needsChart'), {
@@ -76,9 +77,37 @@ const app = new Vue({
           }
         }
       });
+    },
+    initValuesChart() {
+      new Chart(document.getElementById('valuesChart'), {
+        type: 'doughnut',
+        data: {
+          labels: this.user.values.map(personality => personality.name),
+          datasets: [
+            {
+              label: `${this.user.username} Values`,
+              fill: true,
+              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+              pointBorderColor: "#fff",
+              pointBackgroundColor: "rgba(179,181,198,1)",
+              data: this.user.values.map(personality => personality.raw_score)
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+          }
+        }
+      });
     }
   },
   mounted() {
     this.fetchPersonalityData()
+  },
+  computed: {
+    wordsCount() {
+      return 
+    }
   },
 })

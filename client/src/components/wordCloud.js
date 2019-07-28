@@ -1,4 +1,5 @@
 anychart.onDocumentReady(function() {
+  // console.log(user);
   // code to create a word cloud chart will be here
   var data = [
     {"x": "Watch", "value": 1090000000},
