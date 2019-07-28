@@ -1,4 +1,4 @@
-const countOccurrencesWordsInString = (str) => {  
+export const countOccurrencesWordsInString = (str) => {  
   var split = str.split(" "),
       obj = {},
       wordsCollection = [];
