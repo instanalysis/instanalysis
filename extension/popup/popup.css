@@ -42,6 +42,7 @@ button:hover {
 	margin: 1rem 0;
 	appearance: none;
 	height: 0.4rem; /* Specified height */
+	border-radius: 0.4rem;
 	background: #cfcfcf; /* Grey background */
 	outline: none; /* Remove outline */
 	opacity: 0.8; /* Set transparency (for mouse-over effects on hover) */

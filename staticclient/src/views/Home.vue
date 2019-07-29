@@ -20,13 +20,14 @@
 </template>
 
 <script>
-import ImageData from '@/components/ImageData.vue';
+import ProfileInfo from '@/components/ProfileInfo.vue';
 import TextData from '@/components/TextData.vue';
+import ImageData from '@/components/ImageData.vue';
 
 export default {
   name: 'home',
   components: {
-    ImageData, TextData
+    ProfileInfo, TextData, ImageData
   },
   data() {
     return {
@@ -46,7 +47,34 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+$purp1: #592ba1;
+
+.sectionhead {
+	margin: 0rem 0 0.8rem 0.5rem;
+	.heading {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: $purp1;
+	}
+}
+.box {
+	padding: 0.8rem;
+	margin-bottom: 1.2rem;
+	border-radius: 0.5rem;
+	box-shadow: 0.1rem 0.2rem 1.1rem -0.3rem #777;
+	line-height: 1.6rem;
+	font-size: 0.9rem;
+}
+.boxheading {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  background-color: #eee;
+  border-radius: 0.3rem;
+	font-size: 1rem;
+	font-weight: 700;
+}
 .userprofile {
   display: flex;
   justify-content: center;
