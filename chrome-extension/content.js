@@ -6,7 +6,7 @@ async function sendPageData(){
 	console.log(parsedContent)
 	console.log("opening new window")
 	const key = Math.random().toString(36).replace('0.', '') 
-	window.open("http://stefkwan.com/"+parsedContent.username+"/"+key)
+	window.open("http://stefkwan.com/?username="+parsedContent.username+"?key="+key)
 
 }
 
@@ -156,7 +156,7 @@ async function timeMeOut(ms){
 
 async function waitForEl(selector, maxTimeWait) {
 	// console.log("waiting for", selector)
-	console.log(selector)
+	// console.log(selector)
 	let currentTimeWait = 0
 	while ($(selector)===undefined || $(selector).length===0) {
 		await timeMeOut(100)
