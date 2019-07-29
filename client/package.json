@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chartjs-plugin-datalabels": "^0.6.0",
     "d3": "^5.9.7",
     "sass": "^1.22.7",
     "vue": "^2.6.10"

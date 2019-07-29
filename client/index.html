@@ -23,7 +23,7 @@
       <myheader></myheader>
       <section id="profile" 
       style="display: flex;
-      padding: 1.3rem 104px 1.3rem;
+      padding: 1.3rem 145px;
       margin: 0px -7.5rem;">
         <div style="margin-right: 1.5rem;">
           <img src="http://placehold.it/100x100" alt="" style="border-radius: 50%;">
@@ -35,27 +35,43 @@
         </div>
       </section>
 
-      <section class="myCard" style="display: flex;">
-        <div>
+      <section class="myCard" style="display: flex; justify-content: space-between;width: 100%;">
+        <div style="text-align: center;">
           <div style="display: flex;">
             <img src="./src/assets/images/drama_mask.png" alt="" style="width: 2rem;">
-            <h5>User Personality</h5>
+            <h5>Personality</h5>
           </div>
-          <canvas id="personalityChart" width="350" height="350"></canvas>
+          <div style="margin: 0 auto; width: 100%;">
+            <canvas id="personalityChart" width="600" height="400" style="display: unset;"></canvas>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="myCard" style="display: flex; justify-content: space-between;">
+        <div>
+          <div style="display: flex;font-size: 1.7rem;">
+            <i class="far fa-smile-beam" style="margin-right: 1rem;"></i>
+            <h5>Needs</h5>
+          </div>
+          <canvas id="needsChart" width="450" height="800"></canvas>
         </div>
         <div>
-          <div style="display: flex;">
-            <img src="./src/assets/images/drama_mask.png" alt="" style="width: 2rem;">
-            <h5>User Needs</h5>
+          <div>
+            <div style="display: flex;font-size: 1.7rem;">
+              <i class="fas fa-theater-masks" style="margin-right: 1rem;"></i>
+              <h5>Emotion</h5>
+            </div>
+            <canvas id="emotionPostsChart" width="400" height="400" style="margin-top: -1rem;
+            "></canvas>
           </div>
-          <canvas id="needsChart" width="350" height="350"></canvas>
-        </div>
-        <div>
-          <div style="display: flex;">
-            <img src="./src/assets/images/drama_mask.png" alt="" style="width: 2rem;">
-            <h5>User Values</h5>
-          </div>
-          <canvas id="valuesChart" width="350" height="350"></canvas>
+          <div>
+              <div style="display: flex;font-size: 1.7rem; margin-top: 3rem; margin-bottom: -1rem;">
+                <i class="far fa-grin-hearts" style="margin-right: 1rem;"></i>
+                <h5>Pleasure</h5>
+              </div>
+              <canvas id="valuesChart" width="400" height="350"></canvas>
+            </div>
         </div>
       </section>
       
@@ -84,8 +100,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   
   <script src="./src/components/wordCloud.js"></script>
-  <script src="./src/components/personalityChart.js"></script>
-  <script src="./src/components/statusChart.js"></script>
+  <!-- <script src="./src/components/personalityChart.js"></script> -->
+  <!-- <script src="./src/components/statusChart.js"></script> -->
 
   <script src="./src/components/header.js"></script>
   <script src="./src/components/footer.js"></script>

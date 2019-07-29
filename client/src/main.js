@@ -12,13 +12,15 @@ const app = new Vue({
       personalities: [],
       needs: [],
       values: [],
-      consumption_preferences: []
+      consumption_preferences: [],
+      summary: {}
     }
   },
   methods: {
     async fetchPersonalityData() {
       const {data} = await axios.get(`${PERSONALITIES_PATH}/personalityAnalysisResult`)
       const username = await axios.get(`${PERSONALITIES_PATH}/username`)
+      const summary = await axios.get(`${PERSONALITIES_PATH}/summary`)
 
       this.user.wordsCount = data.word_count
 
@@ -27,10 +29,12 @@ const app = new Vue({
       this.user.needs = data.needs;
       this.user.values = data.values;
       this.user.consumption_preferences = data.consumption_preferences;
+      this.user.summary = summary.data;
       
       this.initNeedsChart();
       this.initPersonalityChart();
       this.initValuesChart();
+      this.initEmotionPostsChart();
     },
     initNeedsChart() {
       new Chart(document.getElementById('needsChart'), {
@@ -44,14 +48,14 @@ const app = new Vue({
               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#9db3d2","#d9ece2", "#e96775", "#455a63", "#b7e3e2", "#beaed6", "#fdd074"],
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
-              data: this.user.needs.map(need => need.raw_score)
+              data: this.user.needs.map(need => need.percentile * 100)
             }
           ]
         },
         options: {
           title: {
-            display: true,
-          }
+            display: false,
+          },
         }
       });
     },
@@ -67,7 +71,7 @@ const app = new Vue({
               backgroundColor: "rgba(111,148,205,0.7)",
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
-              data: this.user.personalities.map(personality => personality.raw_score)
+              data: this.user.personalities.map(personality => personality.percentile * 100)
             }
           ]
         },
@@ -90,7 +94,39 @@ const app = new Vue({
               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
-              data: this.user.values.map(personality => personality.raw_score)
+              data: this.user.values.map(personality => personality.percentile * 100)
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+          }
+        }
+      });
+    },
+    initEmotionPostsChart() {
+      let emotionFromPosts = this.user.summary.emotionFromPosts
+      let arrKey = [];
+      let arrValue = []
+
+      for (const [key, value] of Object.entries(emotionFromPosts)) {
+        arrKey.push(key)
+        arrValue.push(value)
+      }
+
+      new Chart(document.getElementById('emotionPostsChart'), {
+        type: 'pie',
+        data: {
+          labels: arrKey,
+          datasets: [
+            {
+              label: `${this.user.username} Values`,
+              fill: true,
+              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#9db3d2", "#fdd074", "#455a63", "#b7e3e2", "#beaed6", "#e96775"],
+              pointBorderColor: "#fff",
+              pointBackgroundColor: "rgba(179,181,198,1)",
+              data: arrValue
             }
           ]
         },
