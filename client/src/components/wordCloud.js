@@ -25,6 +25,8 @@ const countOccurrencesWordsInString = (str) => {
   
   Mr. Dursley always sat with his back to the window in his office on the ninth floor. If he hadn't, he might have found it harder to concentrate on drills that morning. He didn't see the owls swooping past in broad daylight, though people down in the street did; they pointed and gazed open-mouthed as owl after owl sped overhead. Most of them had never seen an owl even at nighttime. Mr. Dursley, however, had a perfectly normal, owl-free morning. He yelled at five different people. He made several important telephone calls and shouted a bit more. He was in a very good mood until lunchtime, when he thought he'd stretch his legs and walk across the road to buy himself a bun from the bakery.`)
 
+  const ignoreWords = ['the', 'a', 'an', 'and', 'of', 'on', 'in', 'at', 'was', 'he', 'she', 'it', '-', 'for', 'nor', 'but', 'or', 'yet', 'so', 'after', 'although', 'as', 'as if', 'because', 'before', 'by', ' even', 'if', 'even', 'though']
+
   anychart.onDocumentReady(function() {
     var data = words;
   
