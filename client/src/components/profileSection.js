@@ -24,7 +24,7 @@ Vue.component('profile-section', {
         {{user.username}}
       </div>
       <div class="color-grey3 fs-14" style="color: #f783ac"><i class="fas fa-heart" style="margin-right: .3rem"></i>{{totalLikes}} total likes</div>
-      <div class="color-grey3 fs-14">post from July 4th, 2015-August 15th, 2019</div>
+      <div class="color-grey3 fs-14">{{rangeDate}}</div>
     </div>
   </section>
   `,
@@ -33,6 +33,9 @@ Vue.component('profile-section', {
       return this.user.perPost.map(post => post.likes).reduce(function(result,item) {
         return result + item;
        }, 0);
+    },
+    rangeDate() {
+      return `posts from ${this.user.perPost[0].date} - ${this.user.perPost[this.user.perPost.length-1].date}`
     }
   },
 })
