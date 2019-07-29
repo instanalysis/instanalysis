@@ -11,6 +11,7 @@ async function translateToEnglish(req, res, next) {
 		userimage: userimage,
 		posts: posts
 	}
+	console.log(userdata)
 	console.log('dalam function translateToEnglish')
 
     for (let i = 0; i< userdata.posts.length; i++) {

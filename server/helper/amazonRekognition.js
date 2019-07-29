@@ -7,7 +7,7 @@ var rekognition = new AWS.Rekognition({ apiVersion: '2016-06-27' });
 const faceDetection = async (imageLink) => {
   try{
 
-    console.log(imageLink)
+    console.log({imageLink})
     let base64 = await image2base64(imageLink)
     const buffer = new Buffer.from(base64, 'base64')
     var params = {

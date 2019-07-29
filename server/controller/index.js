@@ -1,6 +1,6 @@
 const personalityAnalysis = require('../helper/personalityAnalysis')
-const {faceDetection, labelDetection} = require('../helper/amazonRekognition')
-
+const { faceDetection, labelDetection } = require('../helper/amazonRekognition')
+const app = require('../expressInstance')
 
 class analysisController{
     static async analysis (req,res){
@@ -20,75 +20,114 @@ class analysisController{
             })
             res.json('request successful')
 
-            let promiseListFaceDetection = userData.posts.map((item)=>{
-                return faceDetection(item.imageURL)
-            })
-            let promiseLabelDetection = userData.posts.map((item)=>{
-                return labelDetection(item.imageURL)
-            })
+            let credential = {
+                username: userData.username,
+                key: '123abc'
+            }
             console.log('processing')
+
+            // Start
+            app.emit('start', [
+                credential, 
+                {
+                    wordCloud: words,
+                    userimage: userData.userimage
+                }
+            ])
+
+            // IBManalysis
             let personalityAnalysisResult = await personalityAnalysis(userData)
             
+            app.emit('ibm', [
+                credential,
+                {
+                    personalityAnalysisResult
+                }
+            ])
+            // amazonRekognition
+            let promiseListFaceDetection = userData.posts.map((item) => {
+                return faceDetection(item.imageURL)
+            })
+            let promiseLabelDetection = userData.posts.map((item) => {
+                return labelDetection(item.imageURL)
+            })
+
             let resultFaceDetection = await Promise.all(promiseListFaceDetection)
             let resultLabelDetection = await Promise.all(promiseLabelDetection)
-            let profilePicDetection = await faceDetection(userData.profilePicture)
-            
+            let profilePicDetection = await faceDetection(userData.userimage)
+
+            // manual summary analysis 
             let interestFromPosts = {}
             let emotionFromPosts = {}
             let counter = 0
-            resultFaceDetection.forEach((item, index)=>{
-                if(item.FaceDetails[0]){
-                    counter ++
-                    for(let i = 0; i < item.FaceDetails[0].Emotions.length; i++){
-                        if(emotionFromPosts[item.FaceDetails[0].Emotions[i].Type]){
+            resultFaceDetection.forEach((item, index) => {
+                if (item.FaceDetails[0]) {
+                    counter++
+                    for (let i = 0; i < item.FaceDetails[0].Emotions.length; i++) {
+                        if (emotionFromPosts[item.FaceDetails[0].Emotions[i].Type]) {
                             emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] += item.FaceDetails[0].Emotions[i].Confidence
-                        }else{
+                        } else {
                             emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = item.FaceDetails[0].Emotions[i].Confidence
                         }
-                        if(resultFaceDetection.length === index + 1){
-                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = emotionFromPosts[item.FaceDetails[0].Emotions[i].Type]/counter
+                        if (resultFaceDetection.length === index + 1) {
+                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] / counter
                         }
                     }
                 }
             })
-            resultLabelDetection.forEach(item=>{
-                if(item.Labels[0].Name !== 'Human' && item.Labels[0].Name !== 'Person' && item.Labels[0].Name !== 'Face'){
-                    if(interestFromPosts[item.Labels[0].Name]){
+            resultLabelDetection.forEach(item => {
+                if (item.Labels[0].Name !== 'Human' && item.Labels[0].Name !== 'Person' && item.Labels[0].Name !== 'Face') {
+                    if (interestFromPosts[item.Labels[0].Name]) {
                         interestFromPosts[item.Labels[0].Name] += 1
-                    }else{
+                    } else {
                         interestFromPosts[item.Labels[0].Name] = 1
                     }
                 }
             })
-            let perPost = userData.posts.map((item, index)=>{
-                return{
-                    faceDetection:resultFaceDetection[index],
-                    labelDetection:resultLabelDetection[index],
-                    likes:item.likes,
-                    date:item.date,
+
+            let perPost = userData.posts.map((item, index) => {
+                return {
+                    faceDetection: resultFaceDetection[index],
+                    labelDetection: resultLabelDetection[index],
+                    likes: item.likes,
+                    date: item.date,
                 }
             })
-            let age 
+            let age
             let gender
-            if(profilePicDetection.FaceDetails.length===1){
+            if (profilePicDetection.FaceDetails.length === 1) {
                 age = profilePicDetection.FaceDetails[0].AgeRange
                 gender = profilePicDetection.FaceDetails[0].Gender.Value
-            }else{
-                gender= 'Cannot get data',
-                age= 'Cannot get data'
+            } else {
+                gender = 'Cannot get data',
+                    age = 'Cannot get data'
             }
+
+            app.emit('rekog', [
+                credential,
+                {
+                    perPost,
+                    summary:{
+                        age,
+                        gender,
+                        emotionFromPosts,
+                        interestFromPosts
+                    }
+                }
+            ])
             console.log('done')
-            
+            // app.emit('disconnect')
+
 
         }
-        catch(e){
+        catch (e) {
             console.log(e)
             res.status(500).json(e)
-        }   
-           
+        }
+
     }
 }
-module.exports= analysisController
+module.exports = analysisController
 
 
 
