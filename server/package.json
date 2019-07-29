@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "google-translate": "^2.3.0",
     "ibm-watson": "^4.3.0",
-    "image-to-base64": "^2.0.1"
+    "image-to-base64": "^2.0.1",
+    "socket.io": "^2.2.0"
   }
 }

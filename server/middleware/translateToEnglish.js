@@ -3,6 +3,8 @@ const googleTranslate = require('google-translate')(apiKey);
 
 async function translateToEnglish(req, res, next) {
 	//userdata should be in req.body
+ 	console.log("di middleware translate")
+ 	console.log(req.body)
 	let {username, userimage, posts} = req.body
 	let userdata = {
 		username: username,
@@ -18,6 +20,8 @@ async function translateToEnglish(req, res, next) {
 
  	req.body = userdata
 
+ 	console.log(req.body)
+ 	console.log("mau next dari middleware translate")
 	next()
 }
 
