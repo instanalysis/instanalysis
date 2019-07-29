@@ -11,6 +11,7 @@ async function getLikes() {
 	if(document.querySelector('.Nm9Fw')) {
 		likeStrArr = document.querySelector('.Nm9Fw').textContent.split(' ');
 	} else {
+		// click view count to get like count tooltip
 		document.querySelector('.vcOH2').click()
 		await wait(50)
 		likeStrArr = document.querySelector('.vJRqr').textContent.split(' ');

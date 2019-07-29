@@ -1,29 +1,43 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="topnav">
+      <div id="brand">InstAnalysis</div>
+      <div id="aboutlink">About</div>
     </div>
     <router-view/>
   </div>
 </template>
 
 <style lang="scss">
+$purp1: #592ba1;
+* {
+  margin: 0;
+  padding: 0;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  max-width: 1290px;
+  margin: 0 auto;
+  font-family: "Open Sans", "Segoe UI", "Helvetica Neue", Helvetica, sans-serif;
+  color: #222222;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+#topnav {
+  padding: 0.8rem 1.5rem 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+#brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+#aboutlink {
+  cursor: pointer;
+  background-color: #dfdfdf;
+  padding: 0.3rem 0.6rem 0.4rem 0.6rem;
+  border-radius: 0.3rem;
+  font-size: 0.9rem;
+}
+
 </style>
