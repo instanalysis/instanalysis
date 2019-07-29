@@ -2,14 +2,6 @@ const personalityAnalysis = require('../helper/personalityAnalysis')
 const { faceDetection, labelDetection } = require('../helper/amazonRekognition')
 const app = require('../expressInstance')
 
-<<<<<<< HEAD
-class analysisController{
-    static async analysis (req,res){
-        // console.log("di controller analysis")
-        // console.log(req.body)
-        // console.log("-0---------")
-        try{        
-=======
 class analysisController {
     static async analysis(req, res) {
         console.log("di controller analysis")
@@ -17,7 +9,6 @@ class analysisController {
         console.log("-0---------")
         try {
             let io = req.io
->>>>>>> fc7e70aef41d9a46af0d76295936097237580eee
             let words = ''
             let { username, userimage, posts } = req.body
             let userData = {
@@ -124,13 +115,8 @@ class analysisController {
                         interestFromPosts
                     }
                 }
-<<<<<<< HEAD
-            ])
-            // console.log('done')
-=======
             )
             console.log('done')
->>>>>>> fc7e70aef41d9a46af0d76295936097237580eee
             // app.emit('disconnect')
 
 
