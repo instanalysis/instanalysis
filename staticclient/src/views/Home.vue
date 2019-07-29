@@ -49,7 +49,7 @@ export default {
 
 <style lang="scss">
 $purp1: #592ba1;
-
+$purp2: #6c3fb6;
 .sectionhead {
 	margin: 0rem 0 0.8rem 0.5rem;
 	.heading {
@@ -57,6 +57,21 @@ $purp1: #592ba1;
 		font-weight: bold;
 		color: $purp1;
 	}
+}
+.wordcount {
+	display: inline-flex;
+	margin-right: 0.2rem;
+	font-size: 0.9rem;
+	border-radius: 0.4rem;
+	overflow: hidden;
+}
+.wcn {
+	padding: 0.4rem 0.8rem;
+	background-color: #eee;
+}
+.prp {
+	background-color: $purp2;
+	color: white;
 }
 .box {
 	padding: 0.8rem;

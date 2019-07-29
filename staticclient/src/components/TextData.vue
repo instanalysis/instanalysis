@@ -67,32 +67,25 @@
 		<div id="consumption" class="box">
 			<div class="boxheading">CONSUMPTION PREFERENCES</div>
 			<p>
-				<span :class="con1class"></span>
-				Likely to be influenced by brand name when making product purchases.
+				<span :class="con1class"></span>Likely to be influenced by brand name when making product purchases.
 			</p>
 			<p>
-				<span :class="con2class"></span>
-				Likely to be influenced by product utility when making product purchases.
+				<span :class="con2class"></span>Likely to be influenced by product utility when making product purchases.
 			</p>
 			<p>
-				<span :class="con3class"></span>
-				Likely to be influenced by social media when making product purchases.
+				<span :class="con3class"></span>Likely to be influenced by social media when making product purchases.
 			</p>
 			<p>
-				<span :class="con4class"></span>
-				Likely to be influenced by family when making product purchases.
+				<span :class="con4class"></span>Likely to be influenced by family when making product purchases.
 			</p>
 			<p>
-				<span :class="con5class"></span>
-				Likely to consider starting a business in next few years.
+				<span :class="con5class"></span>Likely to consider starting a business in next few years.
 			</p>
 			<p>
-				<span :class="con6class"></span>
-				Likely to be concerned about the environment.
+				<span :class="con6class"></span>Likely to be concerned about the environment.
 			</p>
 			<p>
-				<span :class="con7class"></span>
-				Likely to like outdoor activities.
+				<span :class="con7class"></span>Likely to like outdoor activities.
 			</p>
 		</div>
 	</div>
@@ -185,28 +178,16 @@ export default {
 <style lang="scss" scoped>
 $purp1: #592ba1;
 $purp2: #6c3fb6;
-.wordcount {
-	display: inline-flex;
-	margin-right: 0.2rem;
-	font-size: 0.9rem;
-	border-radius: 0.4rem;
-	overflow: hidden;
-}
-.wcn {
-	padding: 0.4rem 0.8rem;
-	background-color: #eee;
-}
-.prp {
-	background-color: $purp2;
-	color: white;
-}
 .traits {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 2fr 3fr;
 	grid-gap: 1.2rem;
 }
 #consumption {
 	line-height: 1.9rem;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 45rem;
 }
 .sliderflex {
 	display: flex;
