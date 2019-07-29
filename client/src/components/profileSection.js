@@ -1,5 +1,10 @@
 Vue.component('profile-section', {
   props: ['user'],
+  data() {
+    return {
+      totalTemp: 0
+    }
+  },
   template: 
   `
   <section id="profile" 
@@ -18,12 +23,16 @@ Vue.component('profile-section', {
         color: #f26d84;"></i></span>
         {{user.username}}
       </div>
-      <div class="color-grey3 fs-14" style="color: #f783ac"><i class="fas fa-heart" style="margin-right: .3rem"></i>1,323 total likes</div>
+      <div class="color-grey3 fs-14" style="color: #f783ac"><i class="fas fa-heart" style="margin-right: .3rem"></i>{{totalLikes}} total likes</div>
       <div class="color-grey3 fs-14">post from July 4th, 2015-August 15th, 2019</div>
     </div>
   </section>
   `,
-  mounted() {
-    console.log(this.user);
+  computed: {
+    totalLikes() {
+      return this.user.perPost.map(post => post.likes).reduce(function(result,item) {
+        return result + item;
+       }, 0);
+    }
   },
 })

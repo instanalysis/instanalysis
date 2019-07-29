@@ -13,7 +13,8 @@ const app = new Vue({
       needs: [],
       values: [],
       consumption_preferences: [],
-      summary: {}
+      summary: {},
+      perPost: []
     }
   },
   methods: {
@@ -21,6 +22,7 @@ const app = new Vue({
       const {data} = await axios.get(`${PERSONALITIES_PATH}/personalityAnalysisResult`)
       const username = await axios.get(`${PERSONALITIES_PATH}/username`)
       const summary = await axios.get(`${PERSONALITIES_PATH}/summary`)
+      const perPost = await axios.get(`${PERSONALITIES_PATH}/perPost`)
 
       this.user.wordsCount = data.word_count
 
@@ -30,6 +32,7 @@ const app = new Vue({
       this.user.values = data.values;
       this.user.consumption_preferences = data.consumption_preferences;
       this.user.summary = summary.data;
+      this.user.perPost = perPost.data;
       
       this.initNeedsChart();
       this.initPersonalityChart();
