@@ -1,8 +1,13 @@
 const personalityAnalysis = require('../helper/personalityAnalysis')
 const {faceDetection, labelDetection} = require('../helper/amazonRekognition')
+
+
 class analysisController{
     static async analysis (req,res){
-        try{
+        try{         
+            
+ 
+            let words = ''
             let mockData = {
                 username: 'viryse',
                 profilePicture: 'https://scontent-sin2-2.cdninstagram.com/vp/c4708b309def552ba1b5c2a69e535883/5DDC128E/t51.2885-19/s150x150/65892285_653561535118354_4114219902359830528_n.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com',
@@ -142,6 +147,18 @@ class analysisController{
                     }
                 ]
             }
+            mockData.posts.forEach(item=>{
+                words += item.caption + ' '
+            })
+            res.json('request successful')
+            // Start
+            // app.emit('start',{
+            //     wordCloud:words,
+            //     username:mockData.username,
+            //     profilePicture:mockData.profilePicture
+            // })
+
+            
             let promiseListFaceDetection = mockData.posts.map((item)=>{
                 return faceDetection(item.imageURL)
             })
@@ -149,6 +166,8 @@ class analysisController{
                 return labelDetection(item.imageURL)
             })
             console.log('processing')
+            let personalityAnalysisResult = await personalityAnalysis(mockData)
+            
             let resultFaceDetection = await Promise.all(promiseListFaceDetection)
             let resultLabelDetection = await Promise.all(promiseLabelDetection)
             let profilePicDetection = await faceDetection(mockData.profilePicture)
@@ -180,7 +199,6 @@ class analysisController{
                     }
                 }
             })
-            const personalityAnalysisResult = await personalityAnalysis(mockData)
             let perPost = mockData.posts.map((item, index)=>{
                 return{
                     faceDetection:resultFaceDetection[index],
@@ -199,17 +217,7 @@ class analysisController{
                 age= 'Cannot get data'
             }
             console.log('done')
-            res.json({
-                username: mockData.username,
-                personalityAnalysisResult,
-                summary:{
-                    emotionFromPosts,
-                    interestFromPosts,
-                    age,
-                    gender
-                },
-                perPost
-            })
+            
 
         }
         catch(e){
