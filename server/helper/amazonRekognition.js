@@ -4,8 +4,6 @@ AWS.config.loadFromPath('./amazonCredential.json');
 var rekognition = new AWS.Rekognition({ apiVersion: '2016-06-27' });
 
 //// 
-
-
 const faceDetection = async (imageLink) => {
   try{
 
@@ -33,29 +31,8 @@ const faceDetection = async (imageLink) => {
     
 }
 
-const labelDetection = async (imageLink)=>{
-  try{
-    let base64 = await image2base64(imageLink)
-    const buffer = new Buffer.from(base64, 'base64')
-    var params = {
-      Image: { /* required */
-        Bytes: buffer,
-      }
-    };
-    
-    return new Promise(function (resolve, reject) {
-      rekognition.detectLabels(params, function (err, data) {
-        if (err) reject(err) // an error occurred
-        else resolve(data);           // successful response
-      });
-    })
-  }catch(e){
-    throw e
-  }
-}
-
 // fun("https://cdns.klimg.com/merdeka.com/i/w/news/2019/07/25/1096248/670x335/3-partai-blak-blakan-minta-jatah-banyak-kursi-menteri-pada-jokowi.jpg")
-module.exports = {faceDetection, labelDetection}
+module.exports = {faceDetection}
  ////// Comparefaces
 // let image1
 // let image2
