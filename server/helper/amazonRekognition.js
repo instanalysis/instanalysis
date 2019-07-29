@@ -3,9 +3,6 @@ var AWS = require('aws-sdk');
 AWS.config.loadFromPath('./amazonCredential.json');
 var rekognition = new AWS.Rekognition({ apiVersion: '2016-06-27' });
 
-//// 
-
-
 const faceDetection = async (imageLink) => {
   try{
 
