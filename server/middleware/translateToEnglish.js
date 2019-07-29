@@ -31,9 +31,10 @@ async function detectAndTranslate(tobetranslated){
 	let result = tobetranslated
 	return new Promise ((resolve,reject) => {
 		googleTranslate.detectLanguage(tobetranslated, async function(err, detection) {
+			console.log(detection === undefined, 'detection')
+		if (detection === undefined) resolve(tobetranslated) //catch undetected languages
 		  console.log("detectedLanguage", detection.language)
-		  if (detection === undefined) resolve(tobetranslated) //catch undetected languages
-
+		  
 		  const detectedLanguage = detection.language
 
 		  if (detectedLanguage !== 'en') {
