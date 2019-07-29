@@ -169,6 +169,9 @@ axios.post('http://localhost:3000/analysis', mockData)
 .catch(console.log)
 
 console.log("client")
+socket.on('start', function(data){
+    console.log('haii trigger dari controller', data)
+});
 socket.on('start-viryse-123abc', function(data){
     console.log('haii trigger dari controller', data)
 });
