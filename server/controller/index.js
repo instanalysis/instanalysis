@@ -5,6 +5,7 @@ class analysisController{
         try{
             let mockData = {
                 username: 'viryse',
+                profilePicture: 'https://scontent-sin2-2.cdninstagram.com/vp/c4708b309def552ba1b5c2a69e535883/5DDC128E/t51.2885-19/s150x150/65892285_653561535118354_4114219902359830528_n.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com',
                 posts: [
                     {
                         imageURL: 'https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg',
@@ -150,20 +151,21 @@ class analysisController{
             console.log('processing')
             let resultFaceDetection = await Promise.all(promiseListFaceDetection)
             let resultLabelDetection = await Promise.all(promiseLabelDetection)
+            let profilePicDetection = await faceDetection(mockData.profilePicture)
+            
             let interestFromPosts = {}
             let emotionFromPosts = {}
             let counter = 0
             resultFaceDetection.forEach((item, index)=>{
                 if(item.FaceDetails[0]){
                     counter ++
-                    console.log('hei')
                     for(let i = 0; i < item.FaceDetails[0].Emotions.length; i++){
                         if(emotionFromPosts[item.FaceDetails[0].Emotions[i].Type]){
-                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] += item.FaceDetails[0].Emotions[i].confidence
+                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] += item.FaceDetails[0].Emotions[i].Confidence
                         }else{
-                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = item.FaceDetails[0].Emotions[i].confidence
+                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = item.FaceDetails[0].Emotions[i].Confidence
                         }
-                        if(resultFaceDetection.length === index - 1){
+                        if(resultFaceDetection.length === index + 1){
                             emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = emotionFromPosts[item.FaceDetails[0].Emotions[i].Type]/counter
                         }
                     }
@@ -187,13 +189,25 @@ class analysisController{
                     date:item.date,
                 }
             })
-            // console.log(resultFaceDetection)
+            let age 
+            let gender
+            if(profilePicDetection.FaceDetails.length===1){
+                age = profilePicDetection.FaceDetails[0].AgeRange
+                gender = profilePicDetection.FaceDetails[0].Gender.Value
+            }else{
+                gender= 'Cannot get data',
+                age= 'Cannot get data'
+            }
             console.log('done')
             res.json({
                 username: mockData.username,
                 personalityAnalysisResult,
-                emotionFromPosts,
-                interestFromPosts,
+                summary:{
+                    emotionFromPosts,
+                    interestFromPosts,
+                    age,
+                    gender
+                },
                 perPost
             })
 

@@ -23,7 +23,8 @@ const chinesewords = `
 
 async function translateToEnglish(req, res, next) {
 	//userdata should be req.body.data
-	let userdata = req.body.data
+	console.log('dalam function')
+	// let userdata = req.body.data
 
     for (let i = 0; i< userdata.posts.length; i++) {
    		const post = userdata.posts[i]
@@ -58,7 +59,7 @@ const userdata = {
             }
         ]
     } 
-testTranslate(userdata)
+// testTranslate(userdata)
 
 async function testTranslate(userdata){
    for (let i = 0; i< userdata.posts.length; i++) {
