@@ -1,3 +1,5 @@
+const ignoredWord = []
+
 const countOccurrencesWordsInString = (str) => {  
   var split = str.split(" "),
       obj = {},
