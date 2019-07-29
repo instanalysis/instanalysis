@@ -4,9 +4,9 @@ const app = require('../expressInstance')
 
 class analysisController{
     static async analysis (req,res){
-        console.log("di controller analysis")
-        console.log(req.body)
-        console.log("-0---------")
+        // console.log("di controller analysis")
+        // console.log(req.body)
+        // console.log("-0---------")
         try{        
             let words = ''
             let {username, userimage, posts} = req.body
@@ -24,7 +24,7 @@ class analysisController{
                 username: userData.username,
                 key: '123abc'
             }
-            console.log('processing')
+            // console.log('processing')
 
             // Start
             app.emit('start', [
@@ -115,13 +115,13 @@ class analysisController{
                     }
                 }
             ])
-            console.log('done')
+            // console.log('done')
             // app.emit('disconnect')
 
 
         }
         catch (e) {
-            console.log(e)
+            // console.log(e)
             res.status(500).json(e)
         }
 
