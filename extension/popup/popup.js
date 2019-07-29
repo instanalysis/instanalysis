@@ -1,5 +1,8 @@
-document.querySelector('input#myRange').onchange = function(e) {
+chrome.storage.local.set({postlimit: 10})
+
+document.querySelector('input#myRange').oninput = function(e) {
 	document.getElementById('postlimit').value = e.target.value; 
+	chrome.storage.local.set({postlimit: e.target.value})
 }
 
 let startButton = document.getElementById('startButton');
@@ -12,6 +15,9 @@ startButton.onclick = function(element) {
 		active: true,
 		currentWindow: true
 	}, function(tabs) {
+		setTimeout(() => {
+			window.close()
+		}, 400)
 		chrome.tabs.executeScript(
 			tabs[0].id,
 			{ file: 'clickPosts.js' }
