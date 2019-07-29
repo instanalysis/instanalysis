@@ -2,20 +2,30 @@ const personalityAnalysis = require('../helper/personalityAnalysis')
 const { faceDetection, labelDetection } = require('../helper/amazonRekognition')
 const app = require('../expressInstance')
 
+<<<<<<< HEAD
 class analysisController{
     static async analysis (req,res){
         // console.log("di controller analysis")
         // console.log(req.body)
         // console.log("-0---------")
         try{        
+=======
+class analysisController {
+    static async analysis(req, res) {
+        console.log("di controller analysis")
+        console.log(req.body)
+        console.log("-0---------")
+        try {
+            let io = req.io
+>>>>>>> fc7e70aef41d9a46af0d76295936097237580eee
             let words = ''
-            let {username, userimage, posts} = req.body
+            let { username, userimage, posts } = req.body
             let userData = {
                 username: username,
                 userimage: userimage,
                 posts: posts
             }
-            userData.posts.forEach(item=>{
+            userData.posts.forEach(item => {
                 words += item.caption + ' '
             })
             res.json('request successful')
@@ -26,24 +36,25 @@ class analysisController{
             }
             // console.log('processing')
 
-            // Start
-            app.emit('start', [
-                credential, 
+            // // Start
+            io.emit(`start-${credential.username}-${credential.key}`, 
                 {
                     wordCloud: words,
                     userimage: userData.userimage
                 }
-            ])
+            )
 
             // IBManalysis
-            let personalityAnalysisResult = await personalityAnalysis(userData)
-            
-            app.emit('ibm', [
-                credential,
+            const wordsArr = words.split(" ")
+            let personalityAnalysisResult = "not enough data to analyze personality"
+            if (wordsArr.length > 100) {
+                personalityAnalysisResult = await personalityAnalysis(userData)
+            }
+            io.emit(`ibm-${credential.username}-${credential.key}`, 
                 {
                     personalityAnalysisResult
                 }
-            ])
+            )
             // amazonRekognition
             let promiseListFaceDetection = userData.posts.map((item) => {
                 return faceDetection(item.imageURL)
@@ -103,19 +114,23 @@ class analysisController{
                     age = 'Cannot get data'
             }
 
-            app.emit('rekog', [
-                credential,
+            io.emit(`start-${credential.username}-${credential.key}`, 
                 {
                     perPost,
-                    summary:{
+                    summary: {
                         age,
                         gender,
                         emotionFromPosts,
                         interestFromPosts
                     }
                 }
+<<<<<<< HEAD
             ])
             // console.log('done')
+=======
+            )
+            console.log('done')
+>>>>>>> fc7e70aef41d9a46af0d76295936097237580eee
             // app.emit('disconnect')
 
 
