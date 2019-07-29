@@ -1,7 +1,7 @@
 const PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3');
 require('dotenv').config()
 const iam_apikey = process.env.IBM_API_KEY
-const converDataStructure = require('../helper/dataToObjectCreator')
+const convertDataStructure = require('../helper/dataToObjectCreator')
 
 const personalityInsights = new PersonalityInsightsV3({
   version: '2017-10-13',
@@ -9,13 +9,15 @@ const personalityInsights = new PersonalityInsightsV3({
 });
 
 module.exports = function (data){
+    let {IBMAnalysis} = convertDataStructure(data)
+    const profileParams = {
+      content: JSON.parse(JSON.stringify(IBMAnalysis)),
+      content_type: 'application/json',
+      consumption_preferences: true,
+      raw_scores: true,
+    };
 
-  let {IBMAnalysis} = converDataStructure(data)
-  const profileParams = {
-    content: JSON.parse(JSON.stringify(IBMAnalysis)),
-    content_type: 'application/json',
-    consumption_preferences: true,
-    raw_scores: true,
-  };
-  return personalityInsights.profile(profileParams)
+    console.log("starting ibm analysis")
+    const personality = personalityInsights.profile(profileParams)
+    return personality
 }

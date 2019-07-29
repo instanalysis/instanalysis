@@ -36,8 +36,12 @@ class analysisController{
             ])
 
             // IBManalysis
-            let personalityAnalysisResult = await personalityAnalysis(userData)
-            
+            const wordsArr = words.split(" ")
+            let personalityAnalysisResult = "not enough data to analyze personality"
+            if (wordsArr.length > 100){
+                personalityAnalysisResult = await personalityAnalysis(userData)
+            }
+
             app.emit('ibm', [
                 credential,
                 {
