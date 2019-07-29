@@ -1,6 +1,7 @@
 const image2base64 = require('image-to-base64');
 var AWS = require('aws-sdk');
-AWS.config.loadFromPath('./amazonCredential.json');
+var keys = require(__dirname + '/amazonCredential.json')
+AWS.config.update(keys)
 var rekognition = new AWS.Rekognition({ apiVersion: '2016-06-27' });
 
 const faceDetection = async (imageLink) => {
