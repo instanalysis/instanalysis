@@ -2,6 +2,7 @@
 	<div>
 		<div class="sectionhead">
 			<div class="heading">WORD CLOUD</div>
+			<word-cloud :wordstr="wordStr"/>
 		</div>
 		<div style="display: flex; justify-content: space-between; align-items: center;">
 			<div class="sectionhead">
@@ -14,17 +15,24 @@
 			</div>
 		</div>
 		<div id="personality" class="box">
-			<div class="boxheading">PERSONALITY</div>
-			<p><b>Agreeableness: </b><br>
-			&nbsp;&nbsp;&nbsp;A person's tendency to be compassionate and cooperative toward others.</p>
-			<p><b>Extraversion: </b><br>
-			&nbsp;&nbsp;&nbsp;Lower value: more introverted, higher value: more extroverted.</p>
-			<p><b>Orderliness: </b><br>
-			&nbsp;&nbsp;&nbsp;A person's tendency to be more organized and self-disciplined.</p>
-			<p><b>Neuroticism: </b><br>
-			&nbsp;&nbsp;&nbsp;Tendency to feel anger, letting one's emotions take over.</p>
-			<p><b>Openness: </b><br>
-			&nbsp;&nbsp;&nbsp;Openness to experiencing different activities, intellectually curious.</p>
+			<div style="display: flex; justify-content: space-between;">
+				<div>
+					<div class="boxheading">PERSONALITY</div>
+					<p class="offset-l"><b>Agreeableness: </b><br>
+					&nbsp;&nbsp;&nbsp;A person's tendency to be compassionate and cooperative toward others.</p>
+					<p class="offset-l"><b>Extraversion: </b><br>
+					&nbsp;&nbsp;&nbsp;Lower value: more introverted, higher value: more extroverted.</p>
+					<p class="offset-l"><b>Orderliness: </b><br>
+					&nbsp;&nbsp;&nbsp;A person's tendency to be more organized and self-disciplined.</p>
+					<p class="offset-l"><b>Neuroticism: </b><br>
+					&nbsp;&nbsp;&nbsp;Tendency to feel anger, letting one's emotions take over.</p>
+					<p class="offset-l"><b>Openness: </b><br>
+					&nbsp;&nbsp;&nbsp;Openness to experiencing different activities, intellectually curious.</p>
+				</div>
+				<div style="width: 29rem; margin: 0 1rem;">
+					<personality-chart :personality="personality"/>
+				</div>
+			</div>
 		</div>
 		<div class="traits">
 			<div id="needs" class="box">
@@ -62,6 +70,9 @@
 				<p>Emphasizes tradition and order.</p>
 				<p>Seeks hedonistic pleasure.</p>
 				<p>Seeks personal success.</p>
+				<div style="width: 29rem; margin: 0 auto;">
+					<values-chart :values="values"/>
+				</div>
 			</div>
 		</div>
 		<div id="consumption" class="box">
@@ -92,6 +103,10 @@
 </template>
 
 <script>
+import WordCloud from './WordCloud.vue';
+import PersonalityChart from './PersonalityChart.vue';
+import ValuesChart from './ValuesChart.vue';
+
 function getLikely(num) {
 	if(num === 1) {
 		return { likely: true }
@@ -103,10 +118,13 @@ function getLikely(num) {
 }
 
 export default {
+	components: {
+		WordCloud, PersonalityChart, ValuesChart
+	},
 	data() {
 		return {
 			wordCount: 250,
-			wordStr: '',
+			wordStr: `It was on the corner of the street that he noticed the first sign of something peculiar -- a cat reading a map. For a second, Mr. Dursley didn't realize what he had seen -- then he jerked his head around to look again. There was a tabby cat standing on the corner of Privet Drive, but there wasn't a map in sight. What could he have been thinking of? It must have been a trick of the light. Mr. Dursley blinked and stared at the cat. It stared back. As Mr. Dursley drove around the corner and up the road, he watched the cat in his mirror. It was now reading the sign that said Privet Drive -- no, looking at the sign; cats couldn't read maps or signs. Mr. Dursley gave himself a little shake and put the cat out of his mind. As he drove toward town he thought of nothing except a large order of drills he was hoping to get that day. But on the edge of town, drills were driven out of his mind by something else. As he sat in the usual morning traffic jam, he couldn't help noticing that there seemed to be a lot of strangely dressed people about. People in cloaks. Mr. Dursley couldn't bear people who dressed in funny clothes -- the getups you saw on young people! He supposed this was some stupid new fashion. He drummed his fingers on the steering wheel and his eyes fell on a huddle of these weirdos standing quite close by. They were whispering excitedly together. Mr. Dursley was enraged to see that a couple of them weren't young at all; why, that man had to be older than he was, and wearing an emerald-green cloak! The nerve of him! But then it struck Mr. Dursley that this was probably some silly stunt -- these people were obviously collecting for something. . . yes, that would be it. The traffic moved on and a few minutes later, Mr. Dursley arrived in the Grunnings parking lot, his mind back on drills. Mr. Dursley always sat with his back to the window in his office on the ninth floor. If he hadn't, he might have found it harder to concentrate on drills that morning. He didn't see the owls swooping past in broad daylight, though people down in the street did; they pointed and gazed open-mouthed as owl after owl sped overhead. Most of them had never seen an owl even at nighttime.`,
 			personality: { // key is from personality.trait_id
 				"big5_agreeableness": 0.001926483434617321,
 				"big5_extraversion": 0.025620723661231526,
@@ -183,6 +201,9 @@ $purp2: #6c3fb6;
 	grid-template-columns: 2fr 3fr;
 	grid-gap: 1.2rem;
 }
+#personality {
+	padding-bottom: 0;
+}
 #consumption {
 	line-height: 1.9rem;
 	margin-left: auto;
@@ -211,9 +232,6 @@ $purp2: #6c3fb6;
 	height: 1rem; /* Slider handle height */
 	border-radius: 1rem;
 	background: #6730be; /* Green background */
-}
-#needs {
-	// line-height: 1.2rem;
 }
 .needpercent {
 	display: inline-block;

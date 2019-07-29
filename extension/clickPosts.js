@@ -104,17 +104,23 @@ async function scrapeData() {
 		username,
 		key,
 		profilePicture,
+		userimage: profilePicture,
 		posts: data,
 	}
 	console.log(payload)
-	let response = await fetch('http://localhost:3000/', {
-		method: 'POST',
-		headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-		body: JSON.stringify(payload)
-	});
+	// let response = await fetch('http://server.instanalysis.online/analysis', {
+	// 	method: 'POST',
+	// 	mode: 'cors',
+	// 	headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json'
+  //   },
+	// 	body: JSON.stringify(payload)
+	// });
+	chrome.runtime.sendMessage({hitServer: {
+		payload: payload,
+	}});
+
 	chrome.runtime.sendMessage({openTab: `?user=${username}&key=${key}`});
 };
 

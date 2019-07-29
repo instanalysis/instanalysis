@@ -11,8 +11,11 @@
 			</div>
 		</div>
 		<div class="labelgrid">
-			<div class="box">
-				<div class="boxheading">AVERAGE EMOTIONS</div>
+			<div style="position: relative;" class="box">
+				<div style="position: absolute;" class="boxheading">AVERAGE EMOTIONS</div>
+				<div style="width: 25rem; margin: 0 auto;">
+					<emotions-chart :emotions="emotions"/>
+				</div>
 			</div>
 			<div class="box">
 				<div class="boxheading">FREQUENTLY FOUND LABELS</div>
@@ -23,7 +26,12 @@
 </template>
 
 <script>
+import EmotionsChart from './ImageEmotionsChart.vue';
+
 export default {
+	components: {
+		EmotionsChart
+	},
 	data() {
 		return {
 			imageCount: 22,
