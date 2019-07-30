@@ -78,27 +78,13 @@
 		<div id="consumption" class="box">
 			<div class="boxheading">CONSUMPTION PREFERENCES</div>
 			<div style="max-width: 45rem; margin: 0 auto;">
-				<p>
-					<span :class="con1class"></span>Likely to be influenced by brand name when making product purchases.
-				</p>
-				<p>
-					<span :class="con2class"></span>Likely to be influenced by product utility when making product purchases.
-				</p>
-				<p>
-					<span :class="con3class"></span>Likely to be influenced by social media when making product purchases.
-				</p>
-				<p>
-					<span :class="con4class"></span>Likely to be influenced by family when making product purchases.
-				</p>
-				<p>
-					<span :class="con5class"></span>Likely to consider starting a business in next few years.
-				</p>
-				<p>
-					<span :class="con6class"></span>Likely to be concerned about the environment.
-				</p>
-				<p>
-					<span :class="con7class"></span>Likely to like outdoor activities.
-				</p>
+				<p><span :class="con1class"></span>Likely to be influenced by brand name when making product purchases.</p>
+				<p><span :class="con2class"></span>Likely to be influenced by product utility when making product purchases.</p>
+				<p><span :class="con3class"></span>Likely to be influenced by social media when making product purchases.</p>
+				<p><span :class="con4class"></span>Likely to be influenced by family when making product purchases.</p>
+				<p><span :class="con5class"></span>Likely to consider starting a business in next few years.</p>
+				<p><span :class="con6class"></span>Likely to be concerned about the environment.</p>
+				<p><span :class="con7class"></span>Likely to like outdoor activities.</p>
 			</div>
 		</div>
 	</div>
