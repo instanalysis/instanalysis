@@ -28,62 +28,61 @@ async function getLikes() {
 	return likes;
 }
 
-async function waitForMore(currentPosts) {
-	window.scrollTo(0, document.body.scrollHeight);
-	await wait(800);
-	if(currentPosts.length === document.querySelectorAll('._9AhH0').length) {
-		console.log('Loading is slow')
-		await wait(800);
-	}
-	return document.querySelectorAll('._9AhH0')
-}
-
 function generateKey() {
 	return Math.random().toString(16).substring(4, 14)
 }
 
-async function scrapeData(limit) {
-	// Wait for profile picture
-	while(!document.querySelector('._6q-tv')) {
-		await new Promise(resolve => setTimeout(resolve, 100))	
+async function waitForElement(element, maxTime){
+	// console.log('waiting for', element)
+	let time = 0
+	while(!document.querySelector(element) && time < maxTime){
+		await new Promise(resolve => setTimeout(resolve, 100))
+		time += 100
+		// console.log(time)
 	}
+	return document.querySelector(element)
+}
+
+async function scrapeData(limit) {
+	// Wait for username
+	await waitForElement('._7UhW9', 3000)
+	// Wait for profile picture
+	await waitForElement('._6q-tv', 3000)
+	// Wait for posts
+	await waitForElement('.v1Nh3 > a', 3000)
 	// Get User data
 	const username = document.querySelector('._7UhW9').textContent;
 	const profilePicture = document.querySelector('._6q-tv').getAttribute('src')
-	let posts = document.querySelectorAll('._9AhH0');
 
-	if(limit > 24) {
-		posts = await waitForMore(posts);
-		await wait(1000);
-	}
-	if(limit > 36) {
-		await waitForMore(posts);
-		await wait(1250);
-		window.scrollTo(0, 0);
-		posts = document.querySelectorAll('._9AhH0');
-	}
+	window.scrollTo(0, 0)
+	await wait(500)
+	let posts = document.querySelectorAll('.v1Nh3 > a')
 
-	const quantity = posts.length < limit ? posts.length : limit;
-	console.log({quantity})
 	let data = [];
 	// Loop through posts
-	for(let i = 0; i < quantity; i ++) {
+	let post = posts[0] //first post
+	for(let i = 0; i < limit; i ++) {
 		console.log(`Image number ${i + 1}`)
 		data[i] = {	imageUrl: '',	caption: '', likes: 0, postedOn: ''	};
-		posts[i].click();
+		post.click();
 		// wait for post to load
-		while(!document.querySelector('article.M9sTE')) {
-			await new Promise(resolve => setTimeout(resolve, 200));
+		await waitForElement('article.M9sTE', 3000)
+		let timetaken = 0
+		// wait for image or video to load
+		while(!document.querySelector('.KL4Bh') && !document.querySelector('._5wCQW') && timetaken < 5000){
+			// console.log('waiting for image or video to load')
+			await new Promise(resolve => setTimeout(resolve, 100))
+			timetaken += 100
+			// console.log(timetaken)
 		}
-		// safety margin
-		await wait(100);
 		
 		let temp;
 		// check if image or video
 		if(document.querySelector('article.M9sTE').querySelector('.KL4Bh')) {
-			temp = document.querySelector('article.M9sTE')
-				.querySelector('.KL4Bh')
-				.firstElementChild
+			await waitForElement('.FFVAD', 2000)
+			let img = document.querySelector('.FFVAD')
+
+			temp = img
 				.getAttribute('srcset')
 				.split(',')[0]
 			for(let j = 0; j < temp.length - 5; j ++) {
@@ -101,6 +100,7 @@ async function scrapeData(limit) {
 			}
 		}
 
+		await waitForElement('.C4VMK', 3000)
 		if(document.querySelector('.C4VMK')) {
 			// check if first comment is by the correct user
 			if(document.querySelector('.C4VMK').querySelector('.FPmhX.TlrDj').textContent === username) {
@@ -111,10 +111,12 @@ async function scrapeData(limit) {
 		// likes
 		data[i].likes = await getLikes()
 		// date
+		await waitForElement('._1o9PC', 2000)
 		data[i].postedOn = document.querySelector('._1o9PC').getAttribute('datetime')
-		// close modal
-		document.querySelector('.ckWGn').click()
-		await wait(100);
+
+		//prepare to click next post 
+		post = await waitForElement('.coreSpriteRightPaginationArrow', 3000)
+		if (!post) i = limit //break loop if no more posts
 	}
 	// Object to be sent to the backend
 	const key = generateKey()

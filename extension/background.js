@@ -1,8 +1,8 @@
-const clientUrl = 'http://localhost:8080';
+const clientUrl = 'http://localhost:8081';
+// const clientUrl = 'http://www.instanalysis.online';
 const serverUrl = 'http://server.instanalysis.online';
 
 chrome.runtime.onInstalled.addListener((message, callback) => {
-  chrome.storage.sync.set({color: '#3aa757'});
 
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
@@ -39,6 +39,11 @@ chrome.runtime.onMessage.addListener(
           console.log(err)
         }
       })();
+    }
+
+    if (request.clearSavedUsers) {
+      localStorage.setItem('savedUsers',JSON.stringify([]))
+      console.log("clearSavedUsers at background.js")
     }
   }
 );
