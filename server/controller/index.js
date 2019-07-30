@@ -3,7 +3,7 @@ const { faceDetection, labelDetection } = require('../helper/amazonRekognition')
 // const lengthChecker = require('../helper/lengthChecker')
 
 class analysisController {
-    static async analysis(req, res) {
+    static async analysis(req, res) { 
         console.log("di controller analysis")
         console.log(req.body)
         console.log("-0---------")
