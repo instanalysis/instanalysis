@@ -18,7 +18,7 @@ app.use('/', index)
 
 io.on('connection', function(socket){
     console.log('a user is connected')
-    io.emit('hello')
+    io.emit('connect')
 
 
 })

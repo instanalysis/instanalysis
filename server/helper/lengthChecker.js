@@ -1,5 +1,5 @@
 const lengthChecker = function(input){
-    let wordsArr = words.split(" ")
+    let wordsArr = input.split(" ")
     let filtered = wordsArr.filter(word =>{
         return (word && word[0] !== '#')
     })

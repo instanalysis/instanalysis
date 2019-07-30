@@ -17,5 +17,18 @@ module.exports = function (data){
     consumption_preferences: true,
     raw_scores: true,
   };
-  return personalityInsights.profile(profileParams)
+  // return personalityInsights.profile(profileParams)
+  return new Promise((resolve, reject) => {
+    personalityInsights.profile(profileParams)
+      .then(response=>{
+        resolve(response)
+      })
+      .catch( err => {
+        if(err.code === 400){
+          resolve({error: err.message})
+        }else{
+          throw(err)
+        }
+      })
+  })
 }
