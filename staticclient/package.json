@@ -11,7 +11,6 @@
   "dependencies": {
     "anychart": "^8.6.0",
     "chart.js": "^2.8.0",
-    "chartjs-plugin-labels": "^1.1.0",
     "core-js": "^2.6.5",
     "ng-range-slider": "^0.2.0",
     "socket.io-client": "^2.2.0",
