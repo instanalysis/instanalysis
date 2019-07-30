@@ -42,6 +42,8 @@ function compare (dataSetOne, dataSetTwo) {
 	let vScore = Math.sqrt(vDistance)
 	results.valuesScore = vScore
 
+	results.totalScore = (pScore +  nScore + vScore)/3
+
 	return results
 }
 
