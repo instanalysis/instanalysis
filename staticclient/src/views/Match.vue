@@ -16,7 +16,7 @@
           <div class="username">zachlavine8</div>
         </div>
       </div>
-      <compare-profile style="margin-top: 3rem"></compare-profile>
+      <compare-profile :personalities="ibmData.personality" style="margin-top: 3rem"></compare-profile>
       <compare-needs :needs="needs" style="margin-top: 2rem"></compare-needs>
       <compare-values :values="values" style="margin-top: 2rem"></compare-values>
     </div>
