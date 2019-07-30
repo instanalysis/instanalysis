@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "google-translate-api": "^2.3.0",
-    "sentiment": "^5.0.1"
-  }
-}
