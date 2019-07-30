@@ -129,9 +129,9 @@ async function scrapeData(limit) {
 	}
 	console.log(payload)
 
-	chrome.runtime.sendMessage({hitServer: payload});
+	// chrome.runtime.sendMessage({hitServer: payload});
 
-	chrome.runtime.sendMessage({openTab: `?user=${username}&key=${key}`});
+	// chrome.runtime.sendMessage({openTab: `?user=${username}&key=${key}`});
 };
 
 chrome.storage.local.get(['postlimit'], ({ postlimit }) => {

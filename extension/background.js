@@ -42,7 +42,8 @@ chrome.runtime.onMessage.addListener(
     }
 
     if (request.clearSavedUsers) {
-      localStorage.set('savedUsers',JSON.stringify([]))
+      localStorage.setItem('savedUsers',JSON.stringify([]))
+      console.log("clearSavedUsers at background.js")
     }
   }
 );
