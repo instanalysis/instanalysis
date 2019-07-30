@@ -24,6 +24,7 @@ class analysisController {
         try {
             let io = req.io
             let words = ''
+            let likes = 0
             let { username, userimage, posts, key } = req.body
             let userData = {
                 username: username,
@@ -32,6 +33,7 @@ class analysisController {
             }
             userData.posts.forEach(item => {
                 words += item.caption + ' '
+                likes += item.likes
             })
             res.json('request successful')
 
@@ -48,7 +50,7 @@ class analysisController {
                 {
                     wordCloud: words,
                     profilePicture: userData.userimage,
-                    totalLikes: ''
+                    totalLikes: likes
                 }
             )
 
