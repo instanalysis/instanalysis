@@ -1,6 +1,6 @@
 const personalityAnalysis = require('../helper/personalityAnalysis')
 const { faceDetection, labelDetection } = require('../helper/amazonRekognition')
-const lengthChecker = require('../helper/lengthChecker')
+// const lengthChecker = require('../helper/lengthChecker')
 
 class analysisController {
     static async analysis(req, res) {
@@ -25,8 +25,7 @@ class analysisController {
                 username: userData.username,
                 key
             }
-            const testwordsArr = words.split(" ")
-            console.log(testwordsArr.length)
+            
             console.log('processing')
 
             // // Start
@@ -39,14 +38,11 @@ class analysisController {
             )
 
             // IBManalysis
-            let wordLength = lengthChecker(words)
-            let personalityAnalysisResult = {word_count:wordLength, message:"not enough data to analyze personality"}
-            if (wordLength >= 100) {
-                personalityAnalysisResult = await personalityAnalysis(userData)
-            }
+            let personalityAnalysisResult = await personalityAnalysis(userData)
+            console.log(personalityAnalysisResult)
             io.emit(`ibm-${credential.username}-${credential.key}`,
                 {
-                    personalityAnalysisResu1lt
+                    personalityAnalysisResult
                 }
             )
 
