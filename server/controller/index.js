@@ -18,7 +18,7 @@ class analysisController {
             userData.posts.forEach(item => {
                 words += item.caption + ' '
             })
-            // res.json('request successful')
+            res.json('request successful')
 
             let credential = {
                 username: userData.username,
@@ -120,20 +120,20 @@ class analysisController {
                 }
             )
             console.log('done')
-            res.status(200).json({
-                wordCloud: words,
-                profilePicture: userData.userimage,
-                totalLikes: '',
-                personalityAnalysisResult,
-                perPost,
-                summary: {
-                    age,
-                    gender,
-                    emotionFromPosts,
-                    interestFromPosts
-                }
+            // res.status(200).json({
+            //     wordCloud: words,
+            //     profilePicture: userData.userimage,
+            //     totalLikes: '',
+            //     personalityAnalysisResult,
+            //     perPost,
+            //     summary: {
+            //         age,
+            //         gender,
+            //         emotionFromPosts,
+            //         interestFromPosts
+            //     }
 
-            })
+            // })
             // app.emit('disconnect')
 
 
