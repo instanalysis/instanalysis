@@ -4,41 +4,33 @@ const expect = chai.expect;
 const app = require('../app');
 
 const io = require('socket.io-client');
-const http = require('http');
-const ioBack = require('socket.io');
 
-// before((done) => {
-//   httpServer = http.createServer().listen();
-//   httpServerAddr = httpServer.listen().address();
-//   ioServer = ioBack(httpServer);
-//   done();
-// });
 
-// after((done) => {
-//   ioServer.close();
-//   httpServer.close();
-//   done();
-// });
-// beforeEach((done) => {
-//   socket = io.connect(`http:/localhost:3000`, {
-//     'reconnection delay': 0,
-//     'reopen delay': 0,
-//     'force new connection': true,
-//     transports: ['websocket'],
-//   });
-//   afterEach((done) => {
-//     // Cleanup
-//     if (socket.connected) {
-//       socket.disconnect();
-//     }
-//     done();
-//   });
-//   socket.on('connect', () => {
-//     done();
-//   });
-// });
+let socket;
+
+beforeEach(() => {
+  socket = io.connect(`http:/localhost:3000`, {
+    'reconnection delay': 0,
+    'reopen delay': 0,
+    'force new connection': true,
+    transports: ['websocket']
+    });
+    socket.on('connect', () => {
+      console.log("before each connect listener invoked")
+      done();
+    });
+})
+  afterEach((done) => {
+    // Cleanup
+    if (socket.connected) {
+      socket.disconnect();
+    }
+    done();
+  });
+ 
 const mockData = {
   "username": "viryse",
+  "key":"abc123",
   "userimage": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
   "posts": [{
       "imageUrl": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
@@ -198,12 +190,22 @@ const mockData = {
     }
   ]
 }
-
+const mockData2 = {
+  "username": "viryse",
+  "key":"abc123",
+  "userimage": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
+  "posts": [{
+      "imageUrl": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
+      "caption": "Unplug and unwind",
+      "likes": 2842,
+      "date": 2017
+    }]
+  }
 chai.use(chaiHttp);
 
 describe('Analysis Controller Test', () => {
   describe('GET /', () => {
-    it("expected error to be null", (done) => {
+    test("expected error to be null", (done) => {
       chai
         .request(app)
         .get("/")
@@ -212,19 +214,20 @@ describe('Analysis Controller Test', () => {
           done()
         });
     });
-  
-    it("expected have response 200 with text 'Hello World, I am Instanalysiss'", (done) => {
-      chai
-        .request(app)
-        .get("/")
-        .end(function (err, res) {
-          expect(res).to.have.status(200);
-          expect(res.body).to.equal('Hello World, I am Instanalysiss');
-          done()
-        });
-    });
 
-    it("expected have response 200 with text 'Hello World, I am Instanalysiss'", (done) => {
+  
+    // test("expected have response 200 with text 'Hello World, I am Instanalysiss'", (done) => {
+    //   chai
+    //     .request(app)
+    //     .get("/")
+    //     .end(function (err, res) {
+    //       expect(res).to.have.status(200);
+    //       expect(res.body).to.equal('Hello World, I am Instanalysiss');
+    //       done()
+    //     });
+    // });
+
+    test("expected have response 200 with text 'Hello World, I am Instanalysiss'", (done) => {
       chai
         .request(app)
         .post("/analysis")
@@ -232,11 +235,26 @@ describe('Analysis Controller Test', () => {
         .end(function (err, res) {
 
           expect(res).to.have.status(200);
-          expect(res.body).to.equal('request successful');
-          done()
+          expect(res.body).to.equal('request successful');  
+          setTimeout(()=>{
+            done()
+          }, 49000)
         });
     });
-  })
+    // test("expected have response 200 with text 'Hello World, I am Instanalysiss'", (done) => {
+    //   chai
+    //     .request(app)
+    //     .post("/analysis")
+    //     .send(mockData2)
+    //     .end(function (err, res) {
+    //       expect(res).to.have.status(200);
+    //       expect(res.body).to.equal('request successful'); 
+    //       setTimeout(()=>{
+    //         done()
+    //       }, 20000)
+    //     });
+    // });
+  
   // describe('basic socket.io example', () => {
   //   it('should communicate', (done) => {
   //     // once connected, emit Hello World
@@ -250,6 +268,5 @@ describe('Analysis Controller Test', () => {
   //       expect(mySocket).toBeDefined();
   //     });
   //   });
-  // });
-
+  })
 })

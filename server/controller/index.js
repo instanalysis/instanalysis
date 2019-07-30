@@ -29,6 +29,7 @@ class analysisController {
             console.log('processing')
 
             // // Start
+            io.emit('hello')
             io.emit(`start-${credential.username}-${credential.key}`,
                 {
                     wordCloud: words,
