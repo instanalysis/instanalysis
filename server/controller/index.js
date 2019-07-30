@@ -24,7 +24,7 @@ class analysisController {
                 username: userData.username,
                 key
             }
-            console.log('processing')
+            // console.log('processing')
 
             // // Start
             io.emit(`start-${credential.username}-${credential.key}`,
@@ -140,7 +140,7 @@ class analysisController {
 
         }
         catch (e) {
-            console.log(e)
+            // console.log(e)
             res.status(500).json(e)
         }
 
