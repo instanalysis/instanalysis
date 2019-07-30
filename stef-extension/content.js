@@ -1,23 +1,42 @@
-parseContent(5000)
+sendPageData()
+
+async function sendPageData(){
+
+	const parsedContent = await parseContent(5000)
+	console.log(parsedContent)
+	console.log("opening new window")
+	const key = Math.random().toString(36).replace('0.', '') 
+	window.open("http://stefkwan.com/?username="+parsedContent.username+"?key="+key)
+
+}
 
 async function parseContent(maxTimeTaken){
 	let timeTaken = 0
 	let scrollNav = await waitForEl("._4emnV", 2000)
-	console.log(scrollNav.length)
+	// console.log(scrollNav.length)
 	while (scrollNav.length && timeTaken < maxTimeTaken){
 		// console.log("can scroll down")
 		await scrollDown()
 		scrollNav = await waitForEl("._4emnV", 2000)
 		timeTaken += 500
 	}
-	loopThrough()
-}
+	await scrollTop()
+	const parsedContent = loopThrough()
 
+	return parsedContent
+	// return "done"
+}
 
 async function scrollDown(){
 	$("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
 	// console.log("scrolling down")
 	await timeMeOut(500)
+}
+
+async function scrollTop(){
+	$("html, body").animate({ scrollTop: 0 });
+	await timeMeOut(500)
+
 }
 
 async function loopThrough(){
@@ -48,7 +67,7 @@ async function loopThrough(){
 		posts: posts
 	}
 
-	console.log({resultingData})
+	// console.log({resultingData})
 	return resultingData
 }
 
@@ -65,9 +84,9 @@ async function processPost(username){
 	let imageURL = getImageURL()
 	// console.log({imageURL})
 	//".C4VMK"
-	let captionText = cleanCaption(username)
+	let captionText = getCaption(username)
 	// console.log({captionText})
-	let likeCount = await getLikes()
+	let likeCount = getLikes()
 	// console.log({likeCount})
 	let date = getDateFromPost()
 	return new Promise((resolve, reject) => {
@@ -98,7 +117,7 @@ function getImageURL(){
 	return url
 }
 
-function cleanCaption(username){
+function getCaption(username){
 	if ($(".C4VMK > h2:first").text().startsWith(username)) {
 		let caption = $(".C4VMK > span:first").text()
 		// console.log({caption})
@@ -108,7 +127,7 @@ function cleanCaption(username){
 	}
 }
 
-async function getLikes(){
+function getLikes(){
 	let likeStrArr = $(".Nm9Fw").text().split(" ")
 	if (!likeStrArr || likeStrArr.length < 2) {
 		$(".vcOH2").trigger("click")
@@ -135,10 +154,9 @@ async function timeMeOut(ms){
 	})
 }
 
-
 async function waitForEl(selector, maxTimeWait) {
 	// console.log("waiting for", selector)
-	// console.log($(selector))
+	// console.log(selector)
 	let currentTimeWait = 0
 	while ($(selector)===undefined || $(selector).length===0) {
 		await timeMeOut(100)

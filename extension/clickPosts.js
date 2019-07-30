@@ -28,15 +28,21 @@ async function getLikes() {
 	return likes;
 }
 
-function generateKey() {
-	let out = ''
-	for(let i = 0; i < 10; i ++) {
-		out += Math.floor(Math.random()*10).toString()
+async function waitForMore(currentPosts) {
+	window.scrollTo(0, document.body.scrollHeight);
+	await wait(800);
+	if(currentPosts.length === document.querySelectorAll('._9AhH0').length) {
+		console.log('Loading is slow')
+		await wait(800);
 	}
-	return out
+	return document.querySelectorAll('._9AhH0')
 }
 
-async function scrapeData() {
+function generateKey() {
+	return Math.random().toString(16).substring(4, 14)
+}
+
+async function scrapeData(limit) {
 	// Wait for profile picture
 	while(!document.querySelector('._6q-tv')) {
 		await new Promise(resolve => setTimeout(resolve, 100))	
@@ -44,13 +50,25 @@ async function scrapeData() {
 	// Get User data
 	const username = document.querySelector('._7UhW9').textContent;
 	const profilePicture = document.querySelector('._6q-tv').getAttribute('src')
-	const posts = document.querySelectorAll('._9AhH0');
-	// console.log({length: posts.length})
-	const quantity = posts.length > 12 ? 12 : posts.length;
-	let data = [];
+	let posts = document.querySelectorAll('._9AhH0');
 
+	if(limit > 24) {
+		posts = await waitForMore(posts);
+		await wait(1000);
+	}
+	if(limit > 36) {
+		await waitForMore(posts);
+		await wait(1250);
+		window.scrollTo(0, 0);
+		posts = document.querySelectorAll('._9AhH0');
+	}
+
+	const quantity = posts.length < limit ? posts.length : limit;
+	console.log({quantity})
+	let data = [];
 	// Loop through posts
 	for(let i = 0; i < quantity; i ++) {
+		console.log(`Image number ${i + 1}`)
 		data[i] = {	imageUrl: '',	caption: '', likes: 0, postedOn: ''	};
 		posts[i].click();
 		// wait for post to load
@@ -108,20 +126,12 @@ async function scrapeData() {
 		posts: data,
 	}
 	console.log(payload)
-	// let response = await fetch('http://server.instanalysis.online/analysis', {
-	// 	method: 'POST',
-	// 	mode: 'cors',
-	// 	headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json'
-  //   },
-	// 	body: JSON.stringify(payload)
-	// });
-	chrome.runtime.sendMessage({hitServer: {
-		payload: payload,
-	}});
 
-	chrome.runtime.sendMessage({openTab: `?user=${username}&key=${key}`});
+	// chrome.runtime.sendMessage({hitServer: payload});
+
+	// chrome.runtime.sendMessage({openTab: `?user=${username}&key=${key}`});
 };
 
-scrapeData();
+chrome.storage.local.get(['postlimit'], ({ postlimit }) => {
+	scrapeData(postlimit)
+});
