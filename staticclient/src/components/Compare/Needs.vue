@@ -5,25 +5,108 @@
         <div class="boxheading">NEEDS</div>
         <p><b>Excitement:</b> Wants to get out, live life and have fun.</p>
         <div class="range-slider sliderflex">
-          <input class="slider" value="90" min="0" max="100" step="0.5" type="range" disabled>
-          <input class="slider" value="70" min="0" max="100" step="0.5" type="range" disabled>
+          <input 
+            class="slider"
+            value="79" 
+            min="0" 
+            max="100" 
+            type="range"
+            disabled
+          >
+          <input 
+            class="slider" 
+            value="80" 
+            style="background: transparent;"             
+            min="0" 
+            max="100" 
+            step="0.5" 
+            type="range" 
+            disabled
+          >
         </div>
         <p><b>Self-expression:</b>	Enjoys asserting their own unique identity.</p>
-        <div class="sliderflex">
-          <input class="slider" type="range" min="0" max="100" min-value="20" max-value=100  disabled>
+        <div class="range-slider sliderflex">
+          <input 
+            class="slider"
+            value="49" 
+            min="0" 
+            max="100" 
+            type="range"
+            disabled
+          >
+          <input 
+            class="slider" 
+            value="10" 
+            style="background: transparent;"             
+            min="0" 
+            max="100" 
+            step="0.5" 
+            type="range" 
+            disabled
+          >
         </div>
         <p><b>Curiosity:</b>	Has a desire to discover and explore.</p>
-        <div class="sliderflex">
-          <input class="slider" type="range" min="0" max="100" min-value="20" max-value=100  disabled>
+        <div class="range-slider sliderflex">
+          <input 
+            class="slider"
+            value="79" 
+            min="0" 
+            max="100" 
+            type="range"
+            disabled
+          >
+          <input 
+            class="slider" 
+            value="100" 
+            style="background: transparent;"             
+            min="0" 
+            max="100" 
+            step="0.5" 
+            type="range" 
+            disabled
+          >
         </div>
         <p><b>Excellence:</b> Sets high standards and desires perfection.</p>
-        <div class="sliderflex">
-          <input class="slider" type="range" min="0" max="100" min-value="20" max-value=100  disabled>
+        <div class="range-slider sliderflex">
+          <input 
+            class="slider"
+            value="79" 
+            min="0" 
+            max="100" 
+            type="range"
+            disabled
+          >
+          <input 
+            class="slider" 
+            value="20" 
+            style="background: transparent;"             
+            min="0" 
+            max="100" 
+            step="0.5" 
+            type="range" 
+            disabled
+          >
         </div>
         <p><b>Closeness:</b> Relishes being connected to family and friends.</p>
-        <div class="sliderflex">
-          <span class="needpercent">10%</span>
-          <input class="slider" type="range" min="0" max="100" min-value="30" max-value=100  disabled>
+        <div class="range-slider sliderflex">
+          <input 
+            class="slider"
+            value="79" 
+            min="0" 
+            max="100" 
+            type="range"
+            disabled
+          >
+          <input 
+            class="slider" 
+            value="40" 
+            style="background: transparent;"             
+            min="0" 
+            max="100" 
+            step="0.5" 
+            type="range" 
+            disabled
+          >
         </div>
       </div>
     </div>
@@ -31,7 +114,29 @@
 </template>
 
 <script>
+import noUiSlider from 'nouislider';
+import 'nouislider/distribute/nouislider.css';
+
 export default {
+  methods: {
+    init() {
+      let slider = document.getElementById('slider');
+
+      noUiSlider.create(slider, {
+        start: [10, 50],
+        behaviour: 'drag',
+        tooltips: [true, true],
+        connect: true,
+        range: {
+          'min': 0,
+          'max': 100
+        }
+      });
+    }
+  },
+  mounted() {
+    this.init()
+  },
   }
 </script>
 
@@ -128,36 +233,6 @@ div.range-slider input {
     position: absolute;
     width: 98%;
     margin: 0;
+    padding: 0;
 }
-
-div.range-slider input::-webkit-slider-thumb {
-    pointer-events: all;
-    position: relative;
-    z-index: 1;
-    outline: 0;
-}
-
-div.range-slider input::-moz-range-thumb {
-    pointer-events: all;
-    position: relative;
-    z-index: 10;
-    -moz-appearance: none;
-    width: 9px;
-}
-
-div.range-slider input::-moz-range-track {
-    position: relative;
-    z-index: -1;
-    background-color: rgba(0, 0, 0, 1);
-    border: 0;
-}
-div.range-slider input:last-of-type::-moz-range-track {
-    -moz-appearance: none;
-    background: none transparent;
-    border: 0;
-}
-  div.range-slider input[type=range]::-moz-focus-outer {
-  border: 0;
-}
-
 </style>
