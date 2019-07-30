@@ -1,0 +1,70 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+#container {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Helvetica Neue", "Cantarell", "Fira Sans", "Droid Sans", sans-serif;
+	min-width: 12rem;
+	padding: 0.5rem 0.8rem;
+	border-radius: 1rem;
+	text-align: center;
+}
+p.title {
+	margin: 0.4rem 0 0.8rem 0;
+	font-size: 1.1rem;
+	font-weight: bold;
+}
+button {
+	font-family: inherit;
+	cursor: pointer;
+	margin: 0.5rem 0;
+	padding: 0.5rem 0.8rem;
+	outline: none;
+	border: none;
+	font-size: 0.8rem;
+	border-radius: 0.4rem;
+	background-color: #824cda;
+	color: white;
+}
+button:hover {
+	background-color: #6935bd;
+}
+.slidecontainer {
+	/* margin-bottom: 1rem; */
+}
+.slidecontainer > p {
+	font-size: 1rem;
+	margin: 0.5rem 0;
+}
+.slider {
+	-webkit-appearance: none;  /* Override default CSS styles */
+	width: 11rem;
+	margin: 1rem 0;
+	appearance: none;
+	height: 0.4rem; /* Specified height */
+	border-radius: 0.4rem;
+	background: #cfcfcf; /* Grey background */
+	outline: none; /* Remove outline */
+	opacity: 0.8; /* Set transparency (for mouse-over effects on hover) */
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+}
+.slider:hover {
+	opacity: 1;
+}
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none; /* Override default look */
+	appearance: none;
+	width: 1rem; /* Set a specific slider handle width */
+	height: 1rem; /* Slider handle height */
+	border-radius: 1rem;
+	background: #6730be; /* Green background */
+	cursor: pointer; /* Cursor on hover */
+}
+input#postlimit {
+	width: 11rem;
+	border: none;
+	background: none;
+	font-size: 1.2rem;
+	text-align: center;
+}
