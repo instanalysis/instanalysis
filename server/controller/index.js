@@ -90,8 +90,6 @@ class analysisController {
                     }
                 }
             })
-
-
             let perPost = userData.posts.map((item, index) => {
                 return {
                     likes: item.likes,
