@@ -2,7 +2,7 @@ const clientUrl = 'http://localhost:8080';
 const serverUrl = 'http://server.instanalysis.online';
 
 chrome.runtime.onInstalled.addListener((message, callback) => {
-  chrome.storage.sync.set({color: '#3aa757'});
+  // chrome.storage.sync.set({color: '#3aa757'});
 
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
@@ -35,6 +35,7 @@ chrome.runtime.onMessage.addListener(
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify(request.hitServer)
           });
+          // chrome.storage.sync.set({color: '#3aa757'})
         } catch(err) {
           console.log(err)
         }
