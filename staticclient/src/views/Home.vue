@@ -13,7 +13,12 @@
         :consumptionPreferences="consumptionPreferences"
         v-if="personality"
       />
-      <image-data/>
+      <image-data
+        :perPost="perPost"
+        :emotions="emotions"
+        :interests="interests"
+        v-if="perPost"
+      />
     </div>
     <p style="display: inline-block; margin: 0.5rem; background-color: #ddd;">
       User: {{username}}<br>Key: {{key}}<br>
@@ -39,8 +44,8 @@ export default {
   },
   data() {
     return {
-      username: 'yonathanloekito',
-      profilePicture: 'https://scontent-sin2-2.cdninstagram.com/vp/8d40cd77cea8846909425b7ebc60e50e/5DE3E987/t51.2885-19/s150x150/13395042_1061367873910107_837713333_a.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com',
+      username: '',
+      profilePicture: '',
       key: '',
       message: '',
       startData: {},
@@ -64,13 +69,12 @@ export default {
 
     setTimeout(() => {
       const extid = 'njalbdhpniekifijjefichllkdjeecll'
-      // chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
+      chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
     }, 500)
     
   },
   mounted() {
     // const socket = io("http://34.87.39.190/");
-
     // socket.on(`start-${this.user}-123abc`, function(data){
     //     console.log('started', data)
     // });
@@ -80,13 +84,12 @@ export default {
     // socket.on(`rekog-${this.user}-123abc`, function(data){
     //     console.log('AMAZON rekogniton', data)
     // });
-
   },
   computed: {
     userData() {
       return {
         username: this.username,
-        profilePicture: this.profilePicture,
+        profilePicture: this.startData.profilePicture,
       }
     },
     personality() {
@@ -124,6 +127,15 @@ export default {
         return combined;
       } else return null;
     },
+    perPost() {
+      return this.rekogData.perPost
+    },
+    emotions() {
+      return this.rekogData.summary.emotionFromPosts
+    },
+    interests() {
+      return this.rekogData.summary.interestFromPosts
+    }
   }
 }
 </script>

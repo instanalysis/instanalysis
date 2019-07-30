@@ -38,6 +38,7 @@ export default {
   overflow: hidden;
 }
 .pp {
-  max-width: 100%
+	max-width: 100%
+	// max
 }
 </style>

@@ -13,7 +13,7 @@
 		<div class="labelgrid">
 			<div class="box">
 				<div class="boxheading">LIKES GRAPH</div>
-				<likes-chart></likes-chart>
+				<likes-chart :posts="perPost"/>
 			</div>
 			<div style="position: relative;">
 				<div class="box">
@@ -24,7 +24,7 @@
 				</div>
 				<div class="box">
 					<div class="boxheading">FREQUENTLY FOUND LABELS</div>
-					<p v-for="(value, label, index) of labels" :key="index">{{index + 1}}. {{label}}</p>
+					<p class="offset-l" v-for="(el, index) of limited" :key="index">{{index + 1}}. {{el[0]}}</p>
 				</div>
 			</div>
 		</div>
@@ -36,57 +36,18 @@
 	import LikesChart from './LikesChart.vue';
 
 	export default {
+		props: ['perPost', 'emotions', 'interests'],
 		components: {
-			EmotionsChart,
-			LikesChart
+			EmotionsChart, LikesChart
 		},
-		data() {
-			return {
-				imageCount: 22,
-				ageRange: {
-					low: 24,
-					high: 31,
-				},
-				gender: {
-					value: 'male',
-					confidence: 85,
-				},
-				emotions: [{
-						"Type": "CONFUSED",
-						"Confidence": 0.6553729176521301
-					},
-					{
-						"Type": "SAD",
-						"Confidence": 0.30191662907600403
-					},
-					{
-						"Type": "DISGUSTED",
-						"Confidence": 0.8796433210372925
-					},
-					{
-						"Type": "SURPRISED",
-						"Confidence": 1.831209421157837
-					},
-					{
-						"Type": "HAPPY",
-						"Confidence": 95.47262573242188
-					},
-					{
-						"Type": "CALM",
-						"Confidence": 0.10131055116653442
-					},
-					{
-						"Type": "ANGRY",
-						"Confidence": 0.7579055428504944
-					}
-				],
-				labels: {
-					'Car': 12,
-					'Watch': 8,
-					'Motorcycle': 7,
-					'Mountain': 1,
-					'Design': 1,
-				},
+		mounted() {
+		},
+		computed: {
+			limited() {
+				return Object.entries(this.interests).sort((a, b) => b[1] - a[1]).slice(0, 8)
+			},
+			imageCount() {
+				return this.perPost.length;
 			}
 		}
 	}
@@ -95,7 +56,7 @@
 <style lang="scss" scoped>
 	.labelgrid {
 		display: grid;
-		grid-template-columns: 5fr 3fr;
+		grid-template-columns: 3fr 2fr;
 		grid-gap: 1.2rem;
 	}
 </style>
