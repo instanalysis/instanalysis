@@ -3,31 +3,31 @@
     <div class="boxheading">VALUES</div>
     <p>Shows concern for the wellbeing of others.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value=valueTranscendece min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Embraces change, looks for new experiences.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value=valueOpenness min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Emphasizes tradition and order.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value=valueConversation min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Seeks hedonistic pleasure.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value=valueHedonism min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Seeks personal success.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value=valueEnhancement min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
@@ -38,26 +38,20 @@
   import ValuesChart from '../ValuesChart';
 
   export default {
+    props: ['values'],
     components: {
       ValuesChart
     },
     data() {
       return {
-        values1: { // key is from values.trait_id
-          "value_self_transcendence": 0.05015001965356963,
-          "value_openness_to_change": 0.6854512392944407,
-          "value_conservation": 0.02725197430081272,
-          "value_hedonism": 0.3754754766311752,
-          "value_self_enhancement": 0.6890067278325013,
-        },
-        values2: { // key is from values.trait_id
-          "value_self_transcendence": 0.05015001965356963,
-          "value_openness_to_change": 0.6854512392944407,
-          "value_conservation": 0.02725197430081272,
-          "value_hedonism": 0.3754754766311752,
-          "value_self_enhancement": 0.6890067278325013,
-        }
       }
+    },
+    computed: {
+      valueTranscendece() { return this.values.value_self_transcendence },
+      valueOpenness() { return this.values.value_openness_to_change },
+      valueEnhancement() { return this.values.value_self_enhancement },
+      valueConversation() { return this.values.value_conservation },
+      valueHedonism() { return this.values.value_hedonism },
     },
   }
 </script>

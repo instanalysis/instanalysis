@@ -5,31 +5,31 @@
         <div class="boxheading">NEEDS</div>
         <p><b>Excitement:</b> Wants to get out, live life and have fun.</p>
         <div class="range-slider sliderflex">
-          <input class="slider" value="79" min="0" max="100" type="range" disabled>
+          <input class="slider" value=needExcitement min="0" max="100" type="range" disabled>
           <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><b>Self-expression:</b> Enjoys asserting their own unique identity.</p>
         <div class="range-slider sliderflex">
-          <input class="slider" value="49" min="0" max="100" type="range" disabled>
+          <input class="slider" value=needSelfExpression min="0" max="100" type="range" disabled>
           <input class="slider" value="10" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><b>Curiosity:</b> Has a desire to discover and explore.</p>
         <div class="range-slider sliderflex">
-          <input class="slider" value="79" min="0" max="100" type="range" disabled>
+          <input class="slider" value=needCuriosity min="0" max="100" type="range" disabled>
           <input class="slider" value="100" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><b>Excellence:</b> Sets high standards and desires perfection.</p>
         <div class="range-slider sliderflex">
-          <input class="slider" value="79" min="0" max="100" type="range" disabled>
+          <input class="slider" value=needIdeal min="0" max="100" type="range" disabled>
           <input class="slider" value="20" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><b>Closeness:</b> Relishes being connected to family and friends.</p>
         <div class="range-slider sliderflex">
-          <input class="slider" value="79" min="0" max="100" type="range" disabled>
+          <input class="slider" value=needCloseness min="0" max="100" type="range" disabled>
           <input class="slider" value="40" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
@@ -40,7 +40,14 @@
 
 <script>
   export default {
-
+    props: ['needs'],
+    computed: {
+      needExcitement() { return this.needs.need_excitement },
+      needSelfExpression() { return this.needs.need_self_expression },
+      needCuriosity() { return this.needs.need_curiosity },
+      needIdeal() { return this.needs.need_ideal },
+      needCloseness() { return this.needs.need_closeness },
+    }
   }
 </script>
 
