@@ -158,7 +158,7 @@ $purp2: #6c3fb6;
 	padding: 0.8rem;
 	margin-bottom: 1.2rem;
 	border-radius: 0.5rem;
-	box-shadow: 0.1rem 0.2rem 1.1rem -0.3rem #777;
+	box-shadow: 0.1rem 0.2rem 1.1rem -0.5rem #777;
 	line-height: 1.6rem;
 	font-size: 0.9rem;
 }

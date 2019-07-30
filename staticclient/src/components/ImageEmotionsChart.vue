@@ -4,6 +4,7 @@
 
 <script>
 const Chart = require('chart.js');
+// import 'chartjs-plugin-labels';
 
 export default {
   props: ['emotions'],
@@ -49,9 +50,17 @@ export default {
           ]
         },
         options: {
-          title: { display: true }
+          title: { display: true },
+          // plugins: {
+          //   labels: {
+          //     render: 'label',
+          //     arc: true,
+          //     position: 'border'
+          //   }
+          // },
         }
       });
+      
     }
 	},
 	mounted() {

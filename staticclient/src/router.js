@@ -14,6 +14,11 @@ export default new Router({
       component: Home
     },
     {
+      path: '/match',
+      name: 'match',
+      component: () => import(/* webpackChunkName: "about" */ './views/Match.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
