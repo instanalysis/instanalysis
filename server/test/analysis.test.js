@@ -3,6 +3,40 @@ const chaiHttp = require('chai-http');
 const expect = chai.expect;
 const app = require('../app');
 
+const io = require('socket.io-client');
+const http = require('http');
+const ioBack = require('socket.io');
+
+// before((done) => {
+//   httpServer = http.createServer().listen();
+//   httpServerAddr = httpServer.listen().address();
+//   ioServer = ioBack(httpServer);
+//   done();
+// });
+
+// after((done) => {
+//   ioServer.close();
+//   httpServer.close();
+//   done();
+// });
+// beforeEach((done) => {
+//   socket = io.connect(`http:/localhost:3000`, {
+//     'reconnection delay': 0,
+//     'reopen delay': 0,
+//     'force new connection': true,
+//     transports: ['websocket'],
+//   });
+//   afterEach((done) => {
+//     // Cleanup
+//     if (socket.connected) {
+//       socket.disconnect();
+//     }
+//     done();
+//   });
+//   socket.on('connect', () => {
+//     done();
+//   });
+// });
 const mockData = {
   "username": "viryse",
   "userimage": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
@@ -196,10 +230,26 @@ describe('Analysis Controller Test', () => {
         .post("/analysis")
         .send(mockData)
         .end(function (err, res) {
+
           expect(res).to.have.status(200);
-          expect(res.body).to.equal('Hello World, I am Instanalysiss');
+          expect(res.body).to.equal('request successful');
           done()
         });
     });
   })
+  // describe('basic socket.io example', () => {
+  //   it('should communicate', (done) => {
+  //     // once connected, emit Hello World
+  //     ioServer.emit('echo', 'Hello World');
+  //     socket.once('echo', (message) => {
+  //       // Check that the message matches
+  //       expect(message).toBe('Hello World');
+  //       done();
+  //     });
+  //     ioServer.on('connection', (mySocket) => {
+  //       expect(mySocket).toBeDefined();
+  //     });
+  //   });
+  // });
+
 })
