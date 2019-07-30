@@ -28,31 +28,17 @@ async function getLikes() {
 	return likes;
 }
 
-async function waitForMore(currentPosts, limit) {
-	let scrollNav = await waitForElement('._4emnV', 2000)
-	while(currentPosts.length < limit && scrollNav) {
-		console.log('Loading more posts')
-		window.scrollTo(0, document.body.scrollHeight);
-		await wait(500);
-		scrollNav = await waitForElement('._4emnV', 2000)
-		currentPosts = document.querySelectorAll('.v1Nh3 > a')
-	}
-	window.scrollTo(0, 0)
-	await wait(500)
-	return document.querySelectorAll('.v1Nh3 > a')
-}
-
 function generateKey() {
 	return Math.random().toString(16).substring(4, 14)
 }
 
 async function waitForElement(element, maxTime){
-	console.log('waiting for', element)
+	// console.log('waiting for', element)
 	let time = 0
 	while(!document.querySelector(element) && time < maxTime){
 		await new Promise(resolve => setTimeout(resolve, 100))
 		time += 100
-		console.log(time)
+		// console.log(time)
 	}
 	return document.querySelector(element)
 }
@@ -67,25 +53,27 @@ async function scrapeData(limit) {
 	// Get User data
 	const username = document.querySelector('._7UhW9').textContent;
 	const profilePicture = document.querySelector('._6q-tv').getAttribute('src')
-	let posts = document.querySelectorAll('.v1Nh3 > a');
 
-	posts = await waitForMore(posts, limit)
+	window.scrollTo(0, 0)
+	await wait(500)
+	let posts = document.querySelectorAll('.v1Nh3 > a')
 
-	const quantity = posts.length < limit ? posts.length : limit;
-	console.log({quantity})
 	let data = [];
 	// Loop through posts
-	for(let i = 0; i < quantity; i ++) {
+	let post = posts[0] //first post
+	for(let i = 0; i < limit; i ++) {
 		console.log(`Image number ${i + 1}`)
 		data[i] = {	imageUrl: '',	caption: '', likes: 0, postedOn: ''	};
-		posts[i].click();
+		post.click();
 		// wait for post to load
 		await waitForElement('article.M9sTE', 3000)
 		let timetaken = 0
-		while(!document.querySelector('.KL4Bh') && !document.querySelector('._5wCQW') ){
+		// wait for image or video to load
+		while(!document.querySelector('.KL4Bh') && !document.querySelector('._5wCQW') && timetaken < 5000){
+			// console.log('waiting for image or video to load')
 			await new Promise(resolve => setTimeout(resolve, 100))
 			timetaken += 100
-			console.log(timetaken)
+			// console.log(timetaken)
 		}
 		
 		let temp;
@@ -125,10 +113,10 @@ async function scrapeData(limit) {
 		// date
 		await waitForElement('._1o9PC', 2000)
 		data[i].postedOn = document.querySelector('._1o9PC').getAttribute('datetime')
-		// close modal
-		await waitForElement('.ckWGn', 2000)
-		document.querySelector('.ckWGn').click()
-		await wait(100);
+
+		//prepare to click next post 
+		post = await waitForElement('.coreSpriteRightPaginationArrow', 3000)
+		if (!post) i = limit //break loop if no more posts
 	}
 	// Object to be sent to the backend
 	const key = generateKey()
