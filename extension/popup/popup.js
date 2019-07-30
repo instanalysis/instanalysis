@@ -14,7 +14,7 @@ clearButton.onclick = function(e) {
 
 let savedUserSelector = document.getElementById('savedUserSelector')
 savedUserSelector.onload = function(e) {
-	const storageUsers = JSON.parse(localStorage.get('savedUsers'))
+	const storageUsers = JSON.parse(localStorage.getItem('savedUsers'))
 	console.log({storageUsers})
 	storageUsers.forEach( user => {
 		let option = document.createElement("option")
