@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="src/assets/css/style.css">
+  <style>
+  .anychart-credits{display: none;}
+  </style>
+
+  <title>Instanalysis</title>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <myheader></myheader>
+      <profile-section :user="user"></profile-section>
+
+      <section class="myCard" style="display: flex; justify-content: space-between;width: 100%;">
+        <div style="text-align: center;">
+          <div style="display: flex;">
+            <img src="./src/assets/images/drama_mask.png" alt="" style="width: 2rem;">
+            <h5>Personality</h5>
+          </div>
+          <div style="margin: 0 auto; width: 100%;">
+            <canvas id="personalityChart" width="600" height="400" style="display: unset;"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="myCard" style="display: flex; justify-content: space-between;">
+        <div>
+          <div style="display: flex;font-size: 1.7rem;">
+            <i class="far fa-smile-beam" style="margin-right: 1rem;"></i>
+            <h5>Needs</h5>
+          </div>
+          <canvas id="needsChart" width="450" height="800"></canvas>
+        </div>
+        <div>
+          <div>
+            <div style="display: flex;font-size: 1.7rem;">
+              <i class="fas fa-theater-masks" style="margin-right: 1rem;"></i>
+              <h5>Emotion</h5>
+            </div>
+            <canvas id="emotionPostsChart" width="400" height="400" style="margin-top: -1rem;
+            "></canvas>
+          </div>
+          <div>
+              <div style="display: flex;font-size: 1.7rem; margin-top: 3rem; margin-bottom: -1rem;">
+                <i class="far fa-grin-hearts" style="margin-right: 1rem;"></i>
+                <h5>Pleasure</h5>
+              </div>
+              <canvas id="valuesChart" width="400" height="350"></canvas>
+            </div>
+        </div>
+      </section>
+      
+      <section style="text-align: center; width: 100%;">
+        <div style="display: flex">
+          <div style="width: 2rem;margin-right: 1rem;">
+            <img src="./src/assets/images/wordscloud_icon.png" alt="wordcloud icon" style="width:100%">
+          </div>
+          <div style="align-self: center;">
+            <h5> The most word that user write in their posts</h5>
+          </div>
+        </div>
+        <div id="word-cloud" style="width: 100%; height: 50vh;"></div>
+      </section>
+
+      <myfooter />
+    </div>
+  </div>
+  
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  
+  <script src="./src/components/wordCloud.js"></script>
+
+  <script src="./src/components/header.js"></script>
+  <script src="./src/components/profileSection.js"></script>
+  <script src="./src/components/footer.js"></script>
+
+  <script src="./src/main.js"></script>
+</body>
+</html>
