@@ -6,6 +6,7 @@ router.get('/', (req,res)=>{
     res.status(200).json('Hello World, I am Instanalysiss')
 })
 
-router.post('/analysis', translateToEnglish, controller.analysis)
+router.post('/analysis', controller.analysis)
+// router.post('/analysis', translateToEnglish, controller.analysis)
 
 module.exports = router
