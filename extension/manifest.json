@@ -24,6 +24,9 @@
       "js": ["contentScript.js"]
     }
   ],
+  "externally_connectable": {
+    "matches": ["http://localhost:8080/", "http://instanalysis.online/"]
+  },
   "icons": {
     "16": "images/get_started16.png",
     "32": "images/get_started32.png",

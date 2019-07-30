@@ -42,3 +42,10 @@ chrome.runtime.onMessage.addListener(
     }
   }
 );
+
+chrome.runtime.onMessageExternal.addListener(
+  function(request, sender, sendResponse) {
+    if (request.saveUser) {
+      console.log(request.saveUser)
+    }
+  });

@@ -60,7 +60,7 @@ export default {
       new Chart(document.getElementById('valuesChart'), {
         type: 'doughnut',
         data: {
-          labels: this.user.values.map(value => value.name),
+          labels: this.labels,
           datasets: [
             {
               label: `Values`,
@@ -68,7 +68,7 @@ export default {
               backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
-              data: this.user.values.map(value => value.percentile * 100)
+              data: this.chartData,
             }
           ]
         },
@@ -81,6 +81,20 @@ export default {
 	mounted() {
 		this.initValuesChart();
 	},
+	computed: {
+		chartData() {
+			return [
+				this.values.value_self_transcendence,
+				this.values.value_openness_to_change,
+				this.values.value_self_enhancement,
+				this.values.value_conservation,
+				this.values.value_hedonism,
+			];
+		},
+		labels() {
+			return ['Helping Others','Exploration','Achievement','Tradition','Hedonism'];
+		}
+	}
 }
 </script>
 

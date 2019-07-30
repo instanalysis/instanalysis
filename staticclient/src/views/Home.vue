@@ -4,7 +4,15 @@
     </div>
     <div class="container">
       <profile-info :user="userData"/>
-      <text-data :wordStr="startData.wordCloud" :startData="startData" :ibmData="ibmData"/>
+      <text-data
+        :wordStr="startData.wordCloud"
+        :wordCount="ibmData.word_count"
+        :personality="personality"
+        :needs="needs"
+        :values="values"
+        :consumptionPreferences="consumptionPreferences"
+        v-if="personality"
+      />
       <image-data/>
     </div>
     <p style="display: inline-block; margin: 0.5rem; background-color: #ddd;">
@@ -31,8 +39,8 @@ export default {
   },
   data() {
     return {
-      username: 'maximilian',
-      profilePicture: 'https://scontent-sin2-2.cdninstagram.com/vp/6f793dacb0901845be55c3624ca6bed0/5DD5956B/t51.2885-19/s320x320/59440893_336666376926221_276408968295743488_n.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com',
+      username: 'yonathanloekito',
+      profilePicture: 'https://scontent-sin2-2.cdninstagram.com/vp/8d40cd77cea8846909425b7ebc60e50e/5DE3E987/t51.2885-19/s150x150/13395042_1061367873910107_837713333_a.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com',
       key: '',
       message: '',
       startData: {},
@@ -50,10 +58,15 @@ export default {
     // mock
     this.startData = startData;
     setTimeout(() => {
-      this.ibmData = ibmData;
+      this.ibmData = ibmData.personalityAnalysisResult;
       this.rekogData = rekogData;
-    }, 2500)
+    }, 1000)
 
+    setTimeout(() => {
+      const extid = 'njalbdhpniekifijjefichllkdjeecll'
+      // chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
+    }, 500)
+    
   },
   mounted() {
     // const socket = io("http://34.87.39.190/");
@@ -75,7 +88,42 @@ export default {
         username: this.username,
         profilePicture: this.profilePicture,
       }
-    }
+    },
+    personality() {
+      if(this.ibmData.personality) {
+        return this.ibmData.personality.reduce((acc, trait) => {
+          acc[trait.trait_id] = Math.round(trait.percentile * 100)
+          return acc;
+        }, {})
+      } else return null;
+    },
+    needs() {
+      if(this.ibmData.needs) {
+        return this.ibmData.needs.reduce((acc, trait) => {
+          acc[trait.trait_id] = Math.round(trait.percentile * 100)
+          return acc;
+        }, {})
+      } else return null;
+    },
+    values() {
+      if(this.ibmData.values) {
+        return this.ibmData.values.reduce((acc, trait) => {
+          acc[trait.trait_id] = Math.round(trait.percentile * 100)
+          return acc;
+        }, {})
+      } else return null;
+    },
+    consumptionPreferences() {
+      if(this.ibmData.consumption_preferences) {
+        let combined = {}
+        this.ibmData.consumption_preferences.forEach(ob => {
+          ob.consumption_preferences.forEach(ob2 => {
+            combined[ob2.consumption_preference_id] = ob2.score
+          })
+        })
+        return combined;
+      } else return null;
+    },
   }
 }
 </script>
