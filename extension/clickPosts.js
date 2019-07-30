@@ -35,11 +35,11 @@ async function waitForMore(currentPosts, limit) {
 		window.scrollTo(0, document.body.scrollHeight);
 		await wait(500);
 		scrollNav = await waitForElement('._4emnV', 2000)
-		currentPosts = document.querySelectorAll('._9AhH0')
+		currentPosts = document.querySelectorAll('.v1Nh3 > a')
 	}
 	window.scrollTo(0, 0)
 	await wait(500)
-	return document.querySelectorAll('._9AhH0')
+	return document.querySelectorAll('.v1Nh3 > a')
 }
 
 function generateKey() {
@@ -63,11 +63,11 @@ async function scrapeData(limit) {
 	// Wait for profile picture
 	await waitForElement('._6q-tv', 3000)
 	// Wait for posts
-	await waitForElement('._9AhH0', 3000)
+	await waitForElement('.v1Nh3 > a', 3000)
 	// Get User data
 	const username = document.querySelector('._7UhW9').textContent;
 	const profilePicture = document.querySelector('._6q-tv').getAttribute('src')
-	let posts = document.querySelectorAll('._9AhH0');
+	let posts = document.querySelectorAll('.v1Nh3 > a');
 
 	posts = await waitForMore(posts, limit)
 
@@ -91,7 +91,7 @@ async function scrapeData(limit) {
 		let temp;
 		// check if image or video
 		if(document.querySelector('article.M9sTE').querySelector('.KL4Bh')) {
-			await waitForElement('.FFVAD',2000)
+			await waitForElement('.FFVAD', 2000)
 			let img = document.querySelector('.FFVAD')
 
 			temp = img
@@ -141,9 +141,9 @@ async function scrapeData(limit) {
 	}
 	console.log(payload)
 
-	// chrome.runtime.sendMessage({hitServer: payload});
+	chrome.runtime.sendMessage({hitServer: payload});
 
-	// chrome.runtime.sendMessage({openTab: `?user=${username}&key=${key}`});
+	chrome.runtime.sendMessage({openTab: `?user=${username}&key=${key}`});
 };
 
 chrome.storage.local.get(['postlimit'], ({ postlimit }) => {

@@ -41,4 +41,13 @@ startButton.onclick = function(element) {
 			{ file: 'clickPosts.js' }
 		);
 	});
+
+	// const storageUsers = chrome.local.get(['savedUsers'], ({ savedUsers }) => {
+	// 	savedUsers.forEach( user => {
+	// 		let option = document.createElement("option")
+	// 		let text = document.createTextNode(user.username)
+	// 		option.appendChild(text)
+	// 		savedUserSelector.appendChild(option)
+	// 	})
+	// })
 };
