@@ -1,11 +1,18 @@
 const personalityAnalysis = require('../helper/personalityAnalysis')
 const { faceDetection, labelDetection } = require('../helper/amazonRekognition')
 // const lengthChecker = require('../helper/lengthChecker')
+const comparePersonalities = require('../helper/comparePersonalities')
 
 class analysisController {
+    static match(req,res){
+        console.log("from controller match")
+        let {user1, user2} = req.body
+        let comparedResult = comparePersonalities(user1, user2)
+        res.status(200).json(comparedResult)
+    }
+
     static async analysis(req, res) { 
         console.log("di controller analysis")
-        console.log(req.body)
         console.log("-0---------")
         try {
             let io = req.io
@@ -96,14 +103,11 @@ class analysisController {
                     date: item.date,
                 }
             })
-            let age
-            let gender
+            let age= 'Cannot get data'
+            let gender= 'Cannot get data'
             if (profilePicDetection.FaceDetails.length === 1) {
                 age = profilePicDetection.FaceDetails[0].AgeRange
                 gender = profilePicDetection.FaceDetails[0].Gender
-            } else {
-                gender = 'Cannot get data',
-                    age = 'Cannot get data'
             }
 
             io.emit(`rekog-${credential.username}-${credential.key}`,
@@ -118,24 +122,6 @@ class analysisController {
                 }
             )
             console.log('done')
-            // res.status(200).json({
-            //     wordCloud: words,
-            //     profilePicture: userData.userimage,
-            //     totalLikes: '',
-            //     personalityAnalysisResult,
-            //     perPost,
-            //     summary: {
-            //         age,
-            //         gender,
-            //         emotionFromPosts,
-            //         interestFromPosts
-            //     }
-
-            // })
-            // app.emit('disconnect')
-
-
-
         }
         catch (e) {
             console.log('masuk catch', e)

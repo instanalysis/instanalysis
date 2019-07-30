@@ -48,6 +48,7 @@ function compare (dataSetOne, dataSetTwo) {
 }
 
 
+
 let mockData = {
     personalityAnalysisResult: {
         word_count: 100,
