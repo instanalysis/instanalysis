@@ -3,31 +3,31 @@
     <div class="boxheading">VALUES</div>
     <p>Shows concern for the wellbeing of others.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value=valueTranscendece min="0" max="100" type="range" disabled>
+      <input class="slider" v-model="values.value_self_transcendence" min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Embraces change, looks for new experiences.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value=valueOpenness min="0" max="100" type="range" disabled>
+      <input class="slider" v-model="values.value_openness_to_change" min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Emphasizes tradition and order.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value=valueConversation min="0" max="100" type="range" disabled>
+      <input class="slider" v-model="values.value_self_enhancement" min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Seeks hedonistic pleasure.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value=valueHedonism min="0" max="100" type="range" disabled>
+      <input class="slider" v-model="values.value_hedonism" min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Seeks personal success.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" value=valueEnhancement min="0" max="100" type="range" disabled>
+      <input class="slider" v-model="values.value_self_enhancement" min="0" max="100" type="range" disabled>
       <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
@@ -45,14 +45,7 @@
     data() {
       return {
       }
-    },
-    computed: {
-      valueTranscendece() { return this.values.value_self_transcendence },
-      valueOpenness() { return this.values.value_openness_to_change },
-      valueEnhancement() { return this.values.value_self_enhancement },
-      valueConversation() { return this.values.value_conservation },
-      valueHedonism() { return this.values.value_hedonism },
-    },
+    }
   }
 </script>
 
