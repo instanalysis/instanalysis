@@ -1,6 +1,5 @@
 const personalityAnalysis = require('../helper/personalityAnalysis')
 const { faceDetection, labelDetection } = require('../helper/amazonRekognition')
-const app = require('../expressInstance')
 
 class analysisController {
     static async analysis(req, res) {
@@ -10,7 +9,7 @@ class analysisController {
         try {
             let io = req.io
             let words = ''
-            let { username, userimage, posts } = req.body
+            let { username, userimage, posts, key } = req.body
             let userData = {
                 username: username,
                 userimage: userimage,
@@ -19,19 +18,20 @@ class analysisController {
             userData.posts.forEach(item => {
                 words += item.caption + ' '
             })
-            res.json('request successful')
+            // res.json('request successful')
 
             let credential = {
                 username: userData.username,
-                key: '123abc'
+                key
             }
             console.log('processing')
 
             // // Start
-            io.emit(`start-${credential.username}-${credential.key}`, 
+            io.emit(`start-${credential.username}-${credential.key}`,
                 {
                     wordCloud: words,
-                    userimage: userData.userimage
+                    profilePicture: userData.userimage,
+                    totalLikes: ''
                 }
             )
 
@@ -41,17 +41,18 @@ class analysisController {
             if (wordsArr.length > 100) {
                 personalityAnalysisResult = await personalityAnalysis(userData)
             }
-            io.emit(`ibm-${credential.username}-${credential.key}`, 
+            io.emit(`ibm-${credential.username}-${credential.key}`,
                 {
                     personalityAnalysisResult
                 }
             )
+
             // amazonRekognition
             let promiseListFaceDetection = userData.posts.map((item) => {
-                return faceDetection(item.imageURL)
+                return faceDetection(item.imageUrl)
             })
             let promiseLabelDetection = userData.posts.map((item) => {
-                return labelDetection(item.imageURL)
+                return labelDetection(item.imageUrl)
             })
 
             let resultFaceDetection = await Promise.all(promiseListFaceDetection)
@@ -79,18 +80,20 @@ class analysisController {
             })
             resultLabelDetection.forEach(item => {
                 if (item.Labels[0].Name !== 'Human' && item.Labels[0].Name !== 'Person' && item.Labels[0].Name !== 'Face') {
-                    if (interestFromPosts[item.Labels[0].Name]) {
-                        interestFromPosts[item.Labels[0].Name] += 1
-                    } else {
-                        interestFromPosts[item.Labels[0].Name] = 1
+                    let limit = item.Labels.length > 5 ? 5 : item.Labels.length
+                    for (let i = 0; i < limit; i++) {
+                        if (interestFromPosts[item.Labels[i].Name]) {
+                            interestFromPosts[item.Labels[i].Name] += 1
+                        } else {
+                            interestFromPosts[item.Labels[i].Name] = 1
+                        }
                     }
                 }
             })
 
+
             let perPost = userData.posts.map((item, index) => {
                 return {
-                    faceDetection: resultFaceDetection[index],
-                    labelDetection: resultLabelDetection[index],
                     likes: item.likes,
                     date: item.date,
                 }
@@ -99,13 +102,13 @@ class analysisController {
             let gender
             if (profilePicDetection.FaceDetails.length === 1) {
                 age = profilePicDetection.FaceDetails[0].AgeRange
-                gender = profilePicDetection.FaceDetails[0].Gender.Value
+                gender = profilePicDetection.FaceDetails[0].Gender
             } else {
                 gender = 'Cannot get data',
                     age = 'Cannot get data'
             }
 
-            io.emit(`start-${credential.username}-${credential.key}`, 
+            io.emit(`rekog-${credential.username}-${credential.key}`,
                 {
                     perPost,
                     summary: {
@@ -117,7 +120,22 @@ class analysisController {
                 }
             )
             console.log('done')
+            res.status(200).json({
+                wordCloud: words,
+                profilePicture: userData.userimage,
+                totalLikes: '',
+                personalityAnalysisResult,
+                perPost,
+                summary: {
+                    age,
+                    gender,
+                    emotionFromPosts,
+                    interestFromPosts
+                }
+
+            })
             // app.emit('disconnect')
+
 
 
         }
