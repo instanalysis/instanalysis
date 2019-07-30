@@ -2,45 +2,181 @@
   <div id="values" class="box">
     <div class="boxheading">VALUES</div>
     <p>Shows concern for the wellbeing of others.</p>
+    <div class="range-slider sliderflex">
+      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+        disabled>
+    </div>
     <p>Embraces change, looks for new experiences.</p>
+    <div class="range-slider sliderflex">
+      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+        disabled>
+    </div>
     <p>Emphasizes tradition and order.</p>
+    <div class="range-slider sliderflex">
+      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+        disabled>
+    </div>
     <p>Seeks hedonistic pleasure.</p>
+    <div class="range-slider sliderflex">
+      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+        disabled>
+    </div>
     <p>Seeks personal success.</p>
-    <div style="width: 29rem; margin: 0 auto;">
-      <values-chart :values="values1"/>
-      <values-chart :values="values2"/>
+    <div class="range-slider sliderflex">
+      <input class="slider" value="79" min="0" max="100" type="range" disabled>
+      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+        disabled>
     </div>
   </div>
 </template>
 
 <script>
-import ValuesChart from '../ValuesChart';
+  import ValuesChart from '../ValuesChart';
 
-export default {
-  components: {
-    ValuesChart
-  },
-  data() {
-    return {
-      values1: { // key is from values.trait_id
-				"value_self_transcendence": 0.05015001965356963,
-				"value_openness_to_change": 0.6854512392944407,
-				"value_conservation": 0.02725197430081272,
-				"value_hedonism": 0.3754754766311752,
-				"value_self_enhancement": 0.6890067278325013,
-      },
-      values2: { // key is from values.trait_id
-				"value_self_transcendence": 0.05015001965356963,
-				"value_openness_to_change": 0.6854512392944407,
-				"value_conservation": 0.02725197430081272,
-				"value_hedonism": 0.3754754766311752,
-				"value_self_enhancement": 0.6890067278325013,
-			}
-    }
-  },
-}
+  export default {
+    components: {
+      ValuesChart
+    },
+    data() {
+      return {
+        values1: { // key is from values.trait_id
+          "value_self_transcendence": 0.05015001965356963,
+          "value_openness_to_change": 0.6854512392944407,
+          "value_conservation": 0.02725197430081272,
+          "value_hedonism": 0.3754754766311752,
+          "value_self_enhancement": 0.6890067278325013,
+        },
+        values2: { // key is from values.trait_id
+          "value_self_transcendence": 0.05015001965356963,
+          "value_openness_to_change": 0.6854512392944407,
+          "value_conservation": 0.02725197430081272,
+          "value_hedonism": 0.3754754766311752,
+          "value_self_enhancement": 0.6890067278325013,
+        }
+      }
+    },
+  }
 </script>
 
-<style>
+<style lang="scss" scoped>
+  $purp1: #592ba1;
+  $purp2: #6c3fb6;
 
+  .traits {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    grid-gap: 1.2rem;
+  }
+
+  #personality {
+    padding-bottom: 0;
+  }
+
+  #consumption {
+    line-height: 1.9rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 45rem;
+  }
+
+  .sliderflex {
+    display: flex;
+    align-items: center;
+    padding: 0 0.4rem 0.6rem 0.2rem;
+  }
+
+  .slider {
+    flex: 1;
+    -webkit-appearance: none;
+    /* Override default CSS styles */
+    margin: 0.8rem 0 1rem 0.8rem;
+    appearance: none;
+    height: 0.4rem;
+    /* Specified height */
+    border-radius: 0.4rem;
+    background: #cfcfcf;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    width: 1rem;
+    /* Set a specific slider handle width */
+    height: 1rem;
+    /* Slider handle height */
+    border-radius: 1rem;
+    background: #6730be;
+    /* Green background */
+  }
+
+  .needpercent {
+    display: inline-block;
+    margin-right: 0.4rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.3rem;
+    background-color: $purp2;
+    color: white;
+  }
+
+  @mixin lk {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 0.4rem 0.4rem 0;
+    padding: 0 0.4rem;
+    width: 3.8rem;
+    border-radius: 0.3rem;
+  }
+
+  .likely {
+    @include lk;
+    background-color: #25a830;
+    color: white;
+
+    &::after {
+      content: "Likely";
+    }
+  }
+
+  .probable {
+    @include lk;
+    background-color: #ccc;
+
+    &::after {
+      content: "Neutral";
+    }
+  }
+
+  .unlikely {
+    @include lk;
+    background-color: #bb3b3b;
+    color: white;
+
+    &::after {
+      content: "Unlikely";
+    }
+  }
+
+  div.range-slider {
+    position: relative;
+    width: 100%;
+    height: 35px;
+    text-align: center;
+  }
+
+  div.range-slider input {
+    pointer-events: none;
+    position: absolute;
+    width: 98%;
+    margin: 0;
+    padding: 0;
+  }
 </style>
