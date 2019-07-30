@@ -5,11 +5,18 @@ const comparePersonalities = require('../helper/comparePersonalities')
 
 class analysisController {
     static match(req,res){
-        console.log("from controller match")
-        let {user1, user2} = req.body
-        let comparedResult = comparePersonalities(user1, user2)
-        res.status(200).json(comparedResult)
+        try{
+
+            console.log("from controller match")
+            let {user1, user2} = req.body
+            let comparedResult = comparePersonalities(user1, user2)
+            res.status(200).json(comparedResult)
+        }
+        catch(e){
+            res.status(500).json(e)
+        }
     }
+
 
     static async analysis(req, res) { 
         console.log("di controller analysis")
@@ -79,11 +86,11 @@ class analysisController {
                         } else {
                             emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = item.FaceDetails[0].Emotions[i].Confidence
                         }
-                        if (resultFaceDetection.length === index + 1) {
-                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] / counter
-                        }
                     }
                 }
+            })
+            Object.keys(emotionFromPosts).forEach((item)=>{
+                emotionFromPosts[item] = emotionFromPosts[item] / counter
             })
             resultLabelDetection.forEach(item => {
                 if (item.Labels[0].Name !== 'Human' && item.Labels[0].Name !== 'Person' && item.Labels[0].Name !== 'Face') {
@@ -121,6 +128,8 @@ class analysisController {
                     }
                 }
             )
+            console.log(emotionFromPosts, 'emotionfromposts')
+            console.log(interestFromPosts, 'interestFromPosts')
             console.log('done')
         }
         catch (e) {
