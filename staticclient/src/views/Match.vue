@@ -16,7 +16,7 @@
           <div class="username">zachlavine8</div>
         </div>
       </div>
-      <compare-profile :personalities="ibmData.personality" style="margin-top: 3rem"></compare-profile>
+      <compare-profile :personalities="personality" style="margin-top: 3rem"></compare-profile>
       <compare-needs :needs="needs" style="margin-top: 2rem"></compare-needs>
       <compare-values :values="values" style="margin-top: 2rem"></compare-values>
     </div>
@@ -85,12 +85,7 @@ export default {
       }
     },
     personality() {
-      if(this.ibmData && this.ibmData.personality) {
-        return this.ibmData.personality.reduce((acc, trait) => {
-          acc[trait.trait_id] = Math.round(trait.percentile * 100)
-          return acc;
-        }, {})
-      } else return null;
+      return this.ibmData.personality
     },
     needs() {
       if(this.ibmData && this.ibmData.needs) {

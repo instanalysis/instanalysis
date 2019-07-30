@@ -22,14 +22,14 @@ export default {
       new Chart(document.getElementById('personalityChart_1'), {
         type: 'radar',
         data: {
-          labels: this.personalities.map(personality => personality.name),
+          labels: this.personalities && this.personalities.map(personality => personality.name),
           datasets: [
             {
               fill: true,
               backgroundColor: "rgba(111,148,205,0.7)",
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
-              data: this.personalities.map(personality => personality.percentile * 100)
+              data: this.personalities && this.personalities.map(personality => personality.percentile * 100)
             }
           ]
 				},
@@ -44,14 +44,14 @@ export default {
       new Chart(document.getElementById('personalityChart_2'), {
         type: 'radar',
         data: {
-          labels: this.personalities.map(personality => personality.name),
+          labels: this.personalities && this.personalities.map(personality => personality.name),
           datasets: [
             {
               fill: true,
               backgroundColor: "rgba(111,148,205,0.7)",
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
-              data: this.personalities.map(personality => personality.percentile * 100)
+              data: this.personalities && this.personalities.map(personality => personality.percentile * 100)
             }
           ]
 				},
@@ -66,6 +66,12 @@ export default {
 	mounted() {
 		this.initPersonalityChart_1();
 		this.initPersonalityChart_2();
+	},
+	watch: {
+		personalities() {
+			this.initPersonalityChart_1();
+			this.initPersonalityChart_2();
+		}
 	},
 }
 </script>
