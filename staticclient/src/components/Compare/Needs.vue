@@ -39,29 +39,8 @@
 </template>
 
 <script>
-  import noUiSlider from 'nouislider';
-  import 'nouislider/distribute/nouislider.css';
-
   export default {
-    methods: {
-      init() {
-        let slider = document.getElementById('slider');
 
-        noUiSlider.create(slider, {
-          start: [10, 50],
-          behaviour: 'drag',
-          tooltips: [true, true],
-          connect: true,
-          range: {
-            'min': 0,
-            'max': 100
-          }
-        });
-      }
-    },
-    mounted() {
-      this.init()
-    },
   }
 </script>
 

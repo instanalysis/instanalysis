@@ -30,7 +30,17 @@ export default {
     CompareProfile,
     CompareNeeds,
     CompareValues
-  }
+  },
+  methods: {
+    getInitialUser() {
+      console.log(this.$route.query.user)
+      console.log(this.$route.query.key)
+      console.log(this.$route.query.match)
+    }
+  },
+  mounted() {
+    this.getInitialUser()
+  },
 }
 </script>
 

@@ -14,7 +14,6 @@
     "chartjs-plugin-labels": "^1.1.0",
     "core-js": "^2.6.5",
     "ng-range-slider": "^0.2.0",
-    "nouislider": "^14.0.2",
     "socket.io-client": "^2.2.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3"
