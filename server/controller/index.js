@@ -24,7 +24,9 @@ class analysisController {
                 username: userData.username,
                 key
             }
-            // console.log('processing')
+            const testwordsArr = words.split(" ")
+            console.log(testwordsArr.length)
+            console.log('processing')
 
             // // Start
             io.emit(`start-${credential.username}-${credential.key}`,
@@ -43,7 +45,7 @@ class analysisController {
             }
             io.emit(`ibm-${credential.username}-${credential.key}`,
                 {
-                    personalityAnalysisResult
+                    personalityAnalysisResu1lt
                 }
             )
 
@@ -140,8 +142,8 @@ class analysisController {
 
         }
         catch (e) {
-            // console.log(e)
-            res.status(500).json(e)
+            console.log('masuk catch', e)
+            res.status(500).json('error')
         }
 
     }
