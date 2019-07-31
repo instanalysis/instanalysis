@@ -85,16 +85,24 @@ class analysisController {
                 if (item.FaceDetails[0]) {
                     console.log(emotionFromPosts, 'emotionfromposts')
                     counter++
+                    let emotArray = item.FaceDetails[0].Emotions
+                    let totalConfidence = {}
+                    for (let i = 0; i < emotArray.length; i++) {
+                        if(totalConfidence[emotArray[i].Type]){
+                            totalConfidence[emotArray[i].Type] += emotArray[i].Confidence
+                        }else{
+                            totalConfidence[emotArray[i].Type] = emotArray[i].Confidence
+                        }
+                    }
                     for (let i = 0; i < item.FaceDetails[0].Emotions.length; i++) {
                         let emot = item.FaceDetails[0].Emotions[i].Type
                         console.log({emot})
                         console.log({confidende:item.FaceDetails[0].Emotions[i].Confidence})
                         if (emotionFromPosts[emot]) {
-                            emotionFromPosts[emot] += item.FaceDetails[0].Emotions[i].Confidence
+                            emotionFromPosts[emot] += item.FaceDetails[0].Emotions[i].Confidence / totalConfidence[emot] * 100
                         } else {
-                            emotionFromPosts[emot] = item.FaceDetails[0].Emotions[i].Confidence
+                            emotionFromPosts[emot] = item.FaceDetails[0].Emotions[i].Confidence / totalConfidence[emot] * 100
                         }
-
                         console.log({total:emotionFromPosts[emot]})
                     }
                 }
