@@ -72,23 +72,24 @@ export default {
       // }, 6000);
 
     } else {
-      const socket = io("http://server.instanalysis.online/");
-      socket.on(`start-${this.username}-${this.key}`, data => this.startData = data);
-      socket.on(`ibm-${this.username}-${this.key}`, data => this.ibmData = data.personalityAnalysisResult);
-      socket.on(`rekog-${this.username}-${this.key}`, data => this.rekogData = data);
-      setTimeout(() => {
-        if(!this.startData.totalLikes) {
-          this.message = 'Welcome to InstAnalysis. Open our extension on an Instagram profile to get results.'
-        }
-      }, 5500)
+      // const socket = io("http://server.instanalysis.online/");
+      // socket.on(`start-${this.username}-${this.key}`, data => this.startData = data);
+      // socket.on(`ibm-${this.username}-${this.key}`, data => this.ibmData = data.personalityAnalysisResult);
+      // socket.on(`rekog-${this.username}-${this.key}`, data => this.rekogData = data);
+      // setTimeout(() => {
+      //   if(!this.startData.totalLikes) {
+      //     this.message = 'Welcome to InstAnalysis. Open our extension on an Instagram profile to get results.'
+      //   }
+      // }, 5500)
       /* --> Add user to extension drop down   
-        // setTimeout(() => {
-        //   const extid = 'njalbdhpniekifijjefichllkdjeecll'
-        //   chrome.runtime.sendMessage(extid, {saveUser: {
-        //     username: 'bobby'
-        //   }});
-        // }, 1200)
       <-- */
+          setTimeout(() => {
+            const extid = 'njalbdhpniekifijjefichllkdjeecll'
+            console.log('sending message')
+            chrome.runtime.sendMessage(extid, {saveUser: {
+              username: 'bobby'
+            }});
+          }, 1000)
     }
   },
   computed: {
@@ -162,7 +163,7 @@ export default {
   watch: {
     ibmData() {
       if(this.personality) {
-        // const extid = 'hepadbkpclgmhfncinaljmdpajobmkjl'
+        const extid = 'njalbdhpniekifijjefichllkdjeecll'
         let currentUser = {
           username: this.username,
           startData: this.startData,
