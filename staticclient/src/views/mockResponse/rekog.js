@@ -89,7 +89,7 @@ export default {
 			"date": 2017
 		},
 		{
-			"likes": 2369,
+			"likes": 1390,
 			"date": 2017
 		},
 		{
@@ -121,14 +121,17 @@ export default {
 			"CONFUSED": 34.42274594306946,
 			"SURPRISED": 23.401761054992676,
 			"CALM": 3.0811455249786377,
-			"HAPPY": 681.5534362792969
+			"HAPPY": 81.5534362792969
 		},
 		"interestFromPosts": {
 			"Building": 2,
 			"High Rise": 2,
 			"Blossom": 1,
 			"Nature": 12,
-			"Flower": 1
+			"Flower": 1,
+			"Fish": 3,
+			"Song": 9,
+			"Fire": 4,
 		}
 	}
 }

@@ -6,7 +6,7 @@
 const Chart = require('chart.js');
 
 export default {
-  props: ['personality'],
+  props: ['posts'],
 	data() {
 		return {
 			user: {
@@ -48,14 +48,14 @@ export default {
       new Chart(document.getElementById('likesChart'), {
         type: 'line',
         data: {
-          labels: this.user.posts.map(post => post.date),
+          labels: this.oldestFirst.map(post => new Date(post.date).toDateString().substring(4, 15)),
           datasets: [
             {
               fill: true,
               backgroundColor: "rgba(111,148,205,0.7)",
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
-              data: this.user.posts.map(post => post.likes)
+              data: this.oldestFirst.map(post => post.likes)
             }
           ]
 				},
@@ -63,31 +63,11 @@ export default {
           legend: {
             display: false
           },
-          elements: {
-            line: {
-              tension: 0 // disables bezier curves
-            }
-          },
           hover: {
             mode: 'index'
           },
           animation: {
-            duration: 1,
-            onComplete: function () {
-                var chartInstance = this.chart,
-                    ctx = chartInstance.ctx;
-                ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'bottom';
-
-                this.data.datasets.forEach(function (dataset, i) {
-                    var meta = chartInstance.controller.getDatasetMeta(i);
-                    meta.data.forEach(function (bar, index) {
-                        var data = dataset.data[index];                            
-                        ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                    });
-                });
-            }
+            duration: 0.5,
           }
 				},
       });
@@ -95,7 +75,12 @@ export default {
 	},
 	mounted() {
 		this.initLikesChart();
-	},
+  },
+  computed: {
+    oldestFirst() {
+      return this.posts.reverse()
+    }
+  },
 }
 </script>
 

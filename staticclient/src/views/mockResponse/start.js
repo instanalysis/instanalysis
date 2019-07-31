@@ -1,5 +1,5 @@
 export default {
 	"wordCloud": "fuck you Unplug and unwind Kalau senen bisa seru, kenapa nggak? #kenapaya? Clubstyle ✌️ #fxdc #clubstyle #dyna Unplug and unwind If monday can be fun, Wae Rebo? #kenapaya? Clubstyle ✌️ #fxdc #clubstyle #dyna One of those places where you’d feel so young 👨🏻👵🏻 Iceland is petrifying. Iceland is petrifying. Iceland is petrifying. Iceland is petrifying. Iceland is petrifying. Iceland is petrifying. Unplug and unwind Kalau senen bisa seru, kenapa nggak? #kenapaya? Clubstyle ✌️ #fxdc #clubstyle #dyna Unplug and unwind If monday can be fun, Wae Rebo? #kenapaya? Clubstyle ✌️ #fxdc #clubstyle #dyna One of those places where you’d feel so young 👨🏻👵🏻 Iceland is petrifying. Iceland is petrifying. Iceland is petrifying. Iceland is petrifying. Iceland is petrifying. Iceland is petrifying. ",
-	"profilePicture": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
+	"profilePicture": "https://scontent-sin6-2.cdninstagram.com/vp/8f18d9529a01c1c43b7f05ff7bc3cae2/5DDCF24D/t51.2885-19/s320x320/12558345_1659293120975484_1074689227_a.jpg?_nc_ht=scontent-sin6-2.cdninstagram.com&_nc_cat=1%27",
 	"totalLikes": 400
 }
