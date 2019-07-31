@@ -12,7 +12,7 @@ class analysisController {
             // console.log(req.body)
             console.log("------printing.....--------------")
             console.log({user1:req.body.user1})
-            console.log({user1:req.body.user2})
+            console.log({user2:req.body.user2})
             console.log("------printed user1 and user2------")
             let comparedResult = comparePersonalities(user1, user2)
             console.log(comparedResult)

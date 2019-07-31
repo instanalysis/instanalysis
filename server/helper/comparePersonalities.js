@@ -2,29 +2,37 @@ module.exports = compare
 
 function compare (dataSetOne, dataSetTwo) {
     let results = {}
-    console.log('mulai di ')
+    console.log('mulai di compare')
 	//compare personality
 	const p1Arr = dataSetOne.personality
 	const p2Arr = dataSetTwo.personality
-	let pDistance = 0
+    let pDistance = 0
+    console.log('setp1 dan p2 ARR',p1Arr)
+    
 	for (let i = 0; i < p1Arr.length; i++){
+        console.log('array p1 length:', p1Arr.length)
 		//for each personality facet (openness, conscientiousness,..)
 		let facet1 = p1Arr[i]
 		let facet2 = p2Arr[i]
 		for (let j = 0; j < facet1.children.length; j ++){
+            console.log('array facet 1 children length', facet1.children.length)
 			// for each trait in the facet, get score and compare
 			let diff = facet1.children[j].raw_score - facet2.children[j].raw_score
 			let diffSquared = diff * diff
 			pDistance += diffSquared
 		}
 	}
-	let pScore = Math.sqrt(pDistance)
+    let pScore = Math.sqrt(pDistance)
+    console.log('pscore',pScore)
 	results.personalityScore = pScore
 
 	const n1Arr = dataSetOne.needs
-	const n2Arr = dataSetOne.needs
+    const n2Arr = dataSetOne.needs
+    console.log('set n1 n2 arr', n1Arr)
 	let nDistance = 0
 	for (let i = 0; i< n1Arr.length; i++){
+        console.log('n1arr length', n1Arr.length)
+
 		let diff = n1Arr[i].raw_score - n2Arr[i].raw_score
 		let diffSquared = diff * diff
 		nDistance += diffSquared
@@ -34,16 +42,21 @@ function compare (dataSetOne, dataSetTwo) {
 
 	const v1Arr = dataSetOne.values
 	const v2Arr = dataSetOne.values
+    console.log('set v1 v2 arr', v1Arr)
 	let vDistance = 0
 	for (let i = 0; i< v1Arr.length; i++){
+        console.log('v1arr length', v1Arr.length)
 		let diff = v1Arr[i].raw_score - v2Arr[i].raw_score
 		let diffSquared = diff * diff
 		vDistance += diffSquared
 	}
-	let vScore = Math.sqrt(vDistance)
+    let vScore = Math.sqrt(vDistance)
+    console.log('vscore telah di sqrt', vScore)
 	results.valuesScore = vScore
 
-	results.totalScore = (pScore +  nScore + vScore)/3
+    results.totalScore = (pScore +  nScore + vScore)/3
+    
+    console.log({hasilcompare: results})
 
 	return results
 }
