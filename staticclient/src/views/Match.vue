@@ -13,7 +13,6 @@
       </div>
     </div>
     <div class="container">
-      <compare-initial :gender="gender" :userData="userData"></compare-initial>
       <div class="userprofile" style="display: flex; justify-content: space-evenly;">
         <div style="display: flex; justify-content: space-evenly;">
           <div style="width:75px">
@@ -29,9 +28,9 @@
           <div class="username">{{$route.query.user}}</div>
         </div>
       </div>
-      <compare-profile  id="compare-profile" :personalities="personality" style="margin-top: 3rem"></compare-profile>
-      <compare-needs  id="compare-needs" :needs="needs" style="margin-top: 2rem"></compare-needs>
-      <compare-values  id="compare-values" :values="values" style="margin-top: 2rem"></compare-values>
+      <compare-profile :personalities="personality" style="margin-top: 3rem"></compare-profile>
+      <compare-needs  :needs="needs" style="margin-top: 2rem"></compare-needs>
+      <compare-values :values="values" style="margin-top: 2rem"></compare-values>
     </div>
   </div>
 </template>
@@ -82,25 +81,36 @@ export default {
         const extid = 'njalbdhpniekifijjefichllkdjeecll'
         // chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
       }, 500)
+    },
+    initScrollMagic() {
+      const controller = new ScrollMagic.Controller({globalSceneOptions: {duration: 100}});
+
+      new ScrollMagic.Scene({})
+        .setClassToggle("#header-compare", "hide")
+        .addIndicators()
+        .addTo(controller);
     }
   },
   created() {
     const savedUsers = JSON.stringify({"savedUsers": [ {"username": "stef", "userImage": "https://scontent-sin2-2.cdninstagram.com/vp/8d40cd77cea8846909425b7ebc60e50e/5DE3E987/t51.2885-19/s150x150/13395042_1061367873910107_837713333_a.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com", "ibmData": {}}, {"username": "lutfi", "userImage": "https://scontent-sin2-2.cdninstagram.com/vp/8d40cd77cea8846909425b7ebc60e50e/5DE3E987/t51.2885-19/s150x150/13395042_1061367873910107_837713333_a.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com", "ibmData": {}}, {"username": "max", "userImage": "https://scontent-sin2-2.cdninstagram.com/vp/8d40cd77cea8846909425b7ebc60e50e/5DE3E987/t51.2885-19/s150x150/13395042_1061367873910107_837713333_a.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com", "ibmData": {}}, {"username": "yonathan", "userImage": "https://scontent-sin2-2.cdninstagram.com/vp/8d40cd77cea8846909425b7ebc60e50e/5DE3E987/t51.2885-19/s150x150/13395042_1061367873910107_837713333_a.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com", "ibmData": {}}]})
-
     localStorage.setItem('savedUsers', savedUsers)
-
 
     this.getSavedUser()
   },
   mounted() {
-    // init controller
-    const controller = new ScrollMagic.Controller({globalSceneOptions: {duration: 100}});
+    this.initScrollMagic();
+    // const socket = io("http://34.87.39.190/");
 
-    // build scenes
-    new ScrollMagic.Scene({triggerElement: "#compare-values"})
-            .setClassToggle("#header-compare", "hide") // add class toggle
-            .addIndicators() // add indicators (requires plugin)
-            .addTo(controller);
+    // socket.on(`start-${this.user}-123abc`, function(data){
+    //     console.log('started', data)
+    // });
+    // socket.on(`ibm-${this.user}-123abc`, function(data){
+    //     console.log('IBM ANALYSIS', data)
+    // });
+    // socket.on(`rekog-${this.user}-123abc`, function(data){
+    //     console.log('AMAZON rekogniton', data)
+    // });
+    
   },
   computed: {
     userData() {

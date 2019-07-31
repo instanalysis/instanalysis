@@ -5,7 +5,7 @@
         <div class="boxheading">NEEDS</div>
         <p><span style="margin-right: .7rem"><b>Excitement:</b> Wants to get out, live life and have fun.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_excitement}}%</span> | <span class="color-orange fw-600">80%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_excitement}}%</span> | <span class="color-orange fw-600">80%</span>
           </span>
         </p> 
         <div class="range-slider sliderflex">
@@ -15,7 +15,7 @@
         </div>
         <p><span style="margin-right: .7rem"><b>Self-expression:</b> Enjoys asserting their own unique identity.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_self_expression}}%</span> | <span class="color-orange fw-600">10%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_self_expression}}%</span> | <span class="color-orange fw-600">10%</span>
           </span>
         </p>
         <div class="range-slider sliderflex">
@@ -25,7 +25,7 @@
         </div>
         <p><span style="margin-right: .7rem"><b>Curiosity:</b> Has a desire to discover and explore.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_curiosity}}%</span> | <span class="color-orange fw-600">100%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_curiosity}}%</span> | <span class="color-orange fw-600">100%</span>
           </span>
         </p>
         <div class="range-slider sliderflex">
@@ -35,7 +35,7 @@
         </div>
         <p><span style="margin-right: .7rem"><b>Excellence:</b> Sets high standards and desires perfection.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_ideal}}%</span> | <span class="color-orange fw-600">20%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_ideal}}%</span> | <span class="color-orange fw-600">20%</span>
           </span>
         </p>
         <div class="range-slider sliderflex">
@@ -45,18 +45,12 @@
         </div>
         <p><span style="margin-right: .7rem"><b>Closeness:</b> Relishes being connected to family and friends.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_closeness}}%</span> | <span class="color-orange fw-600">40%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_closeness}}%</span> | <span class="color-orange fw-600">40%</span>
           </span>
         </p>
         <div class="range-slider sliderflex" style="display: relative;">
-          <div style="display: absolute;">
-            <output for="need_closeness"></output>
-            <input class="first-user slider" v-model="needs.need_closeness" min="0" max="100" type="range" name="need_closeness" disabled>
-          </div>
-          <div style="display: absolute;">
-            <output for="need_closeness"></output>
-            <input class="second-user slider" value="40" style="background: transparent;" min="0" max="100" step="0.5" type="range" disabled>
-          </div>
+          <input class="first-user slider" v-model="needs.need_closeness" min="0" max="100" type="range" name="need_closeness" disabled>
+          <input class="second-user slider" value="40" style="background: transparent;" min="0" max="100" step="0.5" type="range" disabled>
         </div>
       </div>
     </div>
@@ -65,7 +59,12 @@
 
 <script>
   export default {
-    props: ['needs']
+    props: ['needs'],
+    watch: {
+      needs() {
+        return needs
+      }
+    },
   }
 </script>
 
@@ -211,45 +210,4 @@
     border-radius: 2rem;
     font-size: 12px;
   }
-  // .first-user[type=range]::-webkit-slider-thumb:after { 
-  //   content: "";
-  //   position: absolute;
-  //   width: 0;
-  //   height: 0;
-  //   border-top: 10px solid #999999;
-  //   border-left: 5px solid transparent;
-  //   border-right: 5px solid transparent;
-  //   top: 100%;
-  //   left: 50%;
-  //   margin-left: -5px;
-  //   margin-top: -1px;
-  // }
-
-  // output { 
-  //   position: absolute;
-  //   background-image: linear-gradient(top, #444444, #999999);
-  //   width: 40px; 
-  //   height: 30px; 
-  //   text-align: center; 
-  //   color: white; 
-  //   border-radius: 10px; 
-  //   display: inline-block; 
-  //   font: bold 15px/30px Georgia;
-  //   bottom: 175%;
-  //   left: 0;
-  //   margin-left: -1%;
-  // }
-  // output:after { 
-  //   content: "";
-  //   position: absolute;
-  //   width: 0;
-  //   height: 0;
-  //   border-top: 10px solid #999999;
-  //   border-left: 5px solid transparent;
-  //   border-right: 5px solid transparent;
-  //   top: 100%;
-  //   left: 50%;
-  //   margin-left: -5px;
-  //   margin-top: -1px;
-  // }
 </style>
