@@ -16,14 +16,6 @@ class analysisController {
             res.status(500).json(e)
         }
     }
-    static test(req,res){
-        let io = req.io
-
-        io.emit(`start-rubhi-abc123`,{
-            wordCloud:'a'
-        })
-        console.log(req.body)
-    }
 
     static async analysis(req, res) { 
         console.log("di controller analysis")
@@ -141,7 +133,8 @@ class analysisController {
         }
         catch (e) {
             console.log('masuk catch', e)
-            res.status(500).json('error')
+            let io = req.io
+            io.emit('error', e)
         }
 
     }
