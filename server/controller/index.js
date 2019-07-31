@@ -97,7 +97,7 @@ class analysisController {
                 emotionFromPosts[item] = emotionFromPosts[item] / counter
             })
             resultLabelDetection.forEach(item => {
-                if (item.Labels[0].Name !== 'Human' && item.Labels[0].Name !== 'Person' && item.Labels[0].Name !== 'Face') {
+                // if (item.Labels[0].Name !== 'Human' && item.Labels[0].Name !== 'Person' && item.Labels[0].Name !== 'Face') {
                     let limit = item.Labels.length > 5 ? 5 : item.Labels.length
                     for (let i = 0; i < limit; i++) {
                         if (interestFromPosts[item.Labels[i].Name]) {
@@ -106,7 +106,7 @@ class analysisController {
                             interestFromPosts[item.Labels[i].Name] = 1
                         }
                     }
-                }
+                // }
             })
             let perPost = userData.posts.map((item, index) => {
                 return {
