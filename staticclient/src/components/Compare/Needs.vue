@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="box">
-      <div id="needs">
+      <div id="needs" v-if="needs">
         <div class="boxheading">NEEDS</div>
+        <span v-if="matchScore">Compatible: {{matchScore}}</span>
         <p><span style="margin-right: .7rem"><b>Excitement:</b> Wants to get out, live life and have fun.</span> 
           <span class="compare-percentile-container">
             <span class="color-purple fw-600">{{needs && needs.need_excitement}}%</span> | <span class="color-orange fw-600">{{needsCompare && needsCompare.need_excitement}}%</span>
@@ -59,7 +60,7 @@
 
 <script>
   export default {
-    props: ['needs', 'needsCompare'],
+    props: ['needs', 'needsCompare', 'matchScore'],
     watch: {
       needs() {
         return needs

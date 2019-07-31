@@ -1,7 +1,7 @@
 <template>
   <div class="box" style="width: 100%; text-align: center; display: flex; ">
     <div class="sectionhead">
-      <div class="heading">Personality</div>
+      <div class="heading">Personality</div> <span v-if="matchScore">Compatible: {{matchScore}}</span>
     </div>
     <div style="width:100%">
       <canvas id="personalityChart_1" width="" height="" style="display: unset;"></canvas>
@@ -16,9 +16,9 @@
 const Chart = require('chart.js');
 
 export default {
-  props: ['personalities', 'personalitiesCompare'],
+  props: ['personalities', 'personalitiesCompare', 'matchScore'],
 	methods: {
-		initPersonalityChart_1() {
+		initPersonalityChart() {
       new Chart(document.getElementById('personalityChart_1'), {
         type: 'radar',
         data: {
@@ -39,8 +39,7 @@ export default {
          },
 				},
       });
-    },
-    initPersonalityChart_2() {
+
       new Chart(document.getElementById('personalityChart_2'), {
         type: 'radar',
         data: {
@@ -61,18 +60,17 @@ export default {
          },
 				},
       });
-    }
+    },
 	},
 	mounted() {
-		this.initPersonalityChart_1();
-		this.initPersonalityChart_2();
+		this.initPersonalityChart();
 	},
 	watch: {
 		personalities() {
-			this.initPersonalityChart_1();
+			this.initPersonalityChart();
     },
     personalitiesCompare() {
-			this.initPersonalityChart_2();
+			this.initPersonalityChart();
     }
 	},
 }

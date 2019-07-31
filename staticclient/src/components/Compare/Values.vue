@@ -1,6 +1,7 @@
 <template>
   <div id="values" class="box">
     <div class="boxheading">VALUES</div>
+    <span v-if="matchScore">Compatible: {{matchScore}}</span>
     <p><span style="margin-right: .7rem">Shows concern for the wellbeing of others.</span> 
       <span class="compare-percentile-container">
         <span class="color-purple fw-600">{{values.value_self_transcendence}}%</span> | <span class="color-orange fw-600">{{valuesCompare.value_self_transcendence}}%</span>
@@ -58,7 +59,7 @@
   import ValuesChart from '../ValuesChart';
 
   export default {
-    props: ['values', 'valuesCompare'],
+    props: ['values', 'valuesCompare', 'matchScore'],
     components: {
       ValuesChart
     },
