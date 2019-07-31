@@ -28,7 +28,11 @@
           <div class="username">{{$route.query.user}}</div>
         </div>
       </div>
-      <compare-profile :personalities="personality" style="margin-top: 3rem"></compare-profile>
+      <compare-profile 
+        :personalities="personality" 
+        :personalitiesCompare="personalityCompare" 
+        style="margin-top: 3rem"
+      ></compare-profile>
       <compare-needs  :needs="needs" style="margin-top: 2rem"></compare-needs>
       <compare-values :values="values" style="margin-top: 2rem"></compare-values>
     </div>
@@ -132,9 +136,20 @@ export default {
     personality() {
       return this.ibmData.personality
     },
+    personalityCompare() {
+      return this.ibmDataCompare.personality
+    },
     needs() {
       if(this.ibmData && this.ibmData.needs) {
         return this.ibmData.needs.reduce((acc, trait) => {
+          acc[trait.trait_id] = Math.round(trait.percentile * 100)
+          return acc;
+        }, {})
+      } else return null;
+    },
+    needsCompare() {
+      if(this.ibmDataCompare && this.ibmDataCompare.needs) {
+        return this.ibmDataCompare.needs.reduce((acc, trait) => {
           acc[trait.trait_id] = Math.round(trait.percentile * 100)
           return acc;
         }, {})
@@ -148,20 +163,12 @@ export default {
         }, {})
       } else return null;
     },
-    consumptionPreferences() {
-      if(this.ibmData && this.ibmData.consumption_preferences) {
-        let combined = {}
-        this.ibmData.consumption_preferences.forEach(ob => {
-          ob.consumption_preferences.forEach(ob2 => {
-            combined[ob2.consumption_preference_id] = ob2.score
-          })
-        })
-        return combined;
-      } else return null;
-    },
-    gender() {
-      if(this.rekogData && this.rekogData.summary) {
-        return this.rekogData.summary.gender
+    valuesCompare() {
+      if(this.ibmDataCompare && this.ibmDataCompare.values) {
+        return this.ibmDataCompare.values.reduce((acc, trait) => {
+          acc[trait.trait_id] = Math.round(trait.percentile * 100)
+          return acc;
+        }, {})
       } else return null;
     }
   }

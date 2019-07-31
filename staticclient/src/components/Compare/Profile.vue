@@ -16,7 +16,7 @@
 const Chart = require('chart.js');
 
 export default {
-  props: ['personalities'],
+  props: ['personalities', 'personalitiesCompare'],
 	methods: {
 		initPersonalityChart_1() {
       new Chart(document.getElementById('personalityChart_1'), {
@@ -44,14 +44,14 @@ export default {
       new Chart(document.getElementById('personalityChart_2'), {
         type: 'radar',
         data: {
-          labels: this.personalities && this.personalities.map(personality => personality.name),
+          labels: this.personalitiesCompare && this.personalitiesCompare.map(personality => personality.name),
           datasets: [
             {
               fill: true,
               backgroundColor: "rgba(253,159,110,0.7)",
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
-              data: this.personalities && this.personalities.map(personality => personality.percentile * 100)
+              data: this.personalitiesCompare && this.personalitiesCompare.map(personality => personality.percentile * 100)
             }
           ]
 				},
@@ -70,8 +70,10 @@ export default {
 	watch: {
 		personalities() {
 			this.initPersonalityChart_1();
+    },
+    personalitiesCompare() {
 			this.initPersonalityChart_2();
-		}
+    }
 	},
 }
 </script>
