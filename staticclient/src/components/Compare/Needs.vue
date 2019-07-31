@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="box">
-      <div id="needs" v-if="needs">
+      <div id="needs">
         <div class="boxheading">NEEDS</div>
-        <span v-if="matchScore">Compatible: {{matchScore}}</span>
+        <span>Compability {{matchNeedsScore}}</span>
         <p><span style="margin-right: .7rem"><b>Excitement:</b> Wants to get out, live life and have fun.</span> 
           <span class="compare-percentile-container">
             <span class="color-purple fw-600">{{needs && needs.need_excitement}}%</span> | <span class="color-orange fw-600">{{needsCompare && needsCompare.need_excitement}}%</span>
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+	import FoldingCube from '@/components/Loading/Loading.vue';
+
   export default {
     props: ['needs', 'needsCompare', 'matchScore'],
     watch: {
@@ -68,6 +70,11 @@
       needsCompare(){
         return needsCompare
       }
+    },
+    computed: {
+      matchNeedsScore() {
+        return Math.round(100 - (this.matchScore * 100)) + '%'
+      },
     },
   }
 </script>
@@ -192,18 +199,22 @@
   .color-purple { color:#6c3fb6 };
   .color-orange { color: #ff9f6e };
   .first-user[type=range]::-moz-range-thumb {
+    opacity: .75;
     background: #6c3fb6;
     border: 1px solid #c6a9f7;
   }
   .first-user[type=range]::-webkit-slider-thumb {
+    opacity: .75;
     background: #6c3fb6;
     border: 1px solid #c6a9f7;
   }
   .second-user[type=range]::-moz-range-thumb {
+    opacity: .75;
     background: #ff9f6e;
     border: 1px solid #ff8f56;
   }
   .second-user[type=range]::-webkit-slider-thumb {
+    opacity: .75;
     background: #ff9f6e;
     border: 1px solid #ff8f56;
   }

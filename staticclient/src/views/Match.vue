@@ -23,9 +23,12 @@
           </div>
           <div class="username">{{$route.query.match}}</div>
         </div>
-        <div v-if="matchTotalScore">
-          <p>Compatible</p>
-          {{matchTotalScore}}
+        <div v-if="match.totalScore" style="color: #616161;">
+          <p style="font-size: 2.6rem; margin-bottom: -9px;">{{matchTotalScore}}</p>
+          <p style="font-size: .9rem;">Compability</p>
+        </div>
+        <div v-else>
+          <p style="font-size: .9rem;">Matching in progress</p>
         </div>
         <div style="display: flex; justify-content: space-evenly;">
           <div style="width:75px; height: 75px;">
@@ -39,19 +42,19 @@
         <compare-profile 
           :personalities="personality" 
           :personalitiesCompare="personalityCompare"
-          :matchScore="matchPersonalityScore"
+          :matchScore="match.personalityScore"
           style="margin-top: 3rem"
         ></compare-profile>
         <compare-needs
           :needs="needs" 
           :needsCompare="needsCompare"
-          :matchScore="matchNeedsScore"
+          :matchScore="match.needsScore"
           style="margin-top: 2rem"
         ></compare-needs>
         <compare-values 
           :values="values"
           :valuesCompare="valuesCompare"
-          :matchScore="matchValuesScore"
+          :matchScore="match.valuesScore"
           style="margin-top: 2rem"
         ></compare-values>
       </section>

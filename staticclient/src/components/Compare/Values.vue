@@ -1,7 +1,7 @@
 <template>
   <div id="values" class="box">
     <div class="boxheading">VALUES</div>
-    <span v-if="matchScore">Compatible: {{matchScore}}</span>
+    <span>Compability {{matchPersonalityScore}}</span>
     <p><span style="margin-right: .7rem">Shows concern for the wellbeing of others.</span> 
       <span class="compare-percentile-container">
         <span class="color-purple fw-600">{{values.value_self_transcendence}}%</span> | <span class="color-orange fw-600">{{valuesCompare.value_self_transcendence}}%</span>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+  import FoldingCube from '@/components/Loading/Loading.vue';
   import ValuesChart from '../ValuesChart';
 
   export default {
@@ -66,7 +67,12 @@
     data() {
       return {
       }
-    }
+    },
+    computed: {
+      matchPersonalityScore() {
+        return Math.round(100 - (this.matchScore * 100)) + '%'
+      },
+    },
   }
 </script>
 
@@ -188,18 +194,22 @@
     padding: 0;
   }
   .first-user[type=range]::-moz-range-thumb {
+    opacity: .75;
     background: #6c3fb6;
     border: 1px solid #c6a9f7;
   }
   .first-user[type=range]::-webkit-slider-thumb {
+    opacity: .75;
     background: #6c3fb6;
     border: 1px solid #c6a9f7;
   }
   .second-user[type=range]::-moz-range-thumb {
+    opacity: .75;
     background: #ff9f6e;
     border: 1px solid #ff8f56;
   }
   .second-user[type=range]::-webkit-slider-thumb {
+    opacity: .75;
     background: #ff9f6e;
     border: 1px solid #ff8f56;
   }

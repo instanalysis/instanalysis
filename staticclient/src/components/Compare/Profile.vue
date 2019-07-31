@@ -1,7 +1,7 @@
 <template>
   <div class="box" style="width: 100%; text-align: center; display: flex; ">
     <div class="sectionhead">
-      <div class="heading">Personality</div> <span v-if="matchScore">Compatible: {{matchScore}}</span>
+      <div class="heading">Personality</div> <span v-if="matchScore">Compability {{matchPersonalityScore}}</span>
     </div>
     <div style="width:100%">
       <canvas id="personalityChart_1" width="" height="" style="display: unset;"></canvas>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import FoldingCube from '@/components/Loading/Loading.vue';
 const Chart = require('chart.js');
 
 export default {
@@ -72,7 +73,12 @@ export default {
     personalitiesCompare() {
 			this.initPersonalityChart();
     }
-	},
+  },
+  computed: {
+    matchPersonalityScore() {
+      return Math.round(100 - (this.matchScore * 100)) + '%'
+    },
+  },
 }
 </script>
 

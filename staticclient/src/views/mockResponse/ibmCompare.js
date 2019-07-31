@@ -107,7 +107,7 @@ export default {
 			"trait_id": "big5_extraversion",
 			"name": "Extraversion",
 			"category": "personality",
-			"percentile": 0.08389523754195705,
+			"percentile": 0.98389523754195705,
 			"raw_score": 0.48945513710028,
 			"significant": true,
 			"children": [{
@@ -115,14 +115,14 @@ export default {
 				"name": "Activity level",
 				"category": "personality",
 				"percentile": 0.44673900142404765,
-				"raw_score": 0.5335275281663443,
+				"raw_score": 0.9335275281663443,
 				"significant": true
 			}, {
 				"trait_id": "facet_assertiveness",
 				"name": "Assertiveness",
 				"category": "personality",
 				"percentile": 0.5758182457398059,
-				"raw_score": 0.6536172486459514,
+				"raw_score": 0.98945513710028,
 				"significant": true
 			}, {
 				"trait_id": "facet_cheerfulness",
@@ -136,7 +136,7 @@ export default {
 				"name": "Excitement-seeking",
 				"category": "personality",
 				"percentile": 0.8895426459185158,
-				"raw_score": 0.6555062642615235,
+				"raw_score": 0.9555062642615235,
 				"significant": true
 			}, {
 				"trait_id": "facet_friendliness",
@@ -207,7 +207,7 @@ export default {
 			"trait_id": "big5_neuroticism",
 			"name": "Emotional range",
 			"category": "personality",
-			"percentile": 0.024122338219587314,
+			"percentile": 0.924122338219587314,
 			"raw_score": 0.3918557625217266,
 			"significant": true,
 			"children": [{
