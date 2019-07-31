@@ -31,13 +31,16 @@ function compare (dataSetOne, dataSetTwo) {
     console.log('set n1 n2 arr', n1Arr)
 	let nDistance = 0
 	for (let i = 0; i< n1Arr.length; i++){
-        console.log('n1arr length', n1Arr.length)
+        console.log(i,'n1arr index score:', n1Arr[i].raw_score)
+        console.log(i,'n2arr index score:', n2Arr[i].raw_score)
 
 		let diff = n1Arr[i].raw_score - n2Arr[i].raw_score
 		let diffSquared = diff * diff
-		nDistance += diffSquared
+        nDistance += diffSquared
+        console.log({nDistance})
 	}
-	let nScore = Math.sqrt(nDistance)
+    let nScore = Math.sqrt(nDistance)
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~nscore telah di sqrt:', nScore)
 	results.needsScore = nScore
 
 	const v1Arr = dataSetOne.values
@@ -45,13 +48,15 @@ function compare (dataSetOne, dataSetTwo) {
     console.log('set v1 v2 arr', v1Arr)
 	let vDistance = 0
 	for (let i = 0; i< v1Arr.length; i++){
-        console.log('v1arr length', v1Arr.length)
+        console.log(i,'v1arr index i:',i, v1Arr[i].raw_score)
+        console.log(i,'v2arr index i:',i, v2Arr[i].raw_score)
 		let diff = v1Arr[i].raw_score - v2Arr[i].raw_score
 		let diffSquared = diff * diff
-		vDistance += diffSquared
+        vDistance += diffSquared
+        console.log({vDistance})
 	}
     let vScore = Math.sqrt(vDistance)
-    console.log('vscore telah di sqrt', vScore)
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~vscore telah di sqrt', vScore)
 	results.valuesScore = vScore
 
     results.totalScore = (pScore +  nScore + vScore)/3
