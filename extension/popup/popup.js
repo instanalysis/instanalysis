@@ -10,9 +10,9 @@
 // }
 // mockSavedUsers()
 
-chrome.storage.local.set({postlimit: 10})
 
 window.onload = function(e) {
+	chrome.storage.local.set({postlimit: 10})
 	reloadSavedUsers()
 }
 
@@ -89,6 +89,6 @@ function reloadSavedUsers(){
 		})
 	})
 	chrome.storage.local.set({selectedToCompare: savedUserSelector.value})
-	
+
 	compareButton.disabled = true
 }
