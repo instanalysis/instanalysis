@@ -47,21 +47,6 @@ chrome.runtime.onMessage.addListener(
       })
     }
 
-    if (request.getSavedUsers) {
-      return new Promise ((resolve, reject) => {
-        chrome.storage.local.get(['savedUsers'], function(result){
-          console.log('currentSaved:', result.savedUsers)
-          resolve(result.savedUsers)
-          // console.log('payload:',request.getSavedUsers)
-          // result.savedUsers.forEach(user => {
-          //   let option = document.createElement("option")
-          //   let text = document.createTextNode(user.username)
-          //   option.appendChild(text)
-          //   request.getSavedUsers.appendChild(option)
-          // })
-        })
-      })
-    }
   }
 );
 
