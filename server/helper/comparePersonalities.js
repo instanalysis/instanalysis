@@ -15,19 +15,20 @@ function compare (dataSetOne, dataSetTwo) {
 		let facet1 = p1Arr[i]
 		let facet2 = p2Arr[i]
 		for (let j = 0; j < facet1.children.length; j ++){
-            console.log('array facet 1 children length', facet1.children.length)
 			// for each trait in the facet, get score and compare
-			let diff = facet1.children[j].raw_score - facet2.children[j].raw_score
+            let diff = facet1.children[j].raw_score - facet2.children[j].raw_score
+            console.log("facet1",facet1.children[j].raw_score)
+            console.log("facet2",facet2.children[j].raw_score)
 			let diffSquared = diff * diff
 			pDistance += diffSquared
 		}
 	}
     let pScore = Math.sqrt(pDistance)
-    console.log('pscore',pScore)
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~pscore telah di sqrt:',pScore)
 	results.personalityScore = pScore
 
 	const n1Arr = dataSetOne.needs
-    const n2Arr = dataSetOne.needs
+    const n2Arr = dataSetTwo.needs
     console.log('set n1 n2 arr', n1Arr)
 	let nDistance = 0
 	for (let i = 0; i< n1Arr.length; i++){
@@ -44,7 +45,7 @@ function compare (dataSetOne, dataSetTwo) {
 	results.needsScore = nScore
 
 	const v1Arr = dataSetOne.values
-	const v2Arr = dataSetOne.values
+	const v2Arr = dataSetTwo.values
     console.log('set v1 v2 arr', v1Arr)
 	let vDistance = 0
 	for (let i = 0; i< v1Arr.length; i++){

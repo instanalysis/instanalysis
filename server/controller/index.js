@@ -48,13 +48,15 @@ class analysisController {
 
             // // Start
             io.emit('hello')
-            io.emit(`start${credential}`,
-                {
-                    wordCloud: words,
-                    profilePicture: userData.userimage,
-                    totalLikes: likes
-                }
-            )
+            setTimeout(()=>{
+                io.emit(`start${credential}`,
+                    {
+                        wordCloud: words,
+                        profilePicture: userData.userimage,
+                        totalLikes: likes
+                    }
+                )
+            }, 1500)
 
             // IBManalysis
             let personalityAnalysisResult = await personalityAnalysis(userData)
