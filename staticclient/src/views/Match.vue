@@ -145,11 +145,13 @@ export default {
 <style>
 #header-compare {
   position: fixed;
+  top: 16%;
+  left: -1%;
   width: 100%;
   background-color: #fff;
   box-shadow: 0.1rem 0.3rem 0.3rem -0.5rem #777;
-  margin-left: -2rem;
-  padding: 1rem 3.5rem;
+  margin-left: 0rem;
+  padding: 1rem 3rem;
   margin-top: -3rem;
   z-index: 999;
 }
