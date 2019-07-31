@@ -40,13 +40,6 @@ chrome.runtime.onMessage.addListener(
         }
       })();
     }
-
-    if (request.clearSavedUsers) {
-      chrome.storage.local.set({savedUsers:[]}, function(){
-        console.log('cleared saved users')
-      })
-    }
-
   }
 );
 
@@ -61,13 +54,25 @@ chrome.runtime.onMessage.addListener(
 //event from instanalysis client
 chrome.runtime.onMessageExternal.addListener(
   function(request, sender, sendResponse) {
-    if (request.saveUser) {
-      console.log(request.saveUser)
+    let curUser = request.saveUser
+    if (curUser) {
+      console.log(curUser)
       // if user has no ibm profile data (less than 100 words)
-      if (request.saveUser.username){
+      if (curUser.username){
         chrome.storage.local.get(['savedUsers'], function(result){
           let currentSaved = result.savedUsers
-          currentSaved.push(request.saveUser)
+          let newUser = true
+          // if user was already saved, rewrite old saved data
+          for (let i = 0; i < currentSaved.length; i++){
+            if (currentSaved[i].username === curUser.username){
+              newUser = false
+              currentSaved[i] = curUser
+            }
+          }
+          // if user is new, push to saved users array
+          if (newUser) currentSaved.push(request.saveUser)
+
+          //save updated array
           chrome.storage.local.set({savedUsers: currentSaved}, function(){
             console.log('saved user', request.saveUser.username)
           })
