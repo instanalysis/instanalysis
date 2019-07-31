@@ -5,52 +5,52 @@
         <div class="boxheading">NEEDS</div>
         <p><span style="margin-right: .7rem"><b>Excitement:</b> Wants to get out, live life and have fun.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs && needs.need_excitement}}%</span> | <span class="color-orange fw-600">80%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_excitement}}%</span> | <span class="color-orange fw-600">{{needsCompare && needsCompare.need_excitement}}%</span>
           </span>
         </p> 
         <div class="range-slider sliderflex">
           <input class="first-user slider" v-model="needs.need_excitement" min="0" max="100" type="range" disabled>
-          <input class="second-user slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+          <input class="second-user slider" v-model="needsCompare.need_excitement" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><span style="margin-right: .7rem"><b>Self-expression:</b> Enjoys asserting their own unique identity.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs && needs.need_self_expression}}%</span> | <span class="color-orange fw-600">10%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_self_expression}}%</span> | <span class="color-orange fw-600">{{needsCompare && needsCompare.need_self_expression}}%</span>
           </span>
         </p>
         <div class="range-slider sliderflex">
           <input class="first-user slider" v-model="needs.need_self_expression" min="0" max="100" type="range" disabled>
-          <input class="second-user slider" value="10" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+          <input class="second-user slider" v-model="needsCompare.need_self_expression" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><span style="margin-right: .7rem"><b>Curiosity:</b> Has a desire to discover and explore.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs && needs.need_curiosity}}%</span> | <span class="color-orange fw-600">100%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_curiosity}}%</span> | <span class="color-orange fw-600">{{needsCompare && needsCompare.need_curiosity}}%</span>
           </span>
         </p>
         <div class="range-slider sliderflex">
           <input class="first-user slider" v-model="needs.need_curiosity" min="0" max="100" type="range" disabled>
-          <input class="second-user slider" value="100" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+          <input class="second-user slider" v-model="needsCompare.need_curiosity" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><span style="margin-right: .7rem"><b>Excellence:</b> Sets high standards and desires perfection.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs && needs.need_ideal}}%</span> | <span class="color-orange fw-600">20%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_ideal}}%</span> | <span class="color-orange fw-600">{{needsCompare && needsCompare.need_ideal}}%</span>
           </span>
         </p>
         <div class="range-slider sliderflex">
           <input class="first-user slider" v-model="needs.need_ideal" min="0" max="100" type="range" disabled>
-          <input class="second-user slider" value="20" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+          <input class="second-user slider" v-model="needsCompare.need_ideal" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><span style="margin-right: .7rem"><b>Closeness:</b> Relishes being connected to family and friends.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs && needs.need_closeness}}%</span> | <span class="color-orange fw-600">40%</span>
+            <span class="color-purple fw-600">{{needs && needs.need_closeness}}%</span> | <span class="color-orange fw-600">{{needsCompare && needsCompare.need_closeness}}%</span>
           </span>
         </p>
         <div class="range-slider sliderflex" style="display: relative;">
           <input class="first-user slider" v-model="needs.need_closeness" min="0" max="100" type="range" name="need_closeness" disabled>
-          <input class="second-user slider" value="40" style="background: transparent;" min="0" max="100" step="0.5" type="range" disabled>
+          <input class="second-user slider" v-model="needsCompare.need_closeness" style="background: transparent;" min="0" max="100" step="0.5" type="range" disabled>
         </div>
       </div>
     </div>
@@ -59,10 +59,13 @@
 
 <script>
   export default {
-    props: ['needs'],
+    props: ['needs', 'needsCompare'],
     watch: {
       needs() {
         return needs
+      },
+      needsCompare(){
+        return needsCompare
       }
     },
   }

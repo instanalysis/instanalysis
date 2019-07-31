@@ -33,7 +33,11 @@
         :personalitiesCompare="personalityCompare" 
         style="margin-top: 3rem"
       ></compare-profile>
-      <compare-needs  :needs="needs" style="margin-top: 2rem"></compare-needs>
+      <compare-needs  
+        :needs="needs" 
+        :needsCompare="needsCompare" 
+        style="margin-top: 2rem"
+      ></compare-needs>
       <compare-values :values="values" style="margin-top: 2rem"></compare-values>
     </div>
   </div>
