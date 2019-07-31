@@ -1,7 +1,8 @@
 module.exports = compare
 
 function compare (dataSetOne, dataSetTwo) {
-	let results = {}
+    let results = {}
+    console.log('mulai di ')
 	//compare personality
 	const p1Arr = dataSetOne.personality
 	const p2Arr = dataSetTwo.personality
