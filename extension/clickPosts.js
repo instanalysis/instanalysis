@@ -66,8 +66,9 @@ async function scrapeData(limit) {
 		data[i] = {	imageUrl: '',	caption: '', likes: 0, date: ''	};
 		post.click();
 		// wait for post to load
-		// @STEF: This block of code causse error on line 90 (document.querySelector('article.M9sTE') <-- Will sometimes return null)
-		// -->
+		// @STEF: This block of code causes error on line 89 
+		// (document.querySelector('article.M9sTE') will sometimes return null on videos
+		// -----> below ----->
 				// await waitForElement('article.M9sTE', 3000)
 				// let timetaken = 0
 				// // wait for image or video to load
@@ -75,8 +76,8 @@ async function scrapeData(limit) {
 				// 	// console.log('waiting for image or video to load')
 				// 	await new Promise(resolve => setTimeout(resolve, 100))
 				// 	timetaken += 100
-				// 	// console.log(timetaken)
 				// }
+		// <-----
 		//		
 		while(!document.querySelector('article.M9sTE')) {
 			await new Promise(resolve => setTimeout(resolve, 200));
