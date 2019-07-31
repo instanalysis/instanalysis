@@ -7,10 +7,10 @@
 			</div>
 			<div class="wordcount">
 				<span class="wcn">Number of images analyzed</span>
-				<span class="wcn prp">{{imageCount}}</span>
+				<span class="wcn prp">{{imageCount ? imageCount : '–'}}</span>
 			</div>
 		</div>
-		<div class="labelgrid">
+		<div class="labelgrid" v-if="emotions">
 			<div class="box">
 				<div class="boxheading">LIKES GRAPH</div>
 				<likes-chart :posts="perPost"/>
@@ -35,17 +35,19 @@
 				</div>
 			</div>
 		</div>
+		<folding-cube v-else/>
 	</div>
 </template>
 
 <script>
 	import EmotionsChart from './ImageEmotionsChart.vue';
 	import LikesChart from './LikesChart.vue';
+	import FoldingCube from '@/components/Loading/Loading.vue';
 
 	export default {
 		props: ['perPost', 'emotions', 'interests'],
 		components: {
-			EmotionsChart, LikesChart
+			EmotionsChart, LikesChart, FoldingCube
 		},
 		mounted() {
 		},
@@ -60,7 +62,9 @@
 				return this.sortedInterests.slice(4, 8)
 			},
 			imageCount() {
-				return this.perPost.length;
+				if(this.perPost) {
+					return this.perPost.length;
+				} else return null;
 			}
 		}
 	}

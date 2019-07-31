@@ -5,10 +5,6 @@
 <script>
 const Chart = require('chart.js');
 
-function cleanDate() {
-
-}
-
 export default {
   props: ['posts'],
 	data() {
@@ -52,7 +48,7 @@ export default {
       new Chart(document.getElementById('likesChart'), {
         type: 'line',
         data: {
-          labels: this.posts.map(post => new Date().toDateString().substring(4, 10)),
+          labels: this.posts.map(post => new Date(post.date).toDateString().substring(4, 10)),
           datasets: [
             {
               fill: true,

@@ -3,7 +3,13 @@
     <div class="stripes">
     </div>
     <div class="container">
-      <!-- <profile-info :user="userData" :totalLikes="startData.totalLikes" :gender="gender" :age="age"/>
+      <profile-info
+        :user="userData"
+        :totalLikes="startData.totalLikes"
+        :gender="gender"
+        :age="age"
+        :personality="personality"
+        v-if="startData.totalLikes"/>
       <text-data
         :wordStr="startData.wordCloud"
         :wordCount="ibmData.word_count"
@@ -11,19 +17,13 @@
         :needs="needs"
         :values="values"
         :consumptionPreferences="consumptionPreferences"
-        v-if="personality"
       />
       <image-data
         :perPost="perPost"
         :emotions="emotions"
         :interests="interests"
-        v-if="perPost"
-      /> -->
+      />
     </div>
-    <p style="display: inline-block; margin: 0.5rem; background-color: #ddd;">
-      User: {{username}}<br>Key: {{key}}<br>
-      {{message}}
-    </p>
   </div>
 </template>
 
@@ -40,7 +40,7 @@ import rekogData from './mockResponse/rekog';
 export default {
   name: 'home',
   components: {
-    ProfileInfo, TextData, ImageData
+    ProfileInfo, TextData, ImageData,
   },
   data() {
     return {
@@ -51,6 +51,7 @@ export default {
       startData: {},
       ibmData: {},
       rekogData: {},
+      mock: true,
     }
   },
   created() {
@@ -61,22 +62,30 @@ export default {
       this.key = this.$route.query.key
     }
     // mock
-    this.startData = startData;
-    setTimeout(() => {
-      this.ibmData = ibmData.personalityAnalysisResult;
-      this.rekogData = rekogData;
-    }, 2000)
 
+    if(this.mock) {
+      setTimeout(() => {
+        this.startData = startData;
+      }, 2000)
+      setTimeout(() => {
+        this.ibmData = ibmData.personalityAnalysisResult;
+      }, 4000)
+      setTimeout(() => {
+        this.rekogData = rekogData
+      }, 6000);
+    } else {
+      const socket = io("http://server.instanalysis.online/");
+      socket.on(`start-${this.username}-${this.key}`, data => this.startData = data);
+      socket.on(`ibm-${this.username}-${this.key}`, data => this.ibmData = data);
+      socket.on(`rekog-${this.username}-${this.key}`, data => this.rekogData = data);
+    }
     // setTimeout(() => {
     //   const extid = 'njalbdhpniekifijjefichllkdjeecll'
     //   chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
     // }, 500)
-    
   },
   mounted() {
     const socket = io("http://server.instanalysis.online/");
-
-    console.log(`start-${this.username}-${this.key}`)
     socket.on(`start-${this.username}-${this.key}`, function(data){
       console.log('startData', data)
     });
@@ -135,13 +144,13 @@ export default {
       } else return null;
     },
     emotions() {
-      if(this.rekogData.emotions) {
+      if(this.rekogData.summary) {
         return this.rekogData.summary.emotionFromPosts
       } else return null;
     },
     interests() {
-      if(this.rekogData.interestFromPosts) {
-        return this.rekogData.interestFromPosts
+      if(this.rekogData.summary) {
+        return this.rekogData.summary.interestFromPosts
       } else return null;
     },
     age() {
@@ -152,8 +161,8 @@ export default {
     gender() {
       if (this.rekogData.summary) {
         return this.rekogData.summary.gender
-      }
-    }
+      } else return null;
+    },
   }
 }
 </script>
@@ -188,7 +197,7 @@ $purp2: #6c3fb6;
 	padding: 0.8rem;
 	margin-bottom: 1.2rem;
 	border-radius: 0.5rem;
-	box-shadow: 0.1rem 0.2rem 1.1rem -0.5rem #777;
+	box-shadow: 0.1rem 0.2rem 1.1rem -0.4rem #777;
 	line-height: 1.6rem;
 	font-size: 0.9rem;
 }
@@ -213,4 +222,3 @@ $purp2: #6c3fb6;
   padding: 0rem 1.5rem;
 }
 </style>
-
