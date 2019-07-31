@@ -8,6 +8,7 @@ router.get('/', (req,res)=>{
 
 router.post('/analysis', translateToEnglish, controller.analysis)
 router.post('/match', controller.match)
+router.post('/test', controller.test)
 // router.post('/analysis', translateToEnglish, controller.analysis)
 
 

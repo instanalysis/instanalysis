@@ -16,7 +16,9 @@ class analysisController {
             res.status(500).json(e)
         }
     }
-
+    static test(req,res){
+        console.log(req.body)
+    }
 
     static async analysis(req, res) { 
         console.log("di controller analysis")
