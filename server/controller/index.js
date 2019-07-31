@@ -9,6 +9,7 @@ class analysisController {
 
             console.log("from controller match")
             let {user1, user2} = req.body
+            console.log(req.body)
             let comparedResult = comparePersonalities(user1, user2)
             res.status(200).json(comparedResult)
         }
