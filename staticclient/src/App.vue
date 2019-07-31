@@ -29,7 +29,7 @@ $purp1: #592ba1;
   align-items: center;
 }
 #brand {
-  font-size: 1.25rem;
+  font-size: 22px;
   font-weight: 700;
 }
 #aboutlink {

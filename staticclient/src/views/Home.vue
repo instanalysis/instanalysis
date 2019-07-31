@@ -38,9 +38,9 @@ import TextData from '@/components/TextData.vue';
 import ImageData from '@/components/ImageData.vue';
 import io from 'socket.io-client';
 // mock
-import startData from './mockResponse/start';
-import ibmData from './mockResponse/ibm';
-import rekogData from './mockResponse/rekog';
+// import startData from './mockResponse/start';
+// import ibmData from './mockResponse/ibm';
+// import rekogData from './mockResponse/rekog';
 
 export default {
   name: 'home',
@@ -83,21 +83,9 @@ export default {
         if(!this.startData.totalLikes) {
           this.message = 'Welcome to InstAnalysis. Open our extension on an Instagram profile to get results.'
         }
-      }, 5000)
+      }, 5500)
       
     }
-  },
-  mounted() {
-    // const socket = io("http://server.instanalysis.online/");
-    // socket.on(`start-${this.username}-${this.key}`, function(data){
-    //   console.log('startData', data)
-    // });
-    // socket.on(`ibm-${this.username}-${this.key}`, function(data){
-    //   console.log('ibmData', data)
-    // });
-    // socket.on(`rekog-${this.username}-${this.key}`, function(data){
-    //   console.log('amazonData', data)
-    // });
   },
   computed: {
     userData() {
