@@ -293,8 +293,8 @@ export default {
 			"trait_id": "need_ideal",
 			"name": "Ideal",
 			"category": "needs",
-			"percentile": 0.3319359195147522,
-			"raw_score": 0.670402701896123,
+			"percentile": 0.9319359195147522,
+			"raw_score": 0.270402701896123,
 			"significant": true
 		}, {
 			"trait_id": "need_liberty",
