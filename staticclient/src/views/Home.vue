@@ -37,10 +37,6 @@ import ProfileInfo from '@/components/ProfileInfo.vue';
 import TextData from '@/components/TextData.vue';
 import ImageData from '@/components/ImageData.vue';
 import io from 'socket.io-client';
-// mock
-// import startData from './mockResponse/start';
-// import ibmData from './mockResponse/ibm';
-// import rekogData from './mockResponse/rekog';
 
 export default {
   name: 'home',
