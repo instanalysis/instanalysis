@@ -3,7 +3,13 @@
     <div class="stripes">
     </div>
     <div class="container">
-      <profile-info :user="userData"/>
+      <profile-info
+        :user="userData"
+        :totalLikes="startData.totalLikes"
+        :gender="gender"
+        :age="age"
+        :personality="personality"
+        v-if="startData.totalLikes"/>
       <text-data
         :wordStr="startData.wordCloud"
         :wordCount="ibmData.word_count"
@@ -11,14 +17,13 @@
         :needs="needs"
         :values="values"
         :consumptionPreferences="consumptionPreferences"
-        v-if="personality"
       />
-      <image-data/>
+      <image-data
+        :perPost="perPost"
+        :emotions="emotions"
+        :interests="interests"
+      />
     </div>
-    <p style="display: inline-block; margin: 0.5rem; background-color: #ddd;">
-      User: {{username}}<br>Key: {{key}}<br>
-      {{message}}
-    </p>
   </div>
 </template>
 
@@ -35,17 +40,18 @@ import rekogData from './mockResponse/rekog';
 export default {
   name: 'home',
   components: {
-    ProfileInfo, TextData, ImageData
+    ProfileInfo, TextData, ImageData,
   },
   data() {
     return {
-      username: 'yonathanloekito',
-      profilePicture: 'https://scontent-sin2-2.cdninstagram.com/vp/8d40cd77cea8846909425b7ebc60e50e/5DE3E987/t51.2885-19/s150x150/13395042_1061367873910107_837713333_a.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com',
+      username: '',
+      profilePicture: '',
       key: '',
       message: '',
       startData: {},
       ibmData: {},
       rekogData: {},
+      mock: true,
     }
   },
   created() {
@@ -56,37 +62,45 @@ export default {
       this.key = this.$route.query.key
     }
     // mock
-    this.startData = startData;
-    setTimeout(() => {
-      this.ibmData = ibmData.personalityAnalysisResult;
-      this.rekogData = rekogData;
-    }, 1000)
 
-    setTimeout(() => {
-      const extid = 'njalbdhpniekifijjefichllkdjeecll'
-      // chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
-    }, 500)
-    
+    if(this.mock) {
+      setTimeout(() => {
+        this.startData = startData;
+      }, 2000)
+      setTimeout(() => {
+        this.ibmData = ibmData.personalityAnalysisResult;
+      }, 4000)
+      setTimeout(() => {
+        this.rekogData = rekogData
+      }, 6000);
+    } else {
+      const socket = io("http://server.instanalysis.online/");
+      socket.on(`start-${this.username}-${this.key}`, data => this.startData = data);
+      socket.on(`ibm-${this.username}-${this.key}`, data => this.ibmData = data);
+      socket.on(`rekog-${this.username}-${this.key}`, data => this.rekogData = data);
+    }
+    // setTimeout(() => {
+    //   const extid = 'njalbdhpniekifijjefichllkdjeecll'
+    //   chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
+    // }, 500)
   },
   mounted() {
-    // const socket = io("http://34.87.39.190/");
-
-    // socket.on(`start-${this.user}-123abc`, function(data){
-    //     console.log('started', data)
-    // });
-    // socket.on(`ibm-${this.user}-123abc`, function(data){
-    //     console.log('IBM ANALYSIS', data)
-    // });
-    // socket.on(`rekog-${this.user}-123abc`, function(data){
-    //     console.log('AMAZON rekogniton', data)
-    // });
-
+    const socket = io("http://server.instanalysis.online/");
+    socket.on(`start-${this.username}-${this.key}`, function(data){
+      console.log('startData', data)
+    });
+    socket.on(`ibm-${this.username}-${this.key}`, function(data){
+      console.log('ibmData', data)
+    });
+    socket.on(`rekog-${this.username}-${this.key}`, function(data){
+      console.log('amazonData', data)
+    });
   },
   computed: {
     userData() {
       return {
         username: this.username,
-        profilePicture: this.profilePicture,
+        profilePicture: this.startData.profilePicture,
       }
     },
     personality() {
@@ -124,6 +138,31 @@ export default {
         return combined;
       } else return null;
     },
+    perPost() {
+      if(this.rekogData.perPost) {
+        return this.rekogData.perPost
+      } else return null;
+    },
+    emotions() {
+      if(this.rekogData.summary) {
+        return this.rekogData.summary.emotionFromPosts
+      } else return null;
+    },
+    interests() {
+      if(this.rekogData.summary) {
+        return this.rekogData.summary.interestFromPosts
+      } else return null;
+    },
+    age() {
+      if(this.rekogData.summary) {
+        return this.rekogData.summary.age
+      } else return null;
+    },
+    gender() {
+      if (this.rekogData.summary) {
+        return this.rekogData.summary.gender
+      } else return null;
+    },
   }
 }
 </script>
@@ -158,7 +197,7 @@ $purp2: #6c3fb6;
 	padding: 0.8rem;
 	margin-bottom: 1.2rem;
 	border-radius: 0.5rem;
-	box-shadow: 0.1rem 0.2rem 1.1rem -0.5rem #777;
+	box-shadow: 0.1rem 0.2rem 1.1rem -0.4rem #777;
 	line-height: 1.6rem;
 	font-size: 0.9rem;
 }
@@ -174,25 +213,6 @@ $purp2: #6c3fb6;
 .offset-l {
 	margin-left: 1rem;
 }
-// .userprofile {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin: 0 1.5rem;
-// }
-// .username {
-//   font-size: 2rem;
-//   padding: 0 1rem 1rem 2rem;
-// }
-// .ppc {
-//   width: 150px;
-//   height: 150px;
-//   border-radius: 100px;
-//   overflow: hidden;
-// }
-// .pp {
-//   max-width: 100%
-// }
 .stripes {
   height: 10rem;
   display: none;
@@ -202,4 +222,3 @@ $purp2: #6c3fb6;
   padding: 0rem 1.5rem;
 }
 </style>
-

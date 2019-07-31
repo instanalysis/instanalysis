@@ -1,5 +1,5 @@
 <template>
-	<div id="word-cloud" style="width: 100%; height: 22rem;"></div>
+	<div id="word-cloud" style="width: 100%; height: 20rem;"></div>
 </template>
 
 <script>
