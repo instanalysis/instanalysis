@@ -197,13 +197,13 @@ async function scrapeData(limit, compareUsername) {
 	console.log(payload)
 
 	// return [{hitServer: payload}, {openTab: `?user=${username}&key=${key}`}]
-	// if (compareUsername){
-	// 	chrome.runtime.sendMessage({hitServer: payload});
-	// 	chrome.runtime.sendMessage({openTab: `match?user=${username}&key=${pass}&match=${compareUsername}`});
-	// } else {
-	// 	chrome.runtime.sendMessage({hitServer: payload});
-	// 	chrome.runtime.sendMessage({openTab: `?user=${username}&key=${pass}`});
-	// }
+	if (compareUsername){
+		chrome.runtime.sendMessage({hitServer: payload});
+		chrome.runtime.sendMessage({openTab: `match?user=${username}&key=${pass}&match=${compareUsername}`});
+	} else {
+		chrome.runtime.sendMessage({hitServer: payload});
+		chrome.runtime.sendMessage({openTab: `?user=${username}&key=${pass}`});
+	}
 };
 
 chrome.storage.local.get(['selectedToCompare'], ({selectedToCompare}) => {
