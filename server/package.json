@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --coverage --forceExit --all"
+    "test": "jest --coverage --forceExit --all"
   },
   "directories": {
     "test": "test"
