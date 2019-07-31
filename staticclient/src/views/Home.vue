@@ -159,20 +159,21 @@ export default {
     ibmData() {
       if(this.personality) {
         const extid = 'njalbdhpniekifijjefichllkdjeecll'
-        // let currentUser = {
-        //   username: this.username,
-        //   startData: this.startData,
-        //   ibmData: this.ibmData,
-        // }
+        let currentUser = {
+          username: this.username,
+          startData: this.startData,
+          ibmData: this.ibmData,
+        }
         
-        // let arr = JSON.parse(localStorage.get('savedUsers'))
-        // if(!arr.find(user => user === this.username)) {
-        //   arr.push(currentUser)
-        //   localStorage.setItem('savedUsers', JSON.stringify(arr))
-        //   chrome.runtime.sendMessage(extid, {saveUser: {
-        //     username: this.username
-        //   }});
-        // }
+        let arr = JSON.parse(localStorage.get('savedUsers')) || []
+        console.log(arr)
+        if(!arr.find(user => user === this.username) || arr.length === 0) {
+          arr.push(currentUser)
+          localStorage.setItem('savedUsers', JSON.stringify(arr))
+          chrome.runtime.sendMessage(extid, {saveUser: {
+            username: this.username
+          }});
+        }
       }
     },
   }
