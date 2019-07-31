@@ -18,6 +18,7 @@ class analysisController {
     }
     static test(req,res){
         let io = req.io
+
         io.emit(`start-rubhi-abc123`,{
             wordCloud:'a'
         })
@@ -43,16 +44,13 @@ class analysisController {
             })
             res.json('request successful')
 
-            let credential = {
-                username: userData.username,
-                pass
-            }
+            let credential =`-${username}-${pass}`
             
             console.log('processing')
 
             // // Start
             io.emit('hello')
-            io.emit(`start-${credential.username}-${credential.pass}`,
+            io.emit(`start${credential}`,
                 {
                     wordCloud: words,
                     profilePicture: userData.userimage,
@@ -63,7 +61,7 @@ class analysisController {
             // IBManalysis
             let personalityAnalysisResult = await personalityAnalysis(userData)
             console.log(personalityAnalysisResult)
-            io.emit(`ibm-${credential.username}-${credential.pass}`,
+            io.emit(`ibm${credential}`,
                 {
                     personalityAnalysisResult
                 }
@@ -125,7 +123,7 @@ class analysisController {
                 gender = profilePicDetection.FaceDetails[0].Gender
             }
 
-            io.emit(`rekog-${credential.username}-${credential.pass}`,
+            io.emit(`rekog${credential}`,
                 {
                     perPost,
                     summary: {
@@ -138,6 +136,7 @@ class analysisController {
             )
             console.log(emotionFromPosts, 'emotionfromposts')
             console.log(interestFromPosts, 'interestFromPosts')
+            console.log(credential)
             console.log('done')
         }
         catch (e) {
