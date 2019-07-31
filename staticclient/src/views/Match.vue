@@ -145,7 +145,6 @@ export default {
 <style>
 #header-compare {
   position: fixed;
-  top: 16%;
   left: -1%;
   width: 100%;
   background-color: #fff;
