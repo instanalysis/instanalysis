@@ -86,18 +86,24 @@ class analysisController {
                     console.log(emotionFromPosts, 'emotionfromposts')
                     counter++
                     for (let i = 0; i < item.FaceDetails[0].Emotions.length; i++) {
-                        if (emotionFromPosts[item.FaceDetails[0].Emotions[i].Type]) {
-                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] += item.FaceDetails[0].Emotions[i].Confidence
+                        let emot = item.FaceDetails[0].Emotions[i].Type
+                        console.log({emot})
+                        console.log({confidende:item.FaceDetails[0].Emotions[i].Confidence})
+                        if (emotionFromPosts[emot]) {
+                            emotionFromPosts[emot] += item.FaceDetails[0].Emotions[i].Confidence
                         } else {
-                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = item.FaceDetails[0].Emotions[i].Confidence
+                            emotionFromPosts[emot] = item.FaceDetails[0].Emotions[i].Confidence
                         }
+
+                        console.log({total:emotionFromPosts[emot]})
                     }
                 }
             })
-
+            console.log({numberOfFaces:counter})
             if(counter !==0 ){
                 Object.keys(emotionFromPosts).forEach((item)=>{
                     emotionFromPosts[item] = emotionFromPosts[item] / counter
+                    console.log("=============",emotionFromPosts[item])
                 })
             }
             resultLabelDetection.forEach(item => {
