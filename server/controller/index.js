@@ -115,6 +115,7 @@ class analysisController {
                     resultFaceDetection: resultFaceDetection[index]
                 }
             })
+            console.log(resultFaceDetection)
             let age= 'Cannot get data'
             let gender= 'Cannot get data'
             if (profilePicDetection.FaceDetails.length === 1) {
