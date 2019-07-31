@@ -13,18 +13,35 @@ clearButton.onclick = function(e) {
 }
 
 let savedUserSelector = document.getElementById('savedUserSelector')
-savedUserSelector.onload = function(e) {
-	const storageUsers = JSON.parse(localStorage.getItem('savedUsers'))
-	console.log({storageUsers})
-	storageUsers.forEach( user => {
-		let option = document.createElement("option")
-		let text = document.createTextNode(user.username)
-		option.appendChild(text)
-		savedUserSelector.appendChild(option)
+window.onload = function(e) {
+	
+	chrome.storage.local.get(['savedUsers'], function(result){
+		const storageUsers = result.savedUsers
+		console.log({storageUsers})
+		storageUsers.forEach( user => {
+			let option = document.createElement("option")
+			let text = document.createTextNode(user.username)
+			option.appendChild(text)
+			savedUserSelector.appendChild(option)
+		})
 	})
 }
 
 let compareButton = document.getElementById('compareButton')
+compareButton.onclick = function (argument) {
+	chrome.tabs.query({
+		active: true,
+		currentWindow: true
+	}, function(tabs) {
+		setTimeout(() => {
+			window.close()
+		}, 200)
+		chrome.tabs.executeScript(
+			tabs[0].id,
+			{ file: 'clickPosts.js' }
+		);
+	});
+}
 
 let startButton = document.getElementById('startButton');
 startButton.onclick = function(element) {
@@ -41,7 +58,7 @@ startButton.onclick = function(element) {
 		);
 	});
 
-	// const storageUsers = JSON.parse(localStorage.get('savedUsers'))
+	// const storageUsers = JSON.parse(localStorage.getItem('savedUsers'))
 	// console.log(storageUsers)
 
 	// const storageUsers = chrome.local.get(['savedUsers'], ({ savedUsers }) => {

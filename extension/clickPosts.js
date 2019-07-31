@@ -36,7 +36,7 @@ async function waitForElement(element, maxTime){
 	// console.log('waiting for', element)
 	let time = 0
 	while(!document.querySelector(element) && time < maxTime){
-		await new Promise(resolve => setTimeout(resolve, 100))
+		await wait(100)
 		time += 100
 		// console.log(time)
 	}
@@ -66,12 +66,18 @@ async function scrapeData(limit) {
 		data[i] = {	imageUrl: '',	caption: '', likes: 0, postedOn: ''	};
 		post.click();
 		// wait for post to load
-		await waitForElement('article.M9sTE', 3000)
+		const article = await waitForElement('article.M9sTE', 2000)
+		// give more time to load the post
+		if (!article) {
+			console.log("taking a long time to load")
+			article = await waitForElement('article.M9sTE', 5000)
+		}
+		
 		let timetaken = 0
 		// wait for image or video to load
 		while(!document.querySelector('.KL4Bh') && !document.querySelector('._5wCQW') && timetaken < 5000){
 			// console.log('waiting for image or video to load')
-			await new Promise(resolve => setTimeout(resolve, 100))
+			await wait(100)
 			timetaken += 100
 			// console.log(timetaken)
 		}
@@ -80,7 +86,9 @@ async function scrapeData(limit) {
 		// check if image or video
 		if(document.querySelector('article.M9sTE').querySelector('.KL4Bh')) {
 			await waitForElement('.FFVAD', 2000)
-			let img = document.querySelector('.FFVAD')
+			let img = document.querySelector('article.M9sTE').querySelector('.KL4Bh').querySelector('.FFVAD')
+			// console.log(img)
+			await new Promise(resolve => setTimeout(resolve, 100))
 
 			temp = img
 				.getAttribute('srcset')
@@ -93,8 +101,8 @@ async function scrapeData(limit) {
 			try {
 				data[i].imageUrl = document.querySelector('article.M9sTE')
 					.querySelector('._5wCQW')
-					.querySelector('img')
-					.getAttribute('src')
+					.querySelector('video')
+					.getAttribute('poster')
 			} catch(err) {
 				console.log('No alt img for video')
 			}
@@ -118,6 +126,10 @@ async function scrapeData(limit) {
 		post = await waitForElement('.coreSpriteRightPaginationArrow', 3000)
 		if (!post) i = limit //break loop if no more posts
 	}
+	// close the post
+	const closeButton = await waitForElement('.ckWGn', 3000)
+	closeButton.click()
+
 	// Object to be sent to the backend
 	const key = generateKey()
 	const payload = {

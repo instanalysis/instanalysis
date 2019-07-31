@@ -2,7 +2,7 @@
   "name": "InstAnalysis",
   "version": "1.0",
   "description": "Perform an analysis on an Instagram account",
-  "permissions": ["activeTab", "declarativeContent", "storage", "http://localhost:3000/", "http://34.87.39.190/analysis/", "http://server.instanalysis.online/"],
+  "permissions": ["activeTab", "declarativeContent", "storage", "http://localhost:3000/", "http://34.87.39.190/analysis/", "http://server.instanalysis.online/", "http://instanalysis.online/"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
