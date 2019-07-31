@@ -17,12 +17,17 @@
         :needs="needs"
         :values="values"
         :consumptionPreferences="consumptionPreferences"
+        v-show="startData.totalLikes"
       />
       <image-data
         :perPost="perPost"
         :emotions="emotions"
         :interests="interests"
+        v-show="startData.totalLikes"
       />
+    </div>
+    <div style="margin: 3rem 1rem; text-align: center;" v-if="message">
+      {{message}}
     </div>
   </div>
 </template>
@@ -33,9 +38,9 @@ import TextData from '@/components/TextData.vue';
 import ImageData from '@/components/ImageData.vue';
 import io from 'socket.io-client';
 // mock
-import startData from './mockResponse/start';
-import ibmData from './mockResponse/ibm';
-import rekogData from './mockResponse/rekog';
+// import startData from './mockResponse/start';
+// import ibmData from './mockResponse/ibm';
+// import rekogData from './mockResponse/rekog';
 
 export default {
   name: 'home',
@@ -51,7 +56,6 @@ export default {
       startData: {},
       ibmData: {},
       rekogData: {},
-      mock: true,
     }
   },
   created() {
@@ -62,39 +66,26 @@ export default {
       this.key = this.$route.query.key
     }
     // mock
-
-    if(this.mock) {
-      setTimeout(() => {
-        this.startData = startData;
-      }, 2000)
-      setTimeout(() => {
-        this.ibmData = ibmData.personalityAnalysisResult;
-      }, 4000)
-      setTimeout(() => {
-        this.rekogData = rekogData
-      }, 6000);
+    const mock = false;
+    if(mock) {
+      // setTimeout(() => { this.startData = startData;
+      // }, 2000)
+      // setTimeout(() => { this.ibmData = ibmData.personalityAnalysisResult;
+      // }, 4000)
+      // setTimeout(() => { this.rekogData = rekogData
+      // }, 6000);
     } else {
       const socket = io("http://server.instanalysis.online/");
       socket.on(`start-${this.username}-${this.key}`, data => this.startData = data);
-      socket.on(`ibm-${this.username}-${this.key}`, data => this.ibmData = data);
+      socket.on(`ibm-${this.username}-${this.key}`, data => this.ibmData = data.personalityAnalysisResult);
       socket.on(`rekog-${this.username}-${this.key}`, data => this.rekogData = data);
+      setTimeout(() => {
+        if(!this.startData.totalLikes) {
+          this.message = 'Welcome to InstAnalysis. Open our extension on an Instagram profile to get results.'
+        }
+      }, 5500)
+      
     }
-    // setTimeout(() => {
-    //   const extid = 'njalbdhpniekifijjefichllkdjeecll'
-    //   chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
-    // }, 500)
-  },
-  mounted() {
-    const socket = io("http://server.instanalysis.online/");
-    socket.on(`start-${this.username}-${this.key}`, function(data){
-      console.log('startData', data)
-    });
-    socket.on(`ibm-${this.username}-${this.key}`, function(data){
-      console.log('ibmData', data)
-    });
-    socket.on(`rekog-${this.username}-${this.key}`, function(data){
-      console.log('amazonData', data)
-    });
   },
   computed: {
     userData() {
@@ -162,6 +153,27 @@ export default {
       if (this.rekogData.summary) {
         return this.rekogData.summary.gender
       } else return null;
+    },
+  },
+  watch: {
+    ibmData() {
+      if(this.personality) {
+        const extid = 'njalbdhpniekifijjefichllkdjeecll'
+        // let currentUser = {
+        //   username: this.username,
+        //   startData: this.startData,
+        //   ibmData: this.ibmData,
+        // }
+        
+        // let arr = JSON.parse(localStorage.get('savedUsers'))
+        // if(!arr.find(user => user === this.username)) {
+        //   arr.push(currentUser)
+        //   localStorage.setItem('savedUsers', JSON.stringify(arr))
+        //   chrome.runtime.sendMessage(extid, {saveUser: {
+        //     username: this.username
+        //   }});
+        // }
+      }
     },
   }
 }

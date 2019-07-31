@@ -1,5 +1,4 @@
 // const extensionId = 'njalbdhpniekifijjefichllkdjeecll'
-
 async function wait(ms) {
 	return new Promise(resolve => {
 		setTimeout(resolve, ms);
@@ -36,23 +35,57 @@ async function waitForElement(element, maxTime){
 	// console.log('waiting for', element)
 	let time = 0
 	while(!document.querySelector(element) && time < maxTime){
-		await new Promise(resolve => setTimeout(resolve, 100))
+		await wait(100)
 		time += 100
 		// console.log(time)
 	}
 	return document.querySelector(element)
 }
 
-async function scrapeData(limit) {
+// For progress bar
+let barWidth;
+let dots = 0;
+function progressBar() {
+	let msg = document.createElement('div');
+	msg.innerHTML = `<div class="lmess"><span id="loadingdots">Gathering Data</span><div>`
+	msg.className = 'scrapemessage'
+	
+	document.body.appendChild(msg)
+	let dotSpan = document.querySelector('#loadingdots')
+	setInterval(() => {
+		dots = (dots + 1) % 6
+		let str = 'Gathering Data'
+		for(let i = 0; i < dots; i ++) {
+			str += ' .'
+		}
+		dotSpan.innerHTML = str;
+	}, 160)
+
+	let bar = document.createElement('div')
+	bar.className = 'progbar-container'
+	
+	let progress = document.createElement('div')
+	progress.className = 'progbar-bar'
+
+	msg.appendChild(bar)
+	bar.appendChild(progress)
+
+	barWidth = document.querySelector('.progbar-container').offsetWidth
+}
+
+async function scrapeData(limit, compareUsername) {
 	// Wait for username
 	await waitForElement('._7UhW9', 3000)
 	// Wait for profile picture
-	await waitForElement('._6q-tv', 3000)
+	await waitForElement('._6q-tv', 500)
+	await waitForElement('.be6sR', 500)
 	// Wait for posts
 	await waitForElement('.v1Nh3 > a', 3000)
 	// Get User data
 	const username = document.querySelector('._7UhW9').textContent;
-	const profilePicture = document.querySelector('._6q-tv').getAttribute('src')
+
+	let profilePicture = document.querySelector('._6q-tv') || document.querySelector('.be6sR');
+	profilePicture = profilePicture.getAttribute('src');
 
 	window.scrollTo(0, 0)
 	await wait(500)
@@ -62,6 +95,8 @@ async function scrapeData(limit) {
 	// Loop through posts
 	let post = posts[0] //first post
 	for(let i = 0; i < limit; i ++) {
+		document.querySelector('.progbar-bar').style.width = ((i + 1) / limit) * barWidth + 'px'
+
 		console.log(`Image number ${i + 1}`)
 		data[i] = {	imageUrl: '',	caption: '', likes: 0, date: ''	};
 		post.click();
@@ -82,15 +117,25 @@ async function scrapeData(limit) {
 		while(!document.querySelector('article.M9sTE')) {
 			await new Promise(resolve => setTimeout(resolve, 200));
 		}
+
+		let timetaken = 0
+		// wait for image or video to load
+		while(!document.querySelector('.KL4Bh') && !document.querySelector('._5wCQW') && timetaken < 5000){
+			// console.log('waiting for image or video to load')
+			await wait(100)
+			timetaken += 100
+			// console.log(timetaken)
+		}
 		// safety margin
 		await wait(100);
 		
 		let temp;
 		// check if image or video
 		if(document.querySelector('article.M9sTE').querySelector('.KL4Bh')) {
-			console.log('is image', document.querySelector('article.M9sTE').querySelector('.KL4Bh'))
 			await waitForElement('.FFVAD', 2000)
-			let img = document.querySelector('.FFVAD')
+			let img = document.querySelector('article.M9sTE').querySelector('.KL4Bh').querySelector('.FFVAD')
+			// console.log(img)
+			await wait(200)
 
 			temp = img
 				.getAttribute('srcset')
@@ -99,19 +144,18 @@ async function scrapeData(limit) {
 				data[i].imageUrl += temp[j]
 			}
 		} else {
-			console.log('is video')
 			// get alt image of video
 			try {
 				data[i].imageUrl = document.querySelector('article.M9sTE')
 					.querySelector('._5wCQW')
-					.querySelector('img')
-					.getAttribute('src')
+					.querySelector('video')
+					.getAttribute('poster')
 			} catch(err) {
 				console.log('No alt img for video')
 			}
 		}
 
-		await waitForElement('.C4VMK', 3000)
+		await waitForElement('.C4VMK', 800)
 		if(document.querySelector('.C4VMK')) {
 			// check if first comment is by the correct user
 			if(document.querySelector('.C4VMK').querySelector('.FPmhX.TlrDj').textContent === username) {
@@ -126,11 +170,23 @@ async function scrapeData(limit) {
 		data[i].date = document.querySelector('._1o9PC').getAttribute('datetime')
 
 		//prepare to click next post 
-		post = await waitForElement('.coreSpriteRightPaginationArrow', 3000)
-		if (!post) i = limit //break loop if no more posts
+		post = await waitForElement('.coreSpriteRightPaginationArrow', 1500)
+		//break loop if no more posts
+		if (!post) {
+			document.querySelector('.progbar-bar').style.width = barWidth + 5 + 'px'
+			i = limit
+		}
 	}
+	// close the post
+	const closeButton = await waitForElement('.ckWGn', 3000)
+	closeButton.click()
+
+	setTimeout(() => {
+		document.querySelector('.scrapemessage').style.display = 'none'
+	}, 200)
+
 	// Object to be sent to the backend
-	const pass = generateKey()
+	const pass = generateKey();
 	const payload = {
 		username,
 		pass,
@@ -139,104 +195,29 @@ async function scrapeData(limit) {
 		posts: data,
 	}
 	console.log(payload)
-	chrome.runtime.sendMessage({ hitServer: payload });
-	chrome.runtime.sendMessage({ openTab: `?user=${username}&key=${pass}` });
+
+	// return [{hitServer: payload}, {openTab: `?user=${username}&key=${key}`}]
+	// if (compareUsername){
+	// 	chrome.runtime.sendMessage({hitServer: payload});
+	// 	chrome.runtime.sendMessage({openTab: `match?user=${username}&key=${pass}&match=${compareUsername}`});
+	// } else {
+	// 	chrome.runtime.sendMessage({hitServer: payload});
+	// 	chrome.runtime.sendMessage({openTab: `?user=${username}&key=${pass}`});
+	// }
 };
-chrome.storage.local.get(['postlimit'], ({ postlimit }) => {
-	scrapeData(postlimit)
-});
 
-{/* <div class="sk-folding-cube">
-  <div class="sk-cube1 sk-cube"></div>
-  <div class="sk-cube2 sk-cube"></div>
-  <div class="sk-cube4 sk-cube"></div>
-  <div class="sk-cube3 sk-cube"></div>
-</div>
+chrome.storage.local.get(['selectedToCompare'], ({selectedToCompare}) => {
+	if (selectedToCompare && selectedToCompare != '-'){
+		//analyze, save, and compare
+		chrome.storage.local.get(['postlimit'], ({ postlimit }) => {
+			scrapeData(postlimit, selectedToCompare)
+		});
+	} else {
+		//analyze and save
+		chrome.storage.local.get(['postlimit'], ({ postlimit }) => {
+			scrapeData(postlimit, false)
+		});
+	}
+})
 
-.sk-folding-cube {
-  margin: 20px auto;
-  width: 40px;
-  height: 40px;
-  position: relative;
-  -webkit-transform: rotateZ(45deg);
-          transform: rotateZ(45deg);
-}
-
-.sk-folding-cube .sk-cube {
-  float: left;
-  width: 50%;
-  height: 50%;
-  position: relative;
-  -webkit-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-          transform: scale(1.1); 
-}
-.sk-folding-cube .sk-cube:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #333;
-  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
-          animation: sk-foldCubeAngle 2.4s infinite linear both;
-  -webkit-transform-origin: 100% 100%;
-      -ms-transform-origin: 100% 100%;
-          transform-origin: 100% 100%;
-}
-.sk-folding-cube .sk-cube2 {
-  -webkit-transform: scale(1.1) rotateZ(90deg);
-          transform: scale(1.1) rotateZ(90deg);
-}
-.sk-folding-cube .sk-cube3 {
-  -webkit-transform: scale(1.1) rotateZ(180deg);
-          transform: scale(1.1) rotateZ(180deg);
-}
-.sk-folding-cube .sk-cube4 {
-  -webkit-transform: scale(1.1) rotateZ(270deg);
-          transform: scale(1.1) rotateZ(270deg);
-}
-.sk-folding-cube .sk-cube2:before {
-  -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s;
-}
-.sk-folding-cube .sk-cube3:before {
-  -webkit-animation-delay: 0.6s;
-          animation-delay: 0.6s; 
-}
-.sk-folding-cube .sk-cube4:before {
-  -webkit-animation-delay: 0.9s;
-          animation-delay: 0.9s;
-}
-@-webkit-keyframes sk-foldCubeAngle {
-  0%, 10% {
-    -webkit-transform: perspective(140px) rotateX(-180deg);
-            transform: perspective(140px) rotateX(-180deg);
-    opacity: 0; 
-  } 25%, 75% {
-    -webkit-transform: perspective(140px) rotateX(0deg);
-            transform: perspective(140px) rotateX(0deg);
-    opacity: 1; 
-  } 90%, 100% {
-    -webkit-transform: perspective(140px) rotateY(180deg);
-            transform: perspective(140px) rotateY(180deg);
-    opacity: 0; 
-  } 
-}
-
-@keyframes sk-foldCubeAngle {
-  0%, 10% {
-    -webkit-transform: perspective(140px) rotateX(-180deg);
-            transform: perspective(140px) rotateX(-180deg);
-    opacity: 0; 
-  } 25%, 75% {
-    -webkit-transform: perspective(140px) rotateX(0deg);
-            transform: perspective(140px) rotateX(0deg);
-    opacity: 1; 
-  } 90%, 100% {
-    -webkit-transform: perspective(140px) rotateY(180deg);
-            transform: perspective(140px) rotateY(180deg);
-    opacity: 0; 
-  }
-} */}
+progressBar()

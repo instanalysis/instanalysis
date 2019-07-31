@@ -29,6 +29,9 @@ button {
 button:hover {
 	background-color: #6935bd;
 }
+button:disabled{
+	background-color: darkgrey;
+}
 .slidecontainer {
 	/* margin-bottom: 1rem; */
 }
@@ -67,4 +70,20 @@ input#postlimit {
 	background: none;
 	font-size: 1.2rem;
 	text-align: center;
+}
+
+#clearButton{
+	background-color: brown;
+}
+#clearButton:hover{
+	background-color: red;
+}
+
+.compareContainer {
+	background-color:lightgrey; 
+	border-radius: 12px;
+}
+
+#savedUserSelector{
+	width: 80%;
 }
