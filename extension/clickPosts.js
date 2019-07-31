@@ -42,6 +42,37 @@ async function waitForElement(element, maxTime){
 	return document.querySelector(element)
 }
 
+// For progress bar
+let barWidth;
+let dots = 0;
+function progressBar() {
+	let msg = document.createElement('div');
+	msg.innerHTML = `<div class="lmess"><span id="loadingdots">Gathering Data</span><div>`
+	msg.className = 'scrapemessage'
+	
+	document.body.appendChild(msg)
+	let dotSpan = document.querySelector('#loadingdots')
+	setInterval(() => {
+		dots = (dots + 1) % 6
+		let str = 'Gathering Data'
+		for(let i = 0; i < dots; i ++) {
+			str += ' .'
+		}
+		dotSpan.innerHTML = str;
+	}, 160)
+
+	let bar = document.createElement('div')
+	bar.className = 'progbar-container'
+	
+	let progress = document.createElement('div')
+	progress.className = 'progbar-bar'
+
+	msg.appendChild(bar)
+	bar.appendChild(progress)
+
+	barWidth = document.querySelector('.progbar-container').offsetWidth
+}
+
 async function scrapeData(limit, compareUsername) {
 	// Wait for username
 	await waitForElement('._7UhW9', 3000)
@@ -64,6 +95,8 @@ async function scrapeData(limit, compareUsername) {
 	// Loop through posts
 	let post = posts[0] //first post
 	for(let i = 0; i < limit; i ++) {
+		document.querySelector('.progbar-bar').style.width = ((i + 1) / limit) * barWidth + 'px'
+
 		console.log(`Image number ${i + 1}`)
 		data[i] = {	imageUrl: '',	caption: '', likes: 0, date: ''	};
 		post.click();
@@ -138,11 +171,19 @@ async function scrapeData(limit, compareUsername) {
 
 		//prepare to click next post 
 		post = await waitForElement('.coreSpriteRightPaginationArrow', 1500)
-		if (!post) i = limit //break loop if no more posts
+		//break loop if no more posts
+		if (!post) {
+			document.querySelector('.progbar-bar').style.width = barWidth + 5 + 'px'
+			i = limit
+		}
 	}
 	// close the post
 	const closeButton = await waitForElement('.ckWGn', 3000)
 	closeButton.click()
+
+	setTimeout(() => {
+		document.querySelector('.scrapemessage').style.display = 'none'
+	}, 200)
 
 	// Object to be sent to the backend
 	const pass = generateKey();
@@ -156,13 +197,13 @@ async function scrapeData(limit, compareUsername) {
 	console.log(payload)
 
 	// return [{hitServer: payload}, {openTab: `?user=${username}&key=${key}`}]
-	if (compareUsername){
-		chrome.runtime.sendMessage({hitServer: payload});
-		chrome.runtime.sendMessage({openTab: `match?user=${username}&key=${pass}&match=${compareUsername}`});
-	} else {
-		chrome.runtime.sendMessage({hitServer: payload});
-		chrome.runtime.sendMessage({openTab: `?user=${username}&key=${pass}`});
-	}
+	// if (compareUsername){
+	// 	chrome.runtime.sendMessage({hitServer: payload});
+	// 	chrome.runtime.sendMessage({openTab: `match?user=${username}&key=${pass}&match=${compareUsername}`});
+	// } else {
+	// 	chrome.runtime.sendMessage({hitServer: payload});
+	// 	chrome.runtime.sendMessage({openTab: `?user=${username}&key=${pass}`});
+	// }
 };
 
 chrome.storage.local.get(['selectedToCompare'], ({selectedToCompare}) => {
@@ -178,3 +219,5 @@ chrome.storage.local.get(['selectedToCompare'], ({selectedToCompare}) => {
 		});
 	}
 })
+
+progressBar()

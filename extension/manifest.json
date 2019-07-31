@@ -21,6 +21,7 @@
     {
       "matches": ["https://www.instagram.com/*"],
       "run_at": "document_idle",
+      "css": ["injectedcss.css"],
       "js": ["contentScript.js"]
     }
   ],
