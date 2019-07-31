@@ -158,14 +158,14 @@ export default {
   watch: {
     ibmData() {
       if(this.personality) {
-        const extid = 'njalbdhpniekifijjefichllkdjeecll'
+        // const extid = 'hepadbkpclgmhfncinaljmdpajobmkjl'
         let currentUser = {
           username: this.username,
           startData: this.startData,
           ibmData: this.ibmData,
         }
         
-        let arr = JSON.parse(localStorage.get('savedUsers')) || []
+        let arr = JSON.parse(localStorage.getItem('savedUsers')) || []
         console.log(arr)
         if(!arr.find(user => user === this.username) || arr.length === 0) {
           arr.push(currentUser)
