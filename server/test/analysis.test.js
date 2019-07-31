@@ -100,12 +100,7 @@ jest.mock('google-translate', () => {
 })
 
 beforeEach(() => {
-  socket = io.connect(`http://localhost:3000/`, {
-    'reconnection delay': 0,
-    'reopen delay': 0,
-    'force new connection': true,
-    transports: ['websocket']
-  });
+  socket = io.connect(`http://localhost:3000/`);
   socket.on('connect', () => {
     console.log("before each connect listener invoked")
   });
@@ -1722,6 +1717,45 @@ describe('Analysis Controller Test', () => {
         .send(mockData)
         .end(function (err, res) {
 
+          expect(res).to.have.status(200);
+          expect(res.body).to.equal('request successful');
+          setTimeout(() => {
+            done()
+          }, 2000)
+        });
+    });
+    test("expected personality analysis throws error", (done) => {
+      chai
+        .request(app)
+        .post("/analysis")
+        .send(mockDataFail)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.equal('request successful');
+          setTimeout(() => {
+            done()
+          }, 2000)
+        });
+    });
+    test("expected personality analysis throws error", (done) => {
+      chai
+        .request(app)
+        .post("/analysis")
+        .send(mockDataFail)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.equal('request successful');
+          setTimeout(() => {
+            done()
+          }, 2000)
+        });
+    });
+    test("expected personality analysis throws error", (done) => {
+      chai
+        .request(app)
+        .post("/analysis")
+        .send(mockDataFail)
+        .end(function (err, res) {
           expect(res).to.have.status(200);
           expect(res.body).to.equal('request successful');
           setTimeout(() => {

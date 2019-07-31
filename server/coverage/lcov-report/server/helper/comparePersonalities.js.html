@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>39/39</span>
+        <span class='fraction'>50/50</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>35/35</span>
+        <span class='fraction'>46/46</span>
       </div>
     </div>
     <p class="quiet">
@@ -780,9 +780,24 @@
 <a name='L732'></a><a href='#L732'>732</a>
 <a name='L733'></a><a href='#L733'>733</a>
 <a name='L734'></a><a href='#L734'>734</a>
-<a name='L735'></a><a href='#L735'>735</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L735'></a><a href='#L735'>735</a>
+<a name='L736'></a><a href='#L736'>736</a>
+<a name='L737'></a><a href='#L737'>737</a>
+<a name='L738'></a><a href='#L738'>738</a>
+<a name='L739'></a><a href='#L739'>739</a>
+<a name='L740'></a><a href='#L740'>740</a>
+<a name='L741'></a><a href='#L741'>741</a>
+<a name='L742'></a><a href='#L742'>742</a>
+<a name='L743'></a><a href='#L743'>743</a>
+<a name='L744'></a><a href='#L744'>744</a>
+<a name='L745'></a><a href='#L745'>745</a>
+<a name='L746'></a><a href='#L746'>746</a>
+<a name='L747'></a><a href='#L747'>747</a>
+<a name='L748'></a><a href='#L748'>748</a>
+<a name='L749'></a><a href='#L749'>749</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -790,9 +805,13 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-yes">30x</span>
@@ -801,11 +820,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
@@ -817,11 +840,16 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1517,29 +1545,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = compare
 &nbsp;
 function compare (dataSetOne, dataSetTwo) {
-	let results = {}
+    let results = {}
+    console.log('mulai di compare')
 	//compare personality
 	const p1Arr = dataSetOne.personality
 	const p2Arr = dataSetTwo.personality
-	let pDistance = 0
+    let pDistance = 0
+    console.log('setp1 dan p2 ARR',p1Arr)
+    
 	for (let i = 0; i &lt; p1Arr.length; i++){
+        console.log('array p1 length:', p1Arr.length)
 		//for each personality facet (openness, conscientiousness,..)
 		let facet1 = p1Arr[i]
 		let facet2 = p2Arr[i]
 		for (let j = 0; j &lt; facet1.children.length; j ++){
+            console.log('array facet 1 children length', facet1.children.length)
 			// for each trait in the facet, get score and compare
 			let diff = facet1.children[j].raw_score - facet2.children[j].raw_score
 			let diffSquared = diff * diff
 			pDistance += diffSquared
 		}
 	}
-	let pScore = Math.sqrt(pDistance)
+    let pScore = Math.sqrt(pDistance)
+    console.log('pscore',pScore)
 	results.personalityScore = pScore
 &nbsp;
 	const n1Arr = dataSetOne.needs
-	const n2Arr = dataSetOne.needs
+    const n2Arr = dataSetOne.needs
+    console.log('set n1 n2 arr', n1Arr)
 	let nDistance = 0
 	for (let i = 0; i&lt; n1Arr.length; i++){
+        console.log('n1arr length', n1Arr.length)
+&nbsp;
 		let diff = n1Arr[i].raw_score - n2Arr[i].raw_score
 		let diffSquared = diff * diff
 		nDistance += diffSquared
@@ -1549,16 +1586,21 @@ function compare (dataSetOne, dataSetTwo) {
 &nbsp;
 	const v1Arr = dataSetOne.values
 	const v2Arr = dataSetOne.values
+    console.log('set v1 v2 arr', v1Arr)
 	let vDistance = 0
 	for (let i = 0; i&lt; v1Arr.length; i++){
+        console.log('v1arr length', v1Arr.length)
 		let diff = v1Arr[i].raw_score - v2Arr[i].raw_score
 		let diffSquared = diff * diff
 		vDistance += diffSquared
 	}
-	let vScore = Math.sqrt(vDistance)
+    let vScore = Math.sqrt(vDistance)
+    console.log('vscore telah di sqrt', vScore)
 	results.valuesScore = vScore
 &nbsp;
-	results.totalScore = (pScore +  nScore + vScore)/3
+    results.totalScore = (pScore +  nScore + vScore)/3
+    
+    console.log({hasilcompare: results})
 &nbsp;
 	return results
 }
@@ -2254,7 +2296,7 @@ let mockData = {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jul 31 2019 13:58:05 GMT+0700 (Western Indonesia Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jul 31 2019 18:35:09 GMT+0700 (Western Indonesia Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>
