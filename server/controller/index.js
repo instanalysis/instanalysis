@@ -83,6 +83,7 @@ class analysisController {
             let counter = 0
             resultFaceDetection.forEach((item, index) => {
                 if (item.FaceDetails[0]) {
+                    console.log(emotionFromPosts, 'emotionfromposts')
                     counter++
                     for (let i = 0; i < item.FaceDetails[0].Emotions.length; i++) {
                         if (emotionFromPosts[item.FaceDetails[0].Emotions[i].Type]) {
@@ -93,9 +94,12 @@ class analysisController {
                     }
                 }
             })
-            Object.keys(emotionFromPosts).forEach((item)=>{
-                emotionFromPosts[item] = emotionFromPosts[item] / counter
-            })
+
+            if(counter !==0 ){
+                Object.keys(emotionFromPosts).forEach((item)=>{
+                    emotionFromPosts[item] = emotionFromPosts[item] / counter
+                })
+            }
             resultLabelDetection.forEach(item => {
                 // if (item.Labels[0].Name !== 'Human' && item.Labels[0].Name !== 'Person' && item.Labels[0].Name !== 'Face') {
                     let limit = item.Labels.length > 5 ? 5 : item.Labels.length
