@@ -1,4 +1,4 @@
-const clientUrl = 'http://localhost:8081';
+const clientUrl = 'http://localhost:8080';
 // const clientUrl = 'http://www.instanalysis.online';
 const serverUrl = 'http://server.instanalysis.online';
 

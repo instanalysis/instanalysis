@@ -19,15 +19,20 @@
 				<div>
 					<div class="boxheading">PERSONALITY</div>
 					<p class="offset-l"><b>Agreeableness: </b><br>
-					&nbsp;&nbsp;&nbsp;A person's tendency to be compassionate and cooperative toward others.</p>
+						<span class="offset-l">A person's tendency to be compassionate and cooperative toward others.</span>
+					</p>
 					<p class="offset-l"><b>Extraversion: </b><br>
-					&nbsp;&nbsp;&nbsp;Lower value: more introverted, higher value: more extroverted.</p>
+						<span class="offset-l">Lower value: more introverted, higher value: more extroverted.</span>
+					</p>
 					<p class="offset-l"><b>Orderliness: </b><br>
-					&nbsp;&nbsp;&nbsp;A person's tendency to be more organized and self-disciplined.</p>
+						<span class="offset-l">A person's tendency to be more organized and self-disciplined.</span>
+					</p>
 					<p class="offset-l"><b>Neuroticism: </b><br>
-					&nbsp;&nbsp;&nbsp;Tendency to feel anger, letting one's emotions take over.</p>
+						<span class="offset-l">Tendency to feel anger, letting one's emotions take over.</span>
+					</p>
 					<p class="offset-l"><b>Openness: </b><br>
-					&nbsp;&nbsp;&nbsp;Openness to experiencing different activities, intellectually curious.</p>
+						<span class="offset-l">Openness to experiencing different activities, intellectually curious.</span>
+					</p>
 				</div>
 				<div style="width: 29rem; margin: 0 1rem;">
 					<personality-chart :personality="personality"/>

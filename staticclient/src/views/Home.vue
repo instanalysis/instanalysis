@@ -3,7 +3,7 @@
     <div class="stripes">
     </div>
     <div class="container">
-      <profile-info :user="userData"/>
+      <!-- <profile-info :user="userData" :totalLikes="startData.totalLikes" :gender="gender" :age="age"/>
       <text-data
         :wordStr="startData.wordCloud"
         :wordCount="ibmData.word_count"
@@ -18,7 +18,7 @@
         :emotions="emotions"
         :interests="interests"
         v-if="perPost"
-      />
+      /> -->
     </div>
     <p style="display: inline-block; margin: 0.5rem; background-color: #ddd;">
       User: {{username}}<br>Key: {{key}}<br>
@@ -65,25 +65,27 @@ export default {
     setTimeout(() => {
       this.ibmData = ibmData.personalityAnalysisResult;
       this.rekogData = rekogData;
-    }, 1000)
+    }, 2000)
 
-    setTimeout(() => {
-      const extid = 'njalbdhpniekifijjefichllkdjeecll'
-      chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
-    }, 500)
+    // setTimeout(() => {
+    //   const extid = 'njalbdhpniekifijjefichllkdjeecll'
+    //   chrome.runtime.sendMessage(extid, {saveUser: {test: 'sartoien'}});
+    // }, 500)
     
   },
   mounted() {
-    // const socket = io("http://34.87.39.190/");
-    // socket.on(`start-${this.user}-123abc`, function(data){
-    //     console.log('started', data)
-    // });
-    // socket.on(`ibm-${this.user}-123abc`, function(data){
-    //     console.log('IBM ANALYSIS', data)
-    // });
-    // socket.on(`rekog-${this.user}-123abc`, function(data){
-    //     console.log('AMAZON rekogniton', data)
-    // });
+    const socket = io("http://server.instanalysis.online/");
+
+    console.log(`start-${this.username}-${this.key}`)
+    socket.on(`start-${this.username}-${this.key}`, function(data){
+      console.log('startData', data)
+    });
+    socket.on(`ibm-${this.username}-${this.key}`, function(data){
+      console.log('ibmData', data)
+    });
+    socket.on(`rekog-${this.username}-${this.key}`, function(data){
+      console.log('amazonData', data)
+    });
   },
   computed: {
     userData() {
@@ -128,13 +130,29 @@ export default {
       } else return null;
     },
     perPost() {
-      return this.rekogData.perPost
+      if(this.rekogData.perPost) {
+        return this.rekogData.perPost
+      } else return null;
     },
     emotions() {
-      return this.rekogData.summary.emotionFromPosts
+      if(this.rekogData.emotions) {
+        return this.rekogData.summary.emotionFromPosts
+      } else return null;
     },
     interests() {
-      return this.rekogData.summary.interestFromPosts
+      if(this.rekogData.interestFromPosts) {
+        return this.rekogData.interestFromPosts
+      } else return null;
+    },
+    age() {
+      if(this.rekogData.summary) {
+        return this.rekogData.summary.age
+      } else return null;
+    },
+    gender() {
+      if (this.rekogData.summary) {
+        return this.rekogData.summary.gender
+      }
     }
   }
 }
@@ -186,25 +204,6 @@ $purp2: #6c3fb6;
 .offset-l {
 	margin-left: 1rem;
 }
-// .userprofile {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin: 0 1.5rem;
-// }
-// .username {
-//   font-size: 2rem;
-//   padding: 0 1rem 1rem 2rem;
-// }
-// .ppc {
-//   width: 150px;
-//   height: 150px;
-//   border-radius: 100px;
-//   overflow: hidden;
-// }
-// .pp {
-//   max-width: 100%
-// }
 .stripes {
   height: 10rem;
   display: none;

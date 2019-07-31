@@ -23,8 +23,15 @@
 					</div>
 				</div>
 				<div class="box">
-					<div class="boxheading">FREQUENTLY FOUND LABELS</div>
-					<p class="offset-l" v-for="(el, index) of limited" :key="index">{{index + 1}}. {{el[0]}}</p>
+					<div class="boxheading" style="margin-bottom: 0.5rem;">MOST FREQUENT IMAGE LABELS</div>
+					<div style="display: flex;">
+						<div>
+							<p class="offset-l" v-for="(el, index) of limited1" :key="index">{{index + 1}}. {{el[0]}}</p>
+						</div>
+						<div style="margin-left: 1.5rem;">
+							<p class="offset-l" v-for="(el, index) of limited2" :key="index">{{index + 5}}. {{el[0]}}</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -43,8 +50,14 @@
 		mounted() {
 		},
 		computed: {
-			limited() {
-				return Object.entries(this.interests).sort((a, b) => b[1] - a[1]).slice(0, 8)
+			sortedInterests() {
+				return Object.entries(this.interests).sort((a, b) => b[1] - a[1])
+			},
+			limited1() {
+				return this.sortedInterests.slice(0, 4)
+			},
+			limited2() {
+				return this.sortedInterests.slice(4, 8)
 			},
 			imageCount() {
 				return this.perPost.length;
