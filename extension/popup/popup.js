@@ -1,12 +1,41 @@
+// function mockSavedUsers(){
+//   chrome.storage.local.get(['savedUsers'], function(result){
+//     let currentSaved = result.savedUsers
+//     currentSaved.push('one')
+//     currentSaved.push('two')
+//     chrome.storage.local.set({savedUsers: currentSaved}, function(){
+//     })
+// 	reloadSavedUsers()
+//   })
+// }
+// mockSavedUsers()
+
 chrome.storage.local.set({postlimit: 10})
 
+window.onload = function(e) {
+	reloadSavedUsers()
+}
+
 const numberOfPosts = document.querySelector('input#myRange')
+const postLimitSelector = document.getElementById('postlimit')
 numberOfPosts.oninput = function(e) {
-	document.getElementById('postlimit').value = e.target.value; 
+	postLimitSelector.value = e.target.value; 
 	chrome.storage.local.set({postlimit: e.target.value})
 }
 
 const savedUserSelector = document.getElementById('savedUserSelector')
+const compareButton = document.getElementById('compareButton')
+savedUserSelector.onclick = function(e){
+	// selectedToCompare
+	if (savedUserSelector.value === '-') {
+		compareButton.disabled = true
+	} else {
+		compareButton.disabled = false
+	}
+	chrome.storage.local.set({selectedToCompare: savedUserSelector.value})
+	console.log(savedUserSelector.value)
+}
+
 const clearButton = document.getElementById('clearButton')
 clearButton.onclick = function(e) {
 	// chrome.runtime.sendMessage({clearSavedUsers: true});
@@ -15,6 +44,37 @@ clearButton.onclick = function(e) {
 		reloadSavedUsers()
 	})
 }
+
+compareButton.onclick = function (argument) {
+	chrome.tabs.query({
+		active: true,
+		currentWindow: true
+	}, function(tabs) {
+		setTimeout(() => {
+			window.close()
+		}, 200)
+		chrome.tabs.executeScript(
+			tabs[0].id,
+			{ file: 'clickPosts.js' }
+		);
+	});
+}
+
+const startButton = document.getElementById('startButton');
+startButton.onclick = function(element) {
+	chrome.tabs.query({
+		active: true,
+		currentWindow: true
+	}, function(tabs) {
+		setTimeout(() => {
+			window.close()
+		}, 200)
+		chrome.tabs.executeScript(
+			tabs[0].id,
+			{ file: 'clickPosts.js' }
+		);
+	});
+};
 
 function reloadSavedUsers(){
 	savedUserSelector.innerHTML = '<option>-</option>'
@@ -28,70 +88,7 @@ function reloadSavedUsers(){
 			savedUserSelector.appendChild(option)
 		})
 	})
+	chrome.storage.local.set({selectedToCompare: savedUserSelector.value})
+	
+	compareButton.disabled = true
 }
-
-// function mockSavedUsers(){
-//   chrome.storage.local.get(['savedUsers'], function(result){
-//     let currentSaved = result.savedUsers
-//     currentSaved.push('one')
-//     currentSaved.push('two')
-//     chrome.storage.local.set({savedUsers: currentSaved}, function(){
-//     })
-// 	reloadSavedUsers()
-//   })
-// }
-// mockSavedUsers()
-
-window.onload = function(e) {
-	reloadSavedUsers()
-}
-
-
-const compareButton = document.getElementById('compareButton')
-compareButton.onclick = function (argument) {
-	// chrome.tabs.query({
-	// 	active: true,
-	// 	currentWindow: true
-	// }, function(tabs) {
-	// 	setTimeout(() => {
-	// 		window.close()
-	// 	}, 200)
-	// 	chrome.tabs.executeScript(
-	// 		tabs[0].id,
-	// 		{ file: 'clickPosts.js' }
-	// 	);
-	// });
-	let userOne = {username: savedUserSelector.value} //ambil selected username dari combobox
-	console.log({userOne})
-	// chrome.storage.local.get(['savedUsers'], function(result){
-	// 	const storageUsers = result.savedUsers
-	// 	for (let i =0; i< storageUsers.length; i++){
-	// 		let user = storageUsers[i]
-	// 		if (user.username === userOne.username){
-	// 			userOne.ibm = user.ibm // get user data
-	// 			i = storageUsers.length
-	// 		}
-	// 	}
-	// 	// we have our first user userOne and our current open page
-	// 	// send ke server
-	// })
-
-	// we have our first user userOne and our current open page
-	// send ke server
-}
-
-const startButton = document.getElementById('startButton');
-startButton.onclick = function(element) {
-	chrome.tabs.query({
-		active: true,
-		currentWindow: true
-	}, function(tabs) {
-		setTimeout(() => {
-			window.close()
-		}, 400)
-		chrome.tabs.executeScript(
-			tabs[0].id,
-			{ file: 'clickPosts.js' }
-		);
-	});
-};
