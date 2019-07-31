@@ -15,15 +15,15 @@
     <div class="container">
       <div class="userprofile" style="display: flex; justify-content: space-evenly;">
         <div style="display: flex; justify-content: space-evenly;">
-          <div style="width:75px">
-            <img class="pp" src="https://scontent-sin2-2.cdninstagram.com/vp/6f793dacb0901845be55c3624ca6bed0/5DD5956B/t51.2885-19/s320x320/59440893_336666376926221_276408968295743488_n.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com" alt="" style="width:100%; border-radius: 50%;">
+          <div style="width:75px; height: 75px;">
+            <img class="pp" :src="startData.profilePicture" alt="" style="width:100%; height:100%; border-radius: 50%;">
           </div>
           <div class="username">{{$route.query.match}}</div>
         </div>
 
         <div style="display: flex; justify-content: space-evenly;">
-          <div style="width:75px">
-            <img class="pp" src="https://scontent-sin2-2.cdninstagram.com/vp/6f793dacb0901845be55c3624ca6bed0/5DD5956B/t51.2885-19/s320x320/59440893_336666376926221_276408968295743488_n.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com" alt="" style="width:100%; border-radius: 50%;">
+          <div style="width:75px; height: 75px;">
+            <img class="pp" :src="startDataCompare.profilePicture" alt="" style="width:100%; height:100%; border-radius: 50%;">
           </div>
           <div class="username">{{$route.query.user}}</div>
         </div>
@@ -45,7 +45,9 @@ import CompareValues from '@/components/Compare/Values'
 
 import startData from './mockResponse/start';
 import ibmData from './mockResponse/ibm';
-import rekogData from './mockResponse/rekog';
+
+import startDataCompare from './mockResponse/startCompare';
+import ibmDataCompare from './mockResponse/ibmCompare';
 
 export default {
   name: 'match',
@@ -62,7 +64,9 @@ export default {
       message: '',
       startData: {},
       ibmData: {},
-      rekogData: {},
+      usernameCompare: 'harrypotter',
+      startDataCompare: {},
+      ibmDataCompare: {}
     }
   },
   methods: {
@@ -70,12 +74,18 @@ export default {
       const getSavedUsers = JSON.parse(localStorage.getItem('savedUsers'))
       const user1 = getSavedUsers.savedUsers.find(user=>user.username === this.$route.query.match)
       // this.savedUser = user1
-      // mock
+
+      // localstorage mock ?match
       this.startData = startData;
       setTimeout(() => {
         this.ibmData = ibmData.personalityAnalysisResult;
-        this.rekogData = rekogData;
-      }, 500)
+      }, 1500)
+
+      // localStorage moch ?user
+      this.startDataCompare = startDataCompare;
+      setTimeout(() => {
+        this.ibmDataCompare = ibmDataCompare.personalityAnalysisResult;
+      }, 1500)
 
       setTimeout(() => {
         const extid = 'njalbdhpniekifijjefichllkdjeecll'
