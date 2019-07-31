@@ -112,6 +112,7 @@ class analysisController {
                 return {
                     likes: item.likes,
                     date: item.date,
+                    resultFaceDetection: resultFaceDetection[index]
                 }
             })
             let age= 'Cannot get data'
