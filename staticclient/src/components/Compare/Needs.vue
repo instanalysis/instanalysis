@@ -5,7 +5,7 @@
         <div class="boxheading">NEEDS</div>
         <p><span style="margin-right: .7rem"><b>Excitement:</b> Wants to get out, live life and have fun.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_excitement}}%</span> -- <span class="color-orange fw-600">80%</span>
+            <span class="color-purple fw-600">{{needs.need_excitement}}%</span> | <span class="color-orange fw-600">80%</span>
           </span>
         </p> 
         <div class="range-slider sliderflex">
@@ -15,7 +15,7 @@
         </div>
         <p><span style="margin-right: .7rem"><b>Self-expression:</b> Enjoys asserting their own unique identity.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_self_expression}}%</span> -- <span class="color-orange fw-600">10%</span>
+            <span class="color-purple fw-600">{{needs.need_self_expression}}%</span> | <span class="color-orange fw-600">10%</span>
           </span>
         </p>
         <div class="range-slider sliderflex">
@@ -25,7 +25,7 @@
         </div>
         <p><span style="margin-right: .7rem"><b>Curiosity:</b> Has a desire to discover and explore.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_curiosity}}%</span> -- <span class="color-orange fw-600">100%</span>
+            <span class="color-purple fw-600">{{needs.need_curiosity}}%</span> | <span class="color-orange fw-600">100%</span>
           </span>
         </p>
         <div class="range-slider sliderflex">
@@ -35,7 +35,7 @@
         </div>
         <p><span style="margin-right: .7rem"><b>Excellence:</b> Sets high standards and desires perfection.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_ideal}}%</span> -- <span class="color-orange fw-600">20%</span>
+            <span class="color-purple fw-600">{{needs.need_ideal}}%</span> | <span class="color-orange fw-600">20%</span>
           </span>
         </p>
         <div class="range-slider sliderflex">
@@ -45,7 +45,7 @@
         </div>
         <p><span style="margin-right: .7rem"><b>Closeness:</b> Relishes being connected to family and friends.</span> 
           <span class="compare-percentile-container">
-            <span class="color-purple fw-600">{{needs.need_closeness}}%</span> -- <span class="color-orange fw-600">40%</span>
+            <span class="color-purple fw-600">{{needs.need_closeness}}%</span> | <span class="color-orange fw-600">40%</span>
           </span>
         </p>
         <div class="range-slider sliderflex" style="display: relative;">

@@ -3,7 +3,7 @@
     <div class="boxheading">VALUES</div>
     <p><span style="margin-right: .7rem">Shows concern for the wellbeing of others.</span> 
       <span class="compare-percentile-container">
-        <span class="color-purple fw-600">{{values.value_self_transcendence}}%</span> -- <span class="color-orange fw-600">80%</span>
+        <span class="color-purple fw-600">{{values.value_self_transcendence}}%</span> | <span class="color-orange fw-600">80%</span>
       </span>
     </p>
     <div class="range-slider sliderflex">
@@ -13,7 +13,7 @@
     </div>
     <p><span style="margin-right: .7rem">Embraces change, looks for new experiences.</span> 
       <span class="compare-percentile-container">
-        <span class="color-purple fw-600">{{values.value_openness_to_change}}%</span> -- <span class="color-orange fw-600">80%</span>
+        <span class="color-purple fw-600">{{values.value_openness_to_change}}%</span> | <span class="color-orange fw-600">80%</span>
       </span>
     </p>
     <div class="range-slider sliderflex">
@@ -23,7 +23,7 @@
     </div>
     <p><span style="margin-right: .7rem">Emphasizes tradition and order.</span> 
       <span class="compare-percentile-container">
-        <span class="color-purple fw-600">{{values.value_self_enhancement}}%</span> -- <span class="color-orange fw-600">80%</span>
+        <span class="color-purple fw-600">{{values.value_self_enhancement}}%</span> | <span class="color-orange fw-600">80%</span>
       </span>
     </p>
     <div class="range-slider sliderflex">
@@ -33,7 +33,7 @@
     </div>
     <p><span style="margin-right: .7rem">Seeks hedonistic pleasure.</span> 
       <span class="compare-percentile-container">
-        <span class="color-purple fw-600">{{values.value_hedonism}}%</span> -- <span class="color-orange fw-600">80%</span>
+        <span class="color-purple fw-600">{{values.value_hedonism}}%</span> | <span class="color-orange fw-600">80%</span>
       </span>
     </p>
     <div class="range-slider sliderflex">
@@ -43,7 +43,7 @@
     </div>
     <p><span style="margin-right: .7rem">Seeks personal success.</span> 
       <span class="compare-percentile-container">
-        <span class="color-purple fw-600">{{values.value_self_enhancement}}%</span> -- <span class="color-orange fw-600">80%</span>
+        <span class="color-purple fw-600">{{values.value_self_enhancement}}%</span> | <span class="color-orange fw-600">80%</span>
       </span>
     </p>
     <div class="range-slider sliderflex">
