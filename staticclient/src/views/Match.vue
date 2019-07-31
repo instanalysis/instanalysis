@@ -13,16 +13,17 @@
       </div>
     </div>
     <div class="container">
+      <compare-initial :gender="gender" :userData="userData"></compare-initial>
       <div class="userprofile" style="display: flex; justify-content: space-evenly;">
         <div style="display: flex; justify-content: space-evenly;">
-          <div style="width:115px">
+          <div style="width:75px">
             <img class="pp" src="https://scontent-sin2-2.cdninstagram.com/vp/6f793dacb0901845be55c3624ca6bed0/5DD5956B/t51.2885-19/s320x320/59440893_336666376926221_276408968295743488_n.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com" alt="" style="width:100%; border-radius: 50%;">
           </div>
           <div class="username">{{$route.query.match}}</div>
         </div>
 
         <div style="display: flex; justify-content: space-evenly;">
-          <div style="width:115px">
+          <div style="width:75px">
             <img class="pp" src="https://scontent-sin2-2.cdninstagram.com/vp/6f793dacb0901845be55c3624ca6bed0/5DD5956B/t51.2885-19/s320x320/59440893_336666376926221_276408968295743488_n.jpg?_nc_ht=scontent-sin2-2.cdninstagram.com" alt="" style="width:100%; border-radius: 50%;">
           </div>
           <div class="username">{{$route.query.user}}</div>
@@ -37,11 +38,11 @@
 
 <script>
 import ScrollMagic from 'scrollmagic';
+import io from 'socket.io-client';
 
 import CompareProfile from '@/components/Compare/Profile'
 import CompareNeeds from '@/components/Compare/Needs'
 import CompareValues from '@/components/Compare/Values'
-import io from 'socket.io-client';
 
 import startData from './mockResponse/start';
 import ibmData from './mockResponse/ibm';
@@ -138,6 +139,11 @@ export default {
         return combined;
       } else return null;
     },
+    gender() {
+      if(this.rekogData && this.rekogData.summary) {
+        return this.rekogData.summary.gender
+      } else return null;
+    }
   }
 }
 </script>
@@ -165,4 +171,11 @@ export default {
 }
 .purple { background-color: rgb(108, 63, 182); }
 .orange { background-color: #ff8f56; }
+.username {
+  font-size: 25px;
+  -ms-flex-item-align: center;
+  align-self: center;
+  margin-left: 1.3rem;
+  color: #616161;
+}
 </style>
