@@ -66,7 +66,7 @@ async function scrapeData(limit, compareUsername) {
 		data[i] = {	imageUrl: '',	caption: '', likes: 0, postedOn: ''	};
 		post.click();
 		// wait for post to load
-		const article = await waitForElement('article.M9sTE', 2000)
+		let article = await waitForElement('article.M9sTE', 2000)
 		// give more time to load the post
 		if (!article) {
 			console.log("taking a long time to load")
