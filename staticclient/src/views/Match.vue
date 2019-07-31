@@ -35,10 +35,14 @@
       ></compare-profile>
       <compare-needs  
         :needs="needs" 
-        :needsCompare="needsCompare" 
+        :needsCompare="needsCompare"
         style="margin-top: 2rem"
       ></compare-needs>
-      <compare-values :values="values" style="margin-top: 2rem"></compare-values>
+      <compare-values 
+        :values="values"
+        :valuesCompare="valuesCompare"
+        style="margin-top: 2rem"
+      ></compare-values>
     </div>
   </div>
 </template>
