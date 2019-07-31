@@ -54,27 +54,27 @@ chrome.runtime.onMessage.addListener(
 //event from instanalysis client
 chrome.runtime.onMessageExternal.addListener(
   function(request, sender, sendResponse) {
-    let curUser = request.saveUser
-    if (curUser) {
+    if (request.saveUser) {
+      let curUser = request.saveUser // {username: 'nama', startData: {}, ibmData: {} }
       console.log(curUser)
       // if user has no ibm profile data (less than 100 words)
       if (curUser.username){
         chrome.storage.local.get(['savedUsers'], function(result){
           let currentSaved = result.savedUsers
           let newUser = true
-          // if user was already saved, rewrite old saved data
+          // if user was already saved, use old saved data
           for (let i = 0; i < currentSaved.length; i++){
-            if (currentSaved[i].username === curUser.username){
+            if (currentSaved[i] === curUser.username){
               newUser = false
-              currentSaved[i] = curUser
+              // currentSaved[i] = curUser
             }
           }
           // if user is new, push to saved users array
-          if (newUser) currentSaved.push(request.saveUser)
+          if (newUser) currentSaved.push(curUser.username)
 
           //save updated array
           chrome.storage.local.set({savedUsers: currentSaved}, function(){
-            console.log('saved user', request.saveUser.username)
+            console.log('saved user', curUser.username)
           })
         })
       }
