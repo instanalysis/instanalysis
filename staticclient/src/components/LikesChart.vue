@@ -48,14 +48,14 @@ export default {
       new Chart(document.getElementById('likesChart'), {
         type: 'line',
         data: {
-          labels: this.posts.map(post => new Date(post.date).toDateString().substring(4, 10)),
+          labels: this.oldestFirst.map(post => new Date(post.date).toDateString().substring(4, 15)),
           datasets: [
             {
               fill: true,
               backgroundColor: "rgba(111,148,205,0.7)",
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
-              data: this.posts.map(post => post.likes)
+              data: this.oldestFirst.map(post => post.likes)
             }
           ]
 				},
@@ -68,20 +68,6 @@ export default {
           },
           animation: {
             duration: 0.5,
-            // onComplete: function () {
-            //   var chartInstance = this.chart,
-            //     ctx = chartInstance.ctx;
-            //   ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-            //   ctx.textAlign = 'center';
-            //   ctx.textBaseline = 'bottom';
-            //   this.data.datasets.forEach(function (dataset, i) {
-            //     var meta = chartInstance.controller.getDatasetMeta(i);
-            //     meta.data.forEach(function (bar, index) {
-            //       var data = dataset.data[index];                            
-            //       ctx.fillText(data, bar._model.x, bar._model.y - 5);
-            //     });
-            //   });
-            // }
           }
 				},
       });
@@ -89,7 +75,12 @@ export default {
 	},
 	mounted() {
 		this.initLikesChart();
-	},
+  },
+  computed: {
+    oldestFirst() {
+      return this.posts.reverse()
+    }
+  },
 }
 </script>
 

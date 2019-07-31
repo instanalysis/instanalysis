@@ -1,5 +1,4 @@
 // const extensionId = 'njalbdhpniekifijjefichllkdjeecll'
-
 async function wait(ms) {
 	return new Promise(resolve => {
 		setTimeout(resolve, ms);
@@ -47,12 +46,15 @@ async function scrapeData(limit) {
 	// Wait for username
 	await waitForElement('._7UhW9', 3000)
 	// Wait for profile picture
-	await waitForElement('._6q-tv', 3000)
+	await waitForElement('._6q-tv', 500)
+	await waitForElement('.be6sR', 500)
 	// Wait for posts
 	await waitForElement('.v1Nh3 > a', 3000)
 	// Get User data
 	const username = document.querySelector('._7UhW9').textContent;
-	const profilePicture = document.querySelector('._6q-tv').getAttribute('src')
+
+	let profilePicture = document.querySelector('._6q-tv') || document.querySelector('.be6sR');
+	profilePicture = profilePicture.getAttribute('src');
 
 	window.scrollTo(0, 0)
 	await wait(500)
@@ -88,7 +90,6 @@ async function scrapeData(limit) {
 		let temp;
 		// check if image or video
 		if(document.querySelector('article.M9sTE').querySelector('.KL4Bh')) {
-			console.log('is image', document.querySelector('article.M9sTE').querySelector('.KL4Bh'))
 			await waitForElement('.FFVAD', 2000)
 			let img = document.querySelector('.FFVAD')
 
@@ -99,7 +100,6 @@ async function scrapeData(limit) {
 				data[i].imageUrl += temp[j]
 			}
 		} else {
-			console.log('is video')
 			// get alt image of video
 			try {
 				data[i].imageUrl = document.querySelector('article.M9sTE')
@@ -111,7 +111,7 @@ async function scrapeData(limit) {
 			}
 		}
 
-		await waitForElement('.C4VMK', 3000)
+		await waitForElement('.C4VMK', 800)
 		if(document.querySelector('.C4VMK')) {
 			// check if first comment is by the correct user
 			if(document.querySelector('.C4VMK').querySelector('.FPmhX.TlrDj').textContent === username) {
@@ -126,7 +126,7 @@ async function scrapeData(limit) {
 		data[i].date = document.querySelector('._1o9PC').getAttribute('datetime')
 
 		//prepare to click next post 
-		post = await waitForElement('.coreSpriteRightPaginationArrow', 3000)
+		post = await waitForElement('.coreSpriteRightPaginationArrow', 1500)
 		if (!post) i = limit //break loop if no more posts
 	}
 	// Object to be sent to the backend
@@ -142,101 +142,10 @@ async function scrapeData(limit) {
 	chrome.runtime.sendMessage({ hitServer: payload });
 	chrome.runtime.sendMessage({ openTab: `?user=${username}&key=${pass}` });
 };
+// RUN SCRAPE
 chrome.storage.local.get(['postlimit'], ({ postlimit }) => {
 	scrapeData(postlimit)
 });
 
-{/* <div class="sk-folding-cube">
-  <div class="sk-cube1 sk-cube"></div>
-  <div class="sk-cube2 sk-cube"></div>
-  <div class="sk-cube4 sk-cube"></div>
-  <div class="sk-cube3 sk-cube"></div>
-</div>
+// const msg = document.createElement('div');
 
-.sk-folding-cube {
-  margin: 20px auto;
-  width: 40px;
-  height: 40px;
-  position: relative;
-  -webkit-transform: rotateZ(45deg);
-          transform: rotateZ(45deg);
-}
-
-.sk-folding-cube .sk-cube {
-  float: left;
-  width: 50%;
-  height: 50%;
-  position: relative;
-  -webkit-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-          transform: scale(1.1); 
-}
-.sk-folding-cube .sk-cube:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #333;
-  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
-          animation: sk-foldCubeAngle 2.4s infinite linear both;
-  -webkit-transform-origin: 100% 100%;
-      -ms-transform-origin: 100% 100%;
-          transform-origin: 100% 100%;
-}
-.sk-folding-cube .sk-cube2 {
-  -webkit-transform: scale(1.1) rotateZ(90deg);
-          transform: scale(1.1) rotateZ(90deg);
-}
-.sk-folding-cube .sk-cube3 {
-  -webkit-transform: scale(1.1) rotateZ(180deg);
-          transform: scale(1.1) rotateZ(180deg);
-}
-.sk-folding-cube .sk-cube4 {
-  -webkit-transform: scale(1.1) rotateZ(270deg);
-          transform: scale(1.1) rotateZ(270deg);
-}
-.sk-folding-cube .sk-cube2:before {
-  -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s;
-}
-.sk-folding-cube .sk-cube3:before {
-  -webkit-animation-delay: 0.6s;
-          animation-delay: 0.6s; 
-}
-.sk-folding-cube .sk-cube4:before {
-  -webkit-animation-delay: 0.9s;
-          animation-delay: 0.9s;
-}
-@-webkit-keyframes sk-foldCubeAngle {
-  0%, 10% {
-    -webkit-transform: perspective(140px) rotateX(-180deg);
-            transform: perspective(140px) rotateX(-180deg);
-    opacity: 0; 
-  } 25%, 75% {
-    -webkit-transform: perspective(140px) rotateX(0deg);
-            transform: perspective(140px) rotateX(0deg);
-    opacity: 1; 
-  } 90%, 100% {
-    -webkit-transform: perspective(140px) rotateY(180deg);
-            transform: perspective(140px) rotateY(180deg);
-    opacity: 0; 
-  } 
-}
-
-@keyframes sk-foldCubeAngle {
-  0%, 10% {
-    -webkit-transform: perspective(140px) rotateX(-180deg);
-            transform: perspective(140px) rotateX(-180deg);
-    opacity: 0; 
-  } 25%, 75% {
-    -webkit-transform: perspective(140px) rotateX(0deg);
-            transform: perspective(140px) rotateX(0deg);
-    opacity: 1; 
-  } 90%, 100% {
-    -webkit-transform: perspective(140px) rotateY(180deg);
-            transform: perspective(140px) rotateY(180deg);
-    opacity: 0; 
-  }
-} */}
