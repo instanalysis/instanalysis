@@ -11,6 +11,7 @@ class analysisController {
             let {user1, user2} = req.body
             console.log(req.body)
             let comparedResult = comparePersonalities(user1, user2)
+            console.log(comparedResult)
             res.status(200).json(comparedResult)
         }
         catch(e){
