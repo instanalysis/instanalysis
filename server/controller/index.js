@@ -56,7 +56,7 @@ class analysisController {
                         totalLikes: likes
                     }
                 )
-            }, 1500)
+            }, 5000)
 
             // IBManalysis
             let personalityAnalysisResult = await personalityAnalysis(userData)
