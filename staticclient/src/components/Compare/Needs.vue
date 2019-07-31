@@ -69,7 +69,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   $purp1: #592ba1;
   $purp2: #6c3fb6;
 
