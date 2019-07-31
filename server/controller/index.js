@@ -17,6 +17,10 @@ class analysisController {
         }
     }
     static test(req,res){
+        let io = req.io
+        io.emit(`start-rubhi-abc123`,{
+            wordCloud:'a'
+        })
         console.log(req.body)
     }
 
