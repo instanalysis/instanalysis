@@ -74,6 +74,7 @@ export default {
       // }, 4000)
       // setTimeout(() => { this.rekogData = rekogData
       // }, 6000);
+
     } else {
       const socket = io("http://server.instanalysis.online/");
       socket.on(`start-${this.username}-${this.key}`, data => this.startData = data);
@@ -84,7 +85,14 @@ export default {
           this.message = 'Welcome to InstAnalysis. Open our extension on an Instagram profile to get results.'
         }
       }, 5500)
-      
+      /* --> Add user to extension drop down   
+        // setTimeout(() => {
+        //   const extid = 'njalbdhpniekifijjefichllkdjeecll'
+        //   chrome.runtime.sendMessage(extid, {saveUser: {
+        //     username: 'bobby'
+        //   }});
+        // }, 1200)
+      <-- */
     }
   },
   computed: {

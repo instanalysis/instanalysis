@@ -60,17 +60,21 @@ chrome.runtime.onMessageExternal.addListener(
       // if user has no ibm profile data (less than 100 words)
       if (curUser.username){
         chrome.storage.local.get(['savedUsers'], function(result){
-          let currentSaved = result.savedUsers
+          let usersArr = result.savedUsers
 
-          // add to array if username is new
-          if (!currentSaved.includes(curUser.username)){
-            currentSaved.push(curUser.username)
+          if(!usersArr) {
+            chrome.storage.local.set({savedUsers: [curUser.username]})
+          } else {
+            // add to array if username is new
+            if (!usersArr.includes(curUser.username)){
+              usersArr.push(curUser.username)
+            }
+  
+            //save updated array
+            chrome.storage.local.set({savedUsers: usersArr}, function(){
+              console.log('saved user', curUser.username)
+            })
           }
-
-          //save updated array
-          chrome.storage.local.set({savedUsers: currentSaved}, function(){
-            console.log('saved user', curUser.username)
-          })
         })
       }
     }
