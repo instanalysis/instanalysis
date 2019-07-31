@@ -23,19 +23,31 @@
           <input class="second-user slider" value="10" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
-        <p><b>Curiosity:</b> Has a desire to discover and explore.</p>
+        <p><span style="margin-right: .7rem"><b>Curiosity:</b> Has a desire to discover and explore.</span> 
+          <span class="compare-percentile-container">
+            <span class="color-purple fw-600">{{needs.need_curiosity}}%</span> -- <span class="color-orange fw-600">100%</span>
+          </span>
+        </p>
         <div class="range-slider sliderflex">
           <input class="first-user slider" v-model="needs.need_curiosity" min="0" max="100" type="range" disabled>
           <input class="second-user slider" value="100" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
-        <p><b>Excellence:</b> Sets high standards and desires perfection.</p>
+        <p><span style="margin-right: .7rem"><b>Excellence:</b> Sets high standards and desires perfection.</span> 
+          <span class="compare-percentile-container">
+            <span class="color-purple fw-600">{{needs.need_ideal}}%</span> -- <span class="color-orange fw-600">20%</span>
+          </span>
+        </p>
         <div class="range-slider sliderflex">
           <input class="first-user slider" v-model="needs.need_ideal" min="0" max="100" type="range" disabled>
           <input class="second-user slider" value="20" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
-        <p><b>Closeness:</b> Relishes being connected to family and friends.</p>
+        <p><span style="margin-right: .7rem"><b>Closeness:</b> Relishes being connected to family and friends.</span> 
+          <span class="compare-percentile-container">
+            <span class="color-purple fw-600">{{needs.need_closeness}}%</span> -- <span class="color-orange fw-600">40%</span>
+          </span>
+        </p>
         <div class="range-slider sliderflex" style="display: relative;">
           <div style="display: absolute;">
             <output for="need_closeness"></output>
