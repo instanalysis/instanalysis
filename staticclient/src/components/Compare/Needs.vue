@@ -3,35 +3,48 @@
     <div class="box">
       <div id="needs">
         <div class="boxheading">NEEDS</div>
-        <p><b>Excitement:</b> Wants to get out, live life and have fun.</p>
+        <p><span style="margin-right: .7rem"><b>Excitement:</b> Wants to get out, live life and have fun.</span> 
+          <span class="compare-percentile-container">
+            <span class="color-purple fw-600">{{needs.need_excitement}}%</span> -- <span class="color-orange fw-600">80%</span>
+          </span>
+        </p> 
         <div class="range-slider sliderflex">
-          <input class="slider" v-model="needs.need_excitement" min="0" max="100" type="range" disabled>
-          <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+          <input class="first-user slider" v-model="needs.need_excitement" min="0" max="100" type="range" disabled>
+          <input class="second-user slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
-        <p><b>Self-expression:</b> Enjoys asserting their own unique identity.</p>
+        <p><span style="margin-right: .7rem"><b>Self-expression:</b> Enjoys asserting their own unique identity.</span> 
+          <span class="compare-percentile-container">
+            <span class="color-purple fw-600">{{needs.need_self_expression}}%</span> -- <span class="color-orange fw-600">10%</span>
+          </span>
+        </p>
         <div class="range-slider sliderflex">
-          <input class="slider" v-model="needs.need_self_expression" min="0" max="100" type="range" disabled>
-          <input class="slider" value="10" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+          <input class="first-user slider" v-model="needs.need_self_expression" min="0" max="100" type="range" disabled>
+          <input class="second-user slider" value="10" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><b>Curiosity:</b> Has a desire to discover and explore.</p>
         <div class="range-slider sliderflex">
-          <input class="slider" v-model="needs.need_curiosity" min="0" max="100" type="range" disabled>
-          <input class="slider" value="100" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+          <input class="first-user slider" v-model="needs.need_curiosity" min="0" max="100" type="range" disabled>
+          <input class="second-user slider" value="100" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><b>Excellence:</b> Sets high standards and desires perfection.</p>
         <div class="range-slider sliderflex">
-          <input class="slider" v-model="needs.need_ideal" min="0" max="100" type="range" disabled>
-          <input class="slider" value="20" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+          <input class="first-user slider" v-model="needs.need_ideal" min="0" max="100" type="range" disabled>
+          <input class="second-user slider" value="20" style="background: transparent;" min="0" max="100" step="0.5" type="range"
             disabled>
         </div>
         <p><b>Closeness:</b> Relishes being connected to family and friends.</p>
-        <div class="range-slider sliderflex">
-          <input class="slider" v-model="needs.need_closeness" min="0" max="100" type="range" disabled>
-          <input class="slider" value="40" style="background: transparent;" min="0" max="100" step="0.5" type="range"
-            disabled>
+        <div class="range-slider sliderflex" style="display: relative;">
+          <div style="display: absolute;">
+            <output for="need_closeness"></output>
+            <input class="first-user slider" v-model="needs.need_closeness" min="0" max="100" type="range" name="need_closeness" disabled>
+          </div>
+          <div style="display: absolute;">
+            <output for="need_closeness"></output>
+            <input class="second-user slider" value="40" style="background: transparent;" min="0" max="100" step="0.5" type="range" disabled>
+          </div>
         </div>
       </div>
     </div>
@@ -161,4 +174,70 @@
     margin: 0;
     padding: 0;
   }
+  .color-purple { color:#6c3fb6 };
+  .color-orange { color: #ff9f6e };
+  .first-user[type=range]::-moz-range-thumb {
+    background: #6c3fb6;
+    border: 1px solid #c6a9f7;
+  }
+  .first-user[type=range]::-webkit-slider-thumb {
+    background: #6c3fb6;
+    border: 1px solid #c6a9f7;
+  }
+  .second-user[type=range]::-moz-range-thumb {
+    background: #ff9f6e;
+    border: 1px solid #ff8f56;
+  }
+  .second-user[type=range]::-webkit-slider-thumb {
+    background: #ff9f6e;
+    border: 1px solid #ff8f56;
+  }
+  .fw-600 { font-weight: 600; }
+  .compare-percentile-container {
+    background-color: #f9f9f9;
+    padding: .1rem .6rem;
+    border-radius: 2rem;
+    font-size: 12px;
+  }
+  // .first-user[type=range]::-webkit-slider-thumb:after { 
+  //   content: "";
+  //   position: absolute;
+  //   width: 0;
+  //   height: 0;
+  //   border-top: 10px solid #999999;
+  //   border-left: 5px solid transparent;
+  //   border-right: 5px solid transparent;
+  //   top: 100%;
+  //   left: 50%;
+  //   margin-left: -5px;
+  //   margin-top: -1px;
+  // }
+
+  // output { 
+  //   position: absolute;
+  //   background-image: linear-gradient(top, #444444, #999999);
+  //   width: 40px; 
+  //   height: 30px; 
+  //   text-align: center; 
+  //   color: white; 
+  //   border-radius: 10px; 
+  //   display: inline-block; 
+  //   font: bold 15px/30px Georgia;
+  //   bottom: 175%;
+  //   left: 0;
+  //   margin-left: -1%;
+  // }
+  // output:after { 
+  //   content: "";
+  //   position: absolute;
+  //   width: 0;
+  //   height: 0;
+  //   border-top: 10px solid #999999;
+  //   border-left: 5px solid transparent;
+  //   border-right: 5px solid transparent;
+  //   top: 100%;
+  //   left: 50%;
+  //   margin-left: -5px;
+  //   margin-top: -1px;
+  // }
 </style>

@@ -48,7 +48,7 @@ export default {
           datasets: [
             {
               fill: true,
-              backgroundColor: "rgba(111,148,205,0.7)",
+              backgroundColor: "rgba(253,159,110,0.7)",
               pointBorderColor: "#fff",
               pointBackgroundColor: "rgba(179,181,198,1)",
               data: this.personalities && this.personalities.map(personality => personality.percentile * 100)

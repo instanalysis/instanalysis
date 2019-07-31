@@ -3,32 +3,32 @@
     <div class="boxheading">VALUES</div>
     <p>Shows concern for the wellbeing of others.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" v-model="values.value_self_transcendence" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_self_transcendence" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Embraces change, looks for new experiences.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" v-model="values.value_openness_to_change" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_openness_to_change" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Emphasizes tradition and order.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" v-model="values.value_self_enhancement" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_self_enhancement" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Seeks hedonistic pleasure.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" v-model="values.value_hedonism" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_hedonism" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
     <p>Seeks personal success.</p>
     <div class="range-slider sliderflex">
-      <input class="slider" v-model="values.value_self_enhancement" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_self_enhancement" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
   </div>
@@ -165,5 +165,21 @@
     width: 98%;
     margin: 0;
     padding: 0;
+  }
+  .first-user[type=range]::-moz-range-thumb {
+    background: #6c3fb6;
+    border: 1px solid #c6a9f7;
+  }
+  .first-user[type=range]::-webkit-slider-thumb {
+    background: #6c3fb6;
+    border: 1px solid #c6a9f7;
+  }
+  .second-user[type=range]::-moz-range-thumb {
+    background: #ff9f6e;
+    border: 1px solid #ff8f56;
+  }
+  .second-user[type=range]::-webkit-slider-thumb {
+    background: #ff9f6e;
+    border: 1px solid #ff8f56;
   }
 </style>
