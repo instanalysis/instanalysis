@@ -40,17 +40,38 @@ chrome.runtime.onMessage.addListener(
         }
       })();
     }
-
-    if (request.clearSavedUsers) {
-      localStorage.setItem('savedUsers', JSON.stringify([]))
-      console.log("clearSavedUsers at background.js")
-    }
   }
 );
 
+// chrome.storage.sync.set({key: value}, function() {
+//          console.log('Value is set to ' + value);
+//        });
+      
+//        chrome.storage.sync.get(['key'], function(result) {
+//          console.log('Value currently is ' + result.key);
+//        });
+
+//event from instanalysis client
 chrome.runtime.onMessageExternal.addListener(
   function(request, sender, sendResponse) {
     if (request.saveUser) {
-      console.log(request.saveUser)
+      let curUser = request.saveUser // {username: 'nama', startData: {}, ibmData: {} }
+      console.log(curUser)
+      // if user has no ibm profile data (less than 100 words)
+      if (curUser.username){
+        chrome.storage.local.get(['savedUsers'], function(result){
+          let currentSaved = result.savedUsers
+
+          // add to array if username is new
+          if (!currentSaved.includes(curUser.username)){
+            currentSaved.push(curUser.username)
+          }
+
+          //save updated array
+          chrome.storage.local.set({savedUsers: currentSaved}, function(){
+            console.log('saved user', curUser.username)
+          })
+        })
+      }
     }
   });

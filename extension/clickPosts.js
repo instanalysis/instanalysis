@@ -35,14 +35,14 @@ async function waitForElement(element, maxTime){
 	// console.log('waiting for', element)
 	let time = 0
 	while(!document.querySelector(element) && time < maxTime){
-		await new Promise(resolve => setTimeout(resolve, 100))
+		await wait(100)
 		time += 100
 		// console.log(time)
 	}
 	return document.querySelector(element)
 }
 
-async function scrapeData(limit) {
+async function scrapeData(limit, compareUsername) {
 	// Wait for username
 	await waitForElement('._7UhW9', 3000)
 	// Wait for profile picture
@@ -84,6 +84,15 @@ async function scrapeData(limit) {
 		while(!document.querySelector('article.M9sTE')) {
 			await new Promise(resolve => setTimeout(resolve, 200));
 		}
+
+		let timetaken = 0
+		// wait for image or video to load
+		while(!document.querySelector('.KL4Bh') && !document.querySelector('._5wCQW') && timetaken < 5000){
+			// console.log('waiting for image or video to load')
+			await wait(100)
+			timetaken += 100
+			// console.log(timetaken)
+		}
 		// safety margin
 		await wait(100);
 		
@@ -91,7 +100,9 @@ async function scrapeData(limit) {
 		// check if image or video
 		if(document.querySelector('article.M9sTE').querySelector('.KL4Bh')) {
 			await waitForElement('.FFVAD', 2000)
-			let img = document.querySelector('.FFVAD')
+			let img = document.querySelector('article.M9sTE').querySelector('.KL4Bh').querySelector('.FFVAD')
+			// console.log(img)
+			await wait(200)
 
 			temp = img
 				.getAttribute('srcset')
@@ -104,8 +115,8 @@ async function scrapeData(limit) {
 			try {
 				data[i].imageUrl = document.querySelector('article.M9sTE')
 					.querySelector('._5wCQW')
-					.querySelector('img')
-					.getAttribute('src')
+					.querySelector('video')
+					.getAttribute('poster')
 			} catch(err) {
 				console.log('No alt img for video')
 			}
@@ -129,8 +140,12 @@ async function scrapeData(limit) {
 		post = await waitForElement('.coreSpriteRightPaginationArrow', 1500)
 		if (!post) i = limit //break loop if no more posts
 	}
+	// close the post
+	const closeButton = await waitForElement('.ckWGn', 3000)
+	closeButton.click()
+
 	// Object to be sent to the backend
-	const pass = generateKey()
+	const pass = generateKey();
 	const payload = {
 		username,
 		pass,
@@ -139,13 +154,27 @@ async function scrapeData(limit) {
 		posts: data,
 	}
 	console.log(payload)
-	chrome.runtime.sendMessage({ hitServer: payload });
-	chrome.runtime.sendMessage({ openTab: `?user=${username}&key=${pass}` });
+
+	// return [{hitServer: payload}, {openTab: `?user=${username}&key=${key}`}]
+	if (compareUsername){
+		chrome.runtime.sendMessage({hitServer: payload});
+		chrome.runtime.sendMessage({openTab: `match?user=${username}&key=${pass}&match=${compareUsername}`});
+	} else {
+		chrome.runtime.sendMessage({hitServer: payload});
+		chrome.runtime.sendMessage({openTab: `?user=${username}&key=${pass}`});
+	}
 };
-// RUN SCRAPE
-chrome.storage.local.get(['postlimit'], ({ postlimit }) => {
-	scrapeData(postlimit)
-});
 
-// const msg = document.createElement('div');
-
+chrome.storage.local.get(['selectedToCompare'], ({selectedToCompare}) => {
+	if (selectedToCompare && selectedToCompare != '-'){
+		//analyze, save, and compare
+		chrome.storage.local.get(['postlimit'], ({ postlimit }) => {
+			scrapeData(postlimit, selectedToCompare)
+		});
+	} else {
+		//analyze and save
+		chrome.storage.local.get(['postlimit'], ({ postlimit }) => {
+			scrapeData(postlimit, false)
+		});
+	}
+})
