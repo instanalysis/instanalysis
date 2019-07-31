@@ -188,7 +188,7 @@ export default {
   position: fixed;
   left: -1%;
   width: 100%;
-  background-color: rgba(255,255,255, 0.9);
+  background-color: rgba(255,255,255, 0.96);
   box-shadow: 0.1rem 0.3rem 0.3rem -0.5rem #777;
   margin-left: 0rem;
   padding: 1rem 3rem;
