@@ -25,7 +25,7 @@ class analysisController {
             let io = req.io
             let words = ''
             let likes = 0
-            let { username, userimage, posts, key } = req.body
+            let { username, userimage, posts, pass } = req.body
             let userData = {
                 username: username,
                 userimage: userimage,
@@ -39,14 +39,14 @@ class analysisController {
 
             let credential = {
                 username: userData.username,
-                key
+                pass
             }
             
             console.log('processing')
 
             // // Start
             io.emit('hello')
-            io.emit(`start-${credential.username}-${credential.key}`,
+            io.emit(`start-${credential.username}-${credential.pass}`,
                 {
                     wordCloud: words,
                     profilePicture: userData.userimage,
@@ -57,7 +57,7 @@ class analysisController {
             // IBManalysis
             let personalityAnalysisResult = await personalityAnalysis(userData)
             console.log(personalityAnalysisResult)
-            io.emit(`ibm-${credential.username}-${credential.key}`,
+            io.emit(`ibm-${credential.username}-${credential.pass}`,
                 {
                     personalityAnalysisResult
                 }
@@ -119,7 +119,7 @@ class analysisController {
                 gender = profilePicDetection.FaceDetails[0].Gender
             }
 
-            io.emit(`rekog-${credential.username}-${credential.key}`,
+            io.emit(`rekog-${credential.username}-${credential.pass}`,
                 {
                     perPost,
                     summary: {
