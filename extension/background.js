@@ -61,16 +61,11 @@ chrome.runtime.onMessageExternal.addListener(
       if (curUser.username){
         chrome.storage.local.get(['savedUsers'], function(result){
           let currentSaved = result.savedUsers
-          let newUser = true
-          // if user was already saved, use old saved data
-          for (let i = 0; i < currentSaved.length; i++){
-            if (currentSaved[i] === curUser.username){
-              newUser = false
-              // currentSaved[i] = curUser
-            }
+
+          // add to array if username is new
+          if (!currentSaved.includes(curUser.username)){
+            currentSaved.push(curUser.username)
           }
-          // if user is new, push to saved users array
-          if (newUser) currentSaved.push(curUser.username)
 
           //save updated array
           chrome.storage.local.set({savedUsers: currentSaved}, function(){
