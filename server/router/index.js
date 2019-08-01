@@ -7,6 +7,8 @@ router.get('/', (req,res)=>{
 })
 
 router.post('/analysis', translateToEnglish, controller.analysis)
-// router.post('/analysis', translateToEnglish, controller.analysis)
+router.post('/match', controller.match)
+// router.post('/analysis', controller.analysis)
+
 
 module.exports = router

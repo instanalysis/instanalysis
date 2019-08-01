@@ -1,16 +1,36 @@
 const personalityAnalysis = require('../helper/personalityAnalysis')
 const { faceDetection, labelDetection } = require('../helper/amazonRekognition')
 // const lengthChecker = require('../helper/lengthChecker')
+const comparePersonalities = require('../helper/comparePersonalities')
 
 class analysisController {
-    static async analysis(req, res) {
+    static match(req,res){
+        try{
+
+            console.log("from controller match")
+            let {user1, user2} = req.body
+            // console.log(req.body)
+            console.log("------printing.....--------------")
+            console.log({user1:req.body.user1})
+            console.log({user2:req.body.user2})
+            console.log("------printed user1 and user2------")
+            let comparedResult = comparePersonalities(user1, user2)
+            console.log(comparedResult)
+            res.status(200).json(comparedResult)
+        }
+        catch(e){
+            res.status(500).json(e)
+        }
+    }
+
+    static async analysis(req, res) { 
         console.log("di controller analysis")
-        console.log(req.body)
         console.log("-0---------")
         try {
             let io = req.io
             let words = ''
-            let { username, userimage, posts, key } = req.body
+            let likes = 0
+            let { username, userimage, posts, pass } = req.body
             let userData = {
                 username: username,
                 userimage: userimage,
@@ -18,30 +38,30 @@ class analysisController {
             }
             userData.posts.forEach(item => {
                 words += item.caption + ' '
+                likes += item.likes
             })
             res.json('request successful')
 
-            let credential = {
-                username: userData.username,
-                key
-            }
+            let credential =`-${username}-${pass}`
             
             console.log('processing')
 
             // // Start
             io.emit('hello')
-            io.emit(`start-${credential.username}-${credential.key}`,
-                {
-                    wordCloud: words,
-                    profilePicture: userData.userimage,
-                    totalLikes: ''
-                }
-            )
+            setTimeout(()=>{
+                io.emit(`start${credential}`,
+                    {
+                        wordCloud: words,
+                        profilePicture: userData.userimage,
+                        totalLikes: likes
+                    }
+                )
+            }, 2000)
 
             // IBManalysis
             let personalityAnalysisResult = await personalityAnalysis(userData)
             console.log(personalityAnalysisResult)
-            io.emit(`ibm-${credential.username}-${credential.key}`,
+            io.emit(`ibm${credential}`,
                 {
                     personalityAnalysisResult
                 }
@@ -65,21 +85,35 @@ class analysisController {
             let counter = 0
             resultFaceDetection.forEach((item, index) => {
                 if (item.FaceDetails[0]) {
+                    console.log(emotionFromPosts, 'emotionfromposts')
                     counter++
-                    for (let i = 0; i < item.FaceDetails[0].Emotions.length; i++) {
-                        if (emotionFromPosts[item.FaceDetails[0].Emotions[i].Type]) {
-                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] += item.FaceDetails[0].Emotions[i].Confidence
+                    let emotArray = item.FaceDetails[0].Emotions
+                    let totalConfidence = 0 //total confidence for this photo
+                    for (let i = 0; i < emotArray.length; i++) {
+                        totalConfidence += emotArray[i].Confidence
+                    }
+                    for (let i = 0; i < emotArray.length; i++) {
+                        let emot = emotArray[i].Type
+                        console.log({emot})
+                        console.log({confidende:emotArray[i].Confidence})
+                        if (emotionFromPosts[emot]) {
+                            emotionFromPosts[emot] += emotArray[i].Confidence / totalConfidence * 100
                         } else {
-                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = item.FaceDetails[0].Emotions[i].Confidence
+                            emotionFromPosts[emot] = emotArray[i].Confidence / totalConfidence * 100
                         }
-                        if (resultFaceDetection.length === index + 1) {
-                            emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] = emotionFromPosts[item.FaceDetails[0].Emotions[i].Type] / counter
-                        }
+                        console.log({total:emotionFromPosts[emot]})
                     }
                 }
             })
+            console.log({numberOfFaces:counter})
+            if(counter !==0 ){
+                Object.keys(emotionFromPosts).forEach((item)=>{
+                    emotionFromPosts[item] = emotionFromPosts[item] / counter
+                    console.log("=============",emotionFromPosts[item])
+                })
+            }
             resultLabelDetection.forEach(item => {
-                if (item.Labels[0].Name !== 'Human' && item.Labels[0].Name !== 'Person' && item.Labels[0].Name !== 'Face') {
+                // if (item.Labels[0].Name !== 'Human' && item.Labels[0].Name !== 'Person' && item.Labels[0].Name !== 'Face') {
                     let limit = item.Labels.length > 5 ? 5 : item.Labels.length
                     for (let i = 0; i < limit; i++) {
                         if (interestFromPosts[item.Labels[i].Name]) {
@@ -88,25 +122,24 @@ class analysisController {
                             interestFromPosts[item.Labels[i].Name] = 1
                         }
                     }
-                }
+                // }
             })
             let perPost = userData.posts.map((item, index) => {
                 return {
                     likes: item.likes,
                     date: item.date,
+                    resultFaceDetection: resultFaceDetection[index]
                 }
             })
-            let age
-            let gender
+            console.log(resultFaceDetection)
+            let age= 'Cannot get data'
+            let gender= 'Cannot get data'
             if (profilePicDetection.FaceDetails.length === 1) {
                 age = profilePicDetection.FaceDetails[0].AgeRange
                 gender = profilePicDetection.FaceDetails[0].Gender
-            } else {
-                gender = 'Cannot get data',
-                    age = 'Cannot get data'
             }
 
-            io.emit(`rekog-${credential.username}-${credential.key}`,
+            io.emit(`rekog${credential}`,
                 {
                     perPost,
                     summary: {
@@ -117,29 +150,15 @@ class analysisController {
                     }
                 }
             )
+            console.log(emotionFromPosts, 'emotionfromposts')
+            console.log(interestFromPosts, 'interestFromPosts')
+            console.log(credential)
             console.log('done')
-            // res.status(200).json({
-            //     wordCloud: words,
-            //     profilePicture: userData.userimage,
-            //     totalLikes: '',
-            //     personalityAnalysisResult,
-            //     perPost,
-            //     summary: {
-            //         age,
-            //         gender,
-            //         emotionFromPosts,
-            //         interestFromPosts
-            //     }
-
-            // })
-            // app.emit('disconnect')
-
-
-
         }
         catch (e) {
             console.log('masuk catch', e)
-            res.status(500).json('error')
+            let io = req.io
+            io.emit('error', e)
         }
 
     }

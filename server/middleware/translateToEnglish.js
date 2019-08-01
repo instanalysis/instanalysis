@@ -9,7 +9,8 @@ async function translateToEnglish(req, res, next) {
 	let userdata = {
 		username: username,
 		userimage: userimage,
-		posts: posts
+		posts: posts,
+		...req.body
 	}
 	// console.log(userdata)
 	// console.log('dalam function translateToEnglish')
