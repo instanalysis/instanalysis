@@ -2,7 +2,10 @@
   <div id="app">
     <div id="topnav">
       <div id="brand">InstAnalysis</div>
-      <div id="aboutlink" @click="printPage">Print</div>
+      <div style="display: flex; ">
+        <div id="aboutlink" @click="goToAboutPage" style="margin-right: 1rem">About</div>
+        <div id="print" @click="printPage">Print</div>
+      </div>
     </div>
     <router-view/>
   </div>
@@ -11,7 +14,8 @@
 <script>
 export default {
   methods: {
-    printPage() { window.print() }
+    printPage() { window.print() },
+    goToAboutPage() { this.$router.push('/about') }
   },
 }
 </script>
@@ -40,7 +44,8 @@ $purp1: #592ba1;
   font-size: 22px;
   font-weight: 700;
 }
-#aboutlink {
+#aboutlink,
+#print {
   cursor: pointer;
   background-color: #dfdfdf;
   padding: 0.3rem 0.6rem 0.4rem 0.6rem;
