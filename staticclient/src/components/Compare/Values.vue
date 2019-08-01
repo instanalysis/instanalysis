@@ -1,63 +1,77 @@
 <template>
   <div id="values" class="box">
     <div class="boxheading">VALUES</div>
-    <p>Shows concern for the wellbeing of others.</p>
+    <span>Compability {{matchPersonalityScore}}</span>
+    <p><span style="margin-right: .7rem">Shows concern for the wellbeing of others.</span> 
+      <span class="compare-percentile-container">
+        <span class="color-purple fw-600">{{values.value_self_transcendence}}%</span> | <span class="color-orange fw-600">{{valuesCompare.value_self_transcendence}}%</span>
+      </span>
+    </p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_self_transcendence" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" v-model="valuesCompare.value_self_transcendence" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
-    <p>Embraces change, looks for new experiences.</p>
+    <p><span style="margin-right: .7rem">Embraces change, looks for new experiences.</span> 
+      <span class="compare-percentile-container">
+        <span class="color-purple fw-600">{{values.value_openness_to_change}}%</span> | <span class="color-orange fw-600">{{valuesCompare.value_openness_to_change}}%</span>
+      </span>
+    </p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_openness_to_change" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" v-model="valuesCompare.value_openness_to_change" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
-    <p>Emphasizes tradition and order.</p>
+    <p><span style="margin-right: .7rem">Emphasizes tradition and order.</span> 
+      <span class="compare-percentile-container">
+        <span class="color-purple fw-600">{{values.value_self_enhancement}}%</span> | <span class="color-orange fw-600">{{valuesCompare.value_self_enhancement}}%</span>
+      </span>
+    </p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_self_enhancement" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" v-model="valuesCompare.value_self_enhancement" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
-    <p>Seeks hedonistic pleasure.</p>
+    <p><span style="margin-right: .7rem">Seeks hedonistic pleasure.</span> 
+      <span class="compare-percentile-container">
+        <span class="color-purple fw-600">{{values.value_hedonism}}%</span> | <span class="color-orange fw-600">{{valuesCompare.value_hedonism}}%</span>
+      </span>
+    </p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_hedonism" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" v-model="valuesCompare.value_hedonism" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
-    <p>Seeks personal success.</p>
+    <p><span style="margin-right: .7rem">Seeks personal success.</span> 
+      <span class="compare-percentile-container">
+        <span class="color-purple fw-600">{{values.value_self_enhancement}}%</span> | <span class="color-orange fw-600">{{valuesCompare.value_self_enhancement}}%</span>
+      </span>
+    </p>
     <div class="range-slider sliderflex">
-      <input class="slider" value="79" min="0" max="100" type="range" disabled>
-      <input class="slider" value="80" style="background: transparent;" min="0" max="100" step="0.5" type="range"
+      <input class="first-user slider" v-model="values.value_self_enhancement" min="0" max="100" type="range" disabled>
+      <input class="second-user slider" v-model="valuesCompare.value_self_enhancement" style="background: transparent;" min="0" max="100" step="0.5" type="range"
         disabled>
     </div>
   </div>
 </template>
 
 <script>
+  import FoldingCube from '@/components/Loading/Loading.vue';
   import ValuesChart from '../ValuesChart';
 
   export default {
+    props: ['values', 'valuesCompare', 'matchScore'],
     components: {
       ValuesChart
     },
     data() {
       return {
-        values1: { // key is from values.trait_id
-          "value_self_transcendence": 0.05015001965356963,
-          "value_openness_to_change": 0.6854512392944407,
-          "value_conservation": 0.02725197430081272,
-          "value_hedonism": 0.3754754766311752,
-          "value_self_enhancement": 0.6890067278325013,
-        },
-        values2: { // key is from values.trait_id
-          "value_self_transcendence": 0.05015001965356963,
-          "value_openness_to_change": 0.6854512392944407,
-          "value_conservation": 0.02725197430081272,
-          "value_hedonism": 0.3754754766311752,
-          "value_self_enhancement": 0.6890067278325013,
-        }
       }
+    },
+    computed: {
+      matchPersonalityScore() {
+        return Math.round(100 - (this.matchScore * 100)) + '%'
+      },
     },
   }
 </script>
@@ -178,5 +192,25 @@
     width: 98%;
     margin: 0;
     padding: 0;
+  }
+  .first-user[type=range]::-moz-range-thumb {
+    opacity: .75;
+    background: #6c3fb6;
+    border: 1px solid #c6a9f7;
+  }
+  .first-user[type=range]::-webkit-slider-thumb {
+    opacity: .75;
+    background: #6c3fb6;
+    border: 1px solid #c6a9f7;
+  }
+  .second-user[type=range]::-moz-range-thumb {
+    opacity: .75;
+    background: #ff9f6e;
+    border: 1px solid #ff8f56;
+  }
+  .second-user[type=range]::-webkit-slider-thumb {
+    opacity: .75;
+    background: #ff9f6e;
+    border: 1px solid #ff8f56;
   }
 </style>

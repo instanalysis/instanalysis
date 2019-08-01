@@ -1,8 +1,9 @@
 // function mockSavedUsers(){
 //   chrome.storage.local.get(['savedUsers'], function(result){
-//     let currentSaved = result.savedUsers
-//     currentSaved.push('one')
-//     currentSaved.push('two')
+// 		let currentSaved = result.savedUsers
+// 		console.log(currentSaved)
+//     currentSaved.push('bellahadid')
+//     currentSaved.push('max')
 //     chrome.storage.local.set({savedUsers: currentSaved}, function(){
 //     })
 // 	reloadSavedUsers()
@@ -80,13 +81,16 @@ function reloadSavedUsers(){
 	savedUserSelector.innerHTML = '<option>-</option>'
 	chrome.storage.local.get(['savedUsers'], function(result){
 		const storageUsers = result.savedUsers
-		console.log({storageUsers})
-		storageUsers.forEach( user => {
-			let option = document.createElement("option")
-			let text = document.createTextNode(user)
-			option.appendChild(text)
-			savedUserSelector.appendChild(option)
-		})
+		if(storageUsers === undefined) {
+			chrome.storage.local.set({savedUsers: []})
+		}else{
+			storageUsers.forEach( user => {
+				let option = document.createElement("option")
+				let text = document.createTextNode(user)
+				option.appendChild(text)
+				savedUserSelector.appendChild(option)
+			})
+		}
 	})
 	chrome.storage.local.set({selectedToCompare: savedUserSelector.value})
 

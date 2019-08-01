@@ -44,6 +44,7 @@ async function waitForElement(element, maxTime){
 
 // For progress bar
 let barWidth;
+let barLimit;
 let dots = 0;
 function progressBar() {
 	let msg = document.createElement('div');
@@ -71,6 +72,7 @@ function progressBar() {
 	bar.appendChild(progress)
 
 	barWidth = document.querySelector('.progbar-container').offsetWidth
+	barLimit = parseInt(document.querySelector('.-nal3').textContent)
 }
 
 async function scrapeData(limit, compareUsername) {
@@ -94,8 +96,9 @@ async function scrapeData(limit, compareUsername) {
 	let data = [];
 	// Loop through posts
 	let post = posts[0] //first post
+	let fullBar = limit <= barLimit ? limit : barLimit
 	for(let i = 0; i < limit; i ++) {
-		document.querySelector('.progbar-bar').style.width = ((i + 1) / limit) * barWidth + 'px'
+		document.querySelector('.progbar-bar').style.width = ((i + 1) / fullBar) * barWidth + 'px'
 
 		console.log(`Image number ${i + 1}`)
 		data[i] = {	imageUrl: '',	caption: '', likes: 0, date: ''	};
@@ -170,15 +173,14 @@ async function scrapeData(limit, compareUsername) {
 		data[i].date = document.querySelector('._1o9PC').getAttribute('datetime')
 
 		//prepare to click next post 
-		post = await waitForElement('.coreSpriteRightPaginationArrow', 1500)
+		post = await waitForElement('.coreSpriteRightPaginationArrow', 1200)
 		//break loop if no more posts
 		if (!post) {
-			document.querySelector('.progbar-bar').style.width = barWidth + 5 + 'px'
-			i = limit
+			i = limit;
 		}
 	}
 	// close the post
-	const closeButton = await waitForElement('.ckWGn', 3000)
+	const closeButton = await waitForElement('.ckWGn', 1500)
 	closeButton.click()
 
 	setTimeout(() => {
@@ -197,15 +199,16 @@ async function scrapeData(limit, compareUsername) {
 	console.log(payload)
 
 	// return [{hitServer: payload}, {openTab: `?user=${username}&key=${key}`}]
-	// if (compareUsername){
-	// 	chrome.runtime.sendMessage({hitServer: payload});
-	// 	chrome.runtime.sendMessage({openTab: `match?user=${username}&key=${pass}&match=${compareUsername}`});
-	// } else {
-	// 	chrome.runtime.sendMessage({hitServer: payload});
-	// 	chrome.runtime.sendMessage({openTab: `?user=${username}&key=${pass}`});
-	// }
+	if (compareUsername){
+		chrome.runtime.sendMessage({hitServer: payload});
+		chrome.runtime.sendMessage({openTab: `match?user=${username}&key=${pass}&match=${compareUsername}`});
+	} else {
+		chrome.runtime.sendMessage({hitServer: payload});
+		chrome.runtime.sendMessage({openTab: `?user=${username}&key=${pass}`});
+	}
 };
 
+progressBar();
 chrome.storage.local.get(['selectedToCompare'], ({selectedToCompare}) => {
 	if (selectedToCompare && selectedToCompare != '-'){
 		//analyze, save, and compare
@@ -218,6 +221,4 @@ chrome.storage.local.get(['selectedToCompare'], ({selectedToCompare}) => {
 			scrapeData(postlimit, false)
 		});
 	}
-})
-
-progressBar()
+});

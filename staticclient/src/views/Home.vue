@@ -37,10 +37,6 @@ import ProfileInfo from '@/components/ProfileInfo.vue';
 import TextData from '@/components/TextData.vue';
 import ImageData from '@/components/ImageData.vue';
 import io from 'socket.io-client';
-// mock
-// import startData from './mockResponse/start';
-// import ibmData from './mockResponse/ibm';
-// import rekogData from './mockResponse/rekog';
 
 export default {
   name: 'home',
@@ -84,14 +80,15 @@ export default {
         if(!this.startData.totalLikes) {
           this.message = 'Welcome to InstAnalysis. Open our extension on an Instagram profile to get results.'
         }
-      }, 5500)
+      }, 8000)
       /* --> Add user to extension drop down   
-        // setTimeout(() => {
-        //   const extid = 'njalbdhpniekifijjefichllkdjeecll'
-        //   chrome.runtime.sendMessage(extid, {saveUser: {
-        //     username: 'bobby'
-        //   }});
-        // }, 1200)
+        setTimeout(() => {
+          const extid = 'njalbdhpniekifijjefichllkdjeecll'
+          console.log('sending message')
+          chrome.runtime.sendMessage(extid, {saveUser: {
+            username: 'rstaoieasr'
+          }});
+        }, 1000)
       <-- */
     }
   },
@@ -167,21 +164,24 @@ export default {
     ibmData() {
       if(this.personality) {
         const extid = 'njalbdhpniekifijjefichllkdjeecll'
-        let currentUser = {
-          username: this.username,
-          startData: this.startData,
-          ibmData: this.ibmData,
-        }
-        
-        let arr = JSON.parse(localStorage.getItem('savedUsers')) || []
-        console.log(arr)
-        if(!arr.find(user => user === this.username) || arr.length === 0) {
-          arr.push(currentUser)
-          localStorage.setItem('savedUsers', JSON.stringify(arr))
-          chrome.runtime.sendMessage(extid, {saveUser: {
-            username: this.username
-          }});
-        }
+
+        setTimeout(() => {
+          let currentUser = {
+            username: this.username,
+            startData: this.startData,
+            ibmData: this.ibmData,
+          }
+          
+          let arr = JSON.parse(localStorage.getItem('savedUsers')) || []
+          console.log(arr)
+          if(!arr.find(user => user === this.username) || arr.length === 0) {
+            arr.push(currentUser)
+            localStorage.setItem('savedUsers', JSON.stringify(arr))
+            chrome.runtime.sendMessage(extid, {saveUser: {
+              username: this.username
+            }});
+          }
+        }, 1900)
       }
     },
   }

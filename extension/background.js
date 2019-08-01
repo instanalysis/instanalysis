@@ -54,6 +54,7 @@ chrome.runtime.onMessage.addListener(
 //event from instanalysis client
 chrome.runtime.onMessageExternal.addListener(
   function(request, sender, sendResponse) {
+    console.log(request)
     if (request.saveUser) {
       let curUser = request.saveUser // {username: 'nama', startData: {}, ibmData: {} }
       console.log(curUser)
