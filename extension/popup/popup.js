@@ -27,6 +27,7 @@ numberOfPosts.oninput = function(e) {
 const savedUserSelector = document.getElementById('savedUserSelector')
 const compareButton = document.getElementById('compareButton')
 savedUserSelector.onclick = function(e){
+	console.log(savedUserSelector.value)
 	// selectedToCompare
 	if (savedUserSelector.value === '-') {
 		compareButton.disabled = true
