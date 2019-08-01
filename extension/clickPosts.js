@@ -97,9 +97,6 @@ async function scrapeData(limit, compareUsername) {
 	// Loop through posts
 	let post = posts[0] //first post
 	let fullBar = limit <= barLimit ? limit : barLimit
-	console.log({
-		limit, barLimit, fullBar
-	})
 	for(let i = 0; i < limit; i ++) {
 		document.querySelector('.progbar-bar').style.width = ((i + 1) / fullBar) * barWidth + 'px'
 
