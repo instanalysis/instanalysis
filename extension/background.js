@@ -1,5 +1,5 @@
-const clientUrl = 'http://localhost:8080';
-// const clientUrl = 'http://www.instanalysis.online';
+// const clientUrl = 'http://localhost:8080';
+const clientUrl = 'http://www.instanalysis.online';
 const serverUrl = 'http://server.instanalysis.online';
 
 chrome.runtime.onInstalled.addListener((message, callback) => {
@@ -42,14 +42,6 @@ chrome.runtime.onMessage.addListener(
     }
   }
 );
-
-// chrome.storage.sync.set({key: value}, function() {
-//          console.log('Value is set to ' + value);
-//        });
-      
-//        chrome.storage.sync.get(['key'], function(result) {
-//          console.log('Value currently is ' + result.key);
-//        });
 
 //event from instanalysis client
 chrome.runtime.onMessageExternal.addListener(
