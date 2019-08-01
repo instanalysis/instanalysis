@@ -1,4 +1,4 @@
-const clientUrl = 'http://localhost:8081';
+const clientUrl = 'http://localhost:8080';
 // const clientUrl = 'http://www.instanalysis.online';
 const serverUrl = 'http://server.instanalysis.online';
 
@@ -40,17 +40,43 @@ chrome.runtime.onMessage.addListener(
         }
       })();
     }
-
-    if (request.clearSavedUsers) {
-      localStorage.setItem('savedUsers', JSON.stringify([]))
-      console.log("clearSavedUsers at background.js")
-    }
   }
 );
 
+// chrome.storage.sync.set({key: value}, function() {
+//          console.log('Value is set to ' + value);
+//        });
+      
+//        chrome.storage.sync.get(['key'], function(result) {
+//          console.log('Value currently is ' + result.key);
+//        });
+
+//event from instanalysis client
 chrome.runtime.onMessageExternal.addListener(
   function(request, sender, sendResponse) {
+    console.log(request)
     if (request.saveUser) {
-      console.log(request.saveUser)
+      let curUser = request.saveUser // {username: 'nama', startData: {}, ibmData: {} }
+      console.log(curUser)
+      // if user has no ibm profile data (less than 100 words)
+      if (curUser.username){
+        chrome.storage.local.get(['savedUsers'], function(result){
+          let usersArr = result.savedUsers
+
+          if(!usersArr) {
+            chrome.storage.local.set({savedUsers: [curUser.username]})
+          } else {
+            // add to array if username is new
+            if (!usersArr.includes(curUser.username)){
+              usersArr.push(curUser.username)
+            }
+  
+            //save updated array
+            chrome.storage.local.set({savedUsers: usersArr}, function(){
+              console.log('saved user', curUser.username)
+            })
+          }
+        })
+      }
     }
   });

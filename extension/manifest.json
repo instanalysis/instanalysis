@@ -2,7 +2,7 @@
   "name": "InstAnalysis",
   "version": "1.0",
   "description": "Perform an analysis on an Instagram account",
-  "permissions": ["activeTab", "declarativeContent", "storage", "http://localhost:3000/", "http://34.87.39.190/analysis/", "http://server.instanalysis.online/"],
+  "permissions": ["activeTab", "declarativeContent", "storage", "http://localhost:3000/", "http://34.87.39.190/analysis/", "http://server.instanalysis.online/", "http://www.instanalysis.online/"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
@@ -21,11 +21,12 @@
     {
       "matches": ["https://www.instagram.com/*"],
       "run_at": "document_idle",
+      "css": ["injectedcss.css"],
       "js": ["contentScript.js"]
     }
   ],
   "externally_connectable": {
-    "matches": ["http://localhost:8080/", "http://instanalysis.online/"]
+    "matches": ["http://localhost:8080/*", "http://www.instanalysis.online/*"]
   },
   "icons": {
     "16": "images/get_started16.png",

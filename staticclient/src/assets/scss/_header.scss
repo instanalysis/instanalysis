@@ -1,0 +1,22 @@
+.header {
+    background-color: transparent;
+    margin: 0px 120px;
+    padding: 8px 0px;
+
+    &__main {
+        position: fixed;
+        right: 0;
+        left: 0;
+        z-index: 10000;
+    }
+
+    &__content {
+        border-bottom: solid 1px #ededed;
+        padding: 8px 0px;
+    }
+
+}
+
+.scaffold {
+    height: 4.5rem;
+}
