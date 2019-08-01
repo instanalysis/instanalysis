@@ -9,6 +9,7 @@
         :gender="gender"
         :age="age"
         :personality="personality"
+        :ibmError="ibmError"
         v-if="startData.totalLikes"/>
       <text-data
         :wordStr="startData.wordCloud"

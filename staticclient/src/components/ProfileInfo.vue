@@ -40,7 +40,7 @@
 
 <script>
 export default {
-	props: ['user', 'totalLikes', 'gender', 'age', 'personality'],
+	props: ['user', 'totalLikes', 'gender', 'age', 'personality', 'ibmError'],
 	data() {
 		return {
 			// numberOfPostsScraped: 0,
@@ -50,7 +50,7 @@ export default {
 	},
 	computed: {
 		loadingDone() {
-			return this.gender && this.personality;
+			return ((this.gender && this.personality) || (this.gender && this.ibmError));
 		}
 	},
 }
