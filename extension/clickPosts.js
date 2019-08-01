@@ -72,7 +72,7 @@ function progressBar() {
 	bar.appendChild(progress)
 
 	barWidth = document.querySelector('.progbar-container').offsetWidth
-	barLimit = parseInt(document.querySelector('.-nal3').textContent)
+	barLimit = parseInt(document.querySelector('.-nal3').textContent.split(',').join(''))
 }
 
 async function scrapeData(limit, compareUsername) {
