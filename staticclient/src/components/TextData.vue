@@ -94,7 +94,8 @@
 				</div>
 			</div>
 		</div>
-		<folding-cube v-else/>
+		<div style="margin: 1rem 2rem; text-align: center;" v-if="ibmError">{{ibmError}}</div>
+		<folding-cube v-if="showLoader"/>
 	</div>
 </template>
 
@@ -116,13 +117,11 @@ function getLikely(num) {
 
 export default {
 	props: [
-		'wordStr', 'wordCount',	'personality', 'needs', 'values', 'consumptionPreferences'
+		'wordStr', 'wordCount',	'personality', 'needs', 'values',
+		'consumptionPreferences', 'ibmError',
 	],
 	components: {
 		WordCloud, PersonalityChart, ValuesChart, FoldingCube
-	},
-	created() {
-		// this.wordStr = this.startData.wordCloud
 	},
 	computed: {
 		per1() { return this.personality.big5_agreeableness },
@@ -154,6 +153,9 @@ export default {
 		con5class() {	return getLikely(this.con5)	},
 		con6class() {	return getLikely(this.con6)	},
 		con7class() {	return getLikely(this.con7)	},
+		showLoader() {
+			return (!this.personality) && (!this.ibmError)
+		},
 	},
 }
 </script>
