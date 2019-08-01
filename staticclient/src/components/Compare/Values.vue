@@ -1,7 +1,9 @@
 <template>
   <div id="values" class="box">
-    <div class="boxheading">VALUES</div>
-    <span>Compability {{matchPersonalityScore}}</span>
+    <div class="compability__container">
+      <div class="boxheading" style="margin-bottom: 0px;">VALUES</div>
+      <div class="compability__percentile">{{matchPersonalityScore}} Compability</div>
+    </div>
     <p><span style="margin-right: .7rem">Shows concern for the wellbeing of others.</span> 
       <span class="compare-percentile-container">
         <span class="color-purple fw-600">{{values.value_self_transcendence}}%</span> | <span class="color-orange fw-600">{{valuesCompare.value_self_transcendence}}%</span>

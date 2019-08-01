@@ -1,13 +1,16 @@
 <template>
-  <div class="box" style="width: 100%; text-align: center; display: flex; ">
-    <div class="sectionhead">
-      <div class="heading">Personality</div> <span v-if="matchScore">Compability {{matchPersonalityScore}}</span>
+  <div class="box">
+    <div class="compability__container">
+      <div class="boxheading" style="margin-bottom: 0px;">Personalities</div>
+      <div class="compability__percentile">{{matchPersonalityScore}} Compability</div>
     </div>
-    <div style="width:100%">
-      <canvas id="personalityChart_1" width="" height="" style="display: unset;"></canvas>
-    </div>
-    <div style="width:100%">
-      <canvas id="personalityChart_2" width="" height="" style="display: unset;"></canvas>  
+    <div style="display: flex;">
+      <div style="width:100%">
+        <canvas id="personalityChart_1" width="" height="" style="display: unset;"></canvas>
+      </div>
+      <div style="width:100%">
+        <canvas id="personalityChart_2" width="" height="" style="display: unset;"></canvas>  
+      </div>
     </div>
   </div>
 </template>
@@ -83,5 +86,13 @@ export default {
 </script>
 
 <style>
-
+.compability__container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.compability__percentile {
+  align-self: center;
+  margin-left: .5rem;
+  color: #616161;
+}
 </style>

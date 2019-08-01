@@ -16,10 +16,12 @@
       </div>
     </div>
     <div class="container">
-      <div class="userprofile" style="display: flex; justify-content: space-evenly;">
+      <div class="userprofile" style="display: flex; justify-content: space-evenly;" v-if="startData">
         <div style="display: flex; justify-content: space-evenly;">
-          <div style="width:75px; height: 75px;">
-            <img class="pp" :src="startData.profilePicture" alt="" style="width:100%; height:100%; border-radius: 50%;">
+          <div style="width:80px; height: 80px;">
+            <div class="circle__background bg-soft-purple">
+              <img class="pp" :src="startData.profilePicture" alt="Profile picture" style="width:80px; height:80px; border-radius: 50%; border: solid 2px #fff">
+            </div>
           </div>
           <div class="username">{{$route.query.user}}</div>
         </div>
@@ -27,12 +29,14 @@
           <p style="font-size: 2.6rem; margin-bottom: -9px;">{{matchTotalScore}}</p>
           <p style="font-size: .9rem;">Compability</p>
         </div>
-        <div v-else>
-          <p style="font-size: .9rem;">Matching in progress</p>
+        <div style="align-self: center;" v-else>
+          <p style="font-size: .9rem;">Matching in progress...</p>
         </div>
         <div style="display: flex; justify-content: space-evenly;">
-          <div style="width:75px; height: 75px;">
-            <img class="pp" :src="startDataCompare.profilePicture" alt="" style="width:100%; height:100%; border-radius: 50%;">
+          <div style="width:80px; height: 80px;">
+            <div class="circle__background bg-soft-orange">
+              <img class="pp" :src="startDataCompare.profilePicture" alt="Profile picture" style="width:80px; height:80px; border-radius: 50%; border: solid 2px #fff">
+            </div>
           </div>
           <div class="username">{{$route.query.match}}</div>
         </div>
@@ -114,172 +118,6 @@ export default {
 
       // user1.ibmData = ibmData.personalityAnalysisResult
 
-      // localstorage mock ?match
-      // axios.post(`http://server.instanalysis.online/analysis`, {
-      //     "username": "harry",
-      //     "pass":"123abc",
-      //     "userimage": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
-      //     "posts": [
-      //       {
-      //       "imageUrl": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
-      //       "caption": "fuck you Unplug and unwind",
-      //       "likes": 2842,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://s.abcnews.com/images/GMA/190416_gma_digital_garner_hpMain_16x9_992.jpg",
-      //       "caption": "Kalau senen bisa seru, kenapa nggak? #kenapaya?",
-      //       "likes": 2369,
-      //       "date":"2017"
-      //   },
-      //   {
-      //       "imageUrl": "https://images.unsplash.com/photo-1535498730771-e735b998cd64?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-      //       "caption": "Clubstyle ✌️ #fxdc #clubstyle #dyna",
-      //       "likes": 2369,
-      //       "date":"2017"
-      //   },
-      //   {
-      //       "imageUrl": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
-      //       "caption": "Unplug and unwind",
-      //       "likes": 2842,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://s.abcnews.com/images/GMA/190416_gma_digital_garner_hpMain_16x9_992.jpg",
-      //       "caption": "If monday can be fun, Wae Rebo? #kenapaya?",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.unsplash.com/photo-1535498730771-e735b998cd64?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-      //       "caption": "Clubstyle ✌️ #fxdc #clubstyle #dyna",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "One of those places where you’d feel so young 👨🏻👵🏻",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //  {
-      //       "imageUrl": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
-      //       "caption": "Unplug and unwind",
-      //       "likes": 2842,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://s.abcnews.com/images/GMA/190416_gma_digital_garner_hpMain_16x9_992.jpg",
-      //       "caption": "Kalau senen bisa seru, kenapa nggak? #kenapaya?",
-      //       "likes": 2369,
-      //       "date":"2017"
-      //   },
-      //   {
-      //       "imageUrl": "https://images.unsplash.com/photo-1535498730771-e735b998cd64?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-      //       "caption": "Clubstyle ✌️ #fxdc #clubstyle #dyna",
-      //       "likes": 2369,
-      //       "date":"2017"
-      //   },
-      //   {
-      //       "imageUrl": "https://cbsnews1.cbsistatic.com/hub/i/2018/11/06/0c1af1b8-155a-458e-b105-78f1e7344bf4/2018-11-06t054310z-1334124005-rc1be15a8050-rtrmadp-3-people-sexiest-man.jpg",
-      //       "caption": "Unplug and unwind",
-      //       "likes": 2842,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://s.abcnews.com/images/GMA/190416_gma_digital_garner_hpMain_16x9_992.jpg",
-      //       "caption": "If monday can be fun, Wae Rebo? #kenapaya?",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.unsplash.com/photo-1535498730771-e735b998cd64?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-      //       "caption": "Clubstyle ✌️ #fxdc #clubstyle #dyna",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "One of those places where you’d feel so young 👨🏻👵🏻",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   },
-      //   {
-      //       "imageUrl": "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      //       "caption": "Iceland is petrifying.",
-      //       "likes": 2369,
-      //       "date": 2017
-      //   }
-      //   ]
-    
-      // })
-
       const socket = io("http://server.instanalysis.online/");
       let user2IbmData = {}
       let user2StartData = {}
@@ -316,8 +154,7 @@ export default {
 
       // setTimeout(() => {
       //   this.startData = startData;
-      //   this.ibmData = user1.ibmData;
-        // this.ibmData = ibmData.personalityAnalysisResult;
+      //   this.ibmData = ibmData.personalityAnalysisResult;
       // }, 1500)
     },
     initScrollMagic() {
@@ -439,5 +276,13 @@ export default {
   align-self: center;
   margin-left: 1.3rem;
   color: #616161;
+}
+.bg-soft-purple {background-color: rgb(183, 139, 255);}
+.bg-soft-orange {background-color: #f0b190;}
+.circle__background {
+  border-radius: 50%;
+  width: 85px;
+  height: 85px;
+  padding: 2px;
 }
 </style>

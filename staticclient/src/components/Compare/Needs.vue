@@ -2,8 +2,10 @@
   <div>
     <div class="box">
       <div id="needs">
-        <div class="boxheading">NEEDS</div>
-        <span>Compability {{matchNeedsScore}}</span>
+        <div class="compability__container">
+          <div class="boxheading" style="margin-bottom: 0px;">NEEDS</div>
+          <div class="compability__percentile">{{matchNeedsScore}} Compability</div>
+        </div>
         <p><span style="margin-right: .7rem"><b>Excitement:</b> Wants to get out, live life and have fun.</span> 
           <span class="compare-percentile-container">
             <span class="color-purple fw-600">{{needs && needs.need_excitement}}%</span> | <span class="color-orange fw-600">{{needsCompare && needsCompare.need_excitement}}%</span>
