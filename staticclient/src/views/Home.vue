@@ -80,7 +80,7 @@ export default {
         if(!this.startData.totalLikes) {
           this.message = 'Welcome to InstAnalysis. Open our extension on an Instagram profile to get results.'
         }
-      }, 5500)
+      }, 8000)
       /* --> Add user to extension drop down   
         setTimeout(() => {
           const extid = 'njalbdhpniekifijjefichllkdjeecll'
