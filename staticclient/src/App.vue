@@ -2,11 +2,19 @@
   <div id="app">
     <div id="topnav">
       <div id="brand">InstAnalysis</div>
-      <div id="aboutlink">About</div>
+      <div id="aboutlink" @click="printPage">Print</div>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    printPage() { window.print() }
+  },
+}
+</script>
 
 <style lang="scss">
 $purp1: #592ba1;
