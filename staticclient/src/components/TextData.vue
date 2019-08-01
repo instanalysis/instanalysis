@@ -7,7 +7,7 @@
 		<div style="display: flex; justify-content: space-between; align-items: center;">
 			<div class="sectionhead">
 				<div class="heading">PERSONALITY PORTRAIT</div>
-				<div class="subhead">by IBM Watson</div>
+				<div class="subhead">Powered by IBM Watson</div>
 			</div>
 			<div class="wordcount">
 				<span class="wcn">Number of words analyzed</span>

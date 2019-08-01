@@ -163,7 +163,7 @@ export default {
   watch: {
     ibmData() {
       if(this.personality) {
-        const extid = 'njalbdhpniekifijjefichllkdjeecll'
+        const extid = 'gldpddbbdgkkpicjinogppfpljeeokjp'
 
         setTimeout(() => {
           let currentUser = {

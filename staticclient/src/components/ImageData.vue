@@ -3,7 +3,7 @@
 		<div style="display: flex; justify-content: space-between; align-items: center;">
 			<div class="sectionhead">
 				<div class="heading">IMAGE ANALYSIS</div>
-				<div class="subhead">by Amazon Rekognition</div>
+				<div class="subhead">Powered by Amazon Rekognition</div>
 			</div>
 			<div class="wordcount">
 				<span class="wcn">Number of images analyzed</span>
