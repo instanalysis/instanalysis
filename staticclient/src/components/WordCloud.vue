@@ -11,7 +11,8 @@ export default {
 		return {
 			ignoredWords: ['the', 'a', 'an', 'and', 'of', 'on', 'in', 'at', 'was',
 			'he', 'she', 'it', '-', 'for', 'nor', 'but', 'or', 'yet', 'so', 'after',
-			'although', 'as', 'as if', 'because', 'before', 'by', ' even', 'if', 'even', 'though']
+			'although', 'as', 'as if', 'because', 'before', 'by', 'even', 'if', 'though',
+			'than', 'whether', 'that', 'what', 'whatever', 'how', 'to', 'too', 'my', 'do']
 		}
 	},
 	mounted() {
