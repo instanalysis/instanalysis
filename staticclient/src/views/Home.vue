@@ -9,6 +9,7 @@
         :gender="gender"
         :age="age"
         :personality="personality"
+        :ibmError="ibmError"
         v-if="startData.totalLikes"/>
       <text-data
         :wordStr="startData.wordCloud"
@@ -17,6 +18,7 @@
         :needs="needs"
         :values="values"
         :consumptionPreferences="consumptionPreferences"
+        :ibmError="ibmError"
         v-show="startData.totalLikes"
       />
       <image-data
@@ -52,6 +54,7 @@ export default {
       startData: {},
       ibmData: {},
       rekogData: {},
+      ibmError: null,
     }
   },
   created() {
@@ -61,20 +64,19 @@ export default {
       this.username = this.$route.query.user
       this.key = this.$route.query.key
     }
-    // mock
     const mock = false;
     if(mock) {
-      // setTimeout(() => { this.startData = startData;
-      // }, 2000)
-      // setTimeout(() => { this.ibmData = ibmData.personalityAnalysisResult;
-      // }, 4000)
-      // setTimeout(() => { this.rekogData = rekogData
-      // }, 6000);
 
     } else {
       const socket = io("http://server.instanalysis.online/");
       socket.on(`start-${this.username}-${this.key}`, data => this.startData = data);
-      socket.on(`ibm-${this.username}-${this.key}`, data => this.ibmData = data.personalityAnalysisResult);
+      socket.on(`ibm-${this.username}-${this.key}`, data => {
+        if(data.personalityAnalysisResult.error) {
+          this.ibmError = data.personalityAnalysisResult.error;
+        } else {
+          this.ibmData = data.personalityAnalysisResult;
+        }
+      });
       socket.on(`rekog-${this.username}-${this.key}`, data => this.rekogData = data);
       setTimeout(() => {
         if(!this.startData.totalLikes) {
@@ -84,7 +86,6 @@ export default {
       /* --> Add user to extension drop down   
         setTimeout(() => {
           const extid = 'njalbdhpniekifijjefichllkdjeecll'
-          console.log('sending message')
           chrome.runtime.sendMessage(extid, {saveUser: {
             username: 'rstaoieasr'
           }});
